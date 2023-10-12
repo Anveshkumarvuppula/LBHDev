@@ -1,0 +1,935 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_SCM_CIV2_Customer_PreProd_name": {
+            "defaultValue": "PwC_LA_SCM_CIV2_Customer_PreProd",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_dynamicsax_3_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-3",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_SCM_CIV2_Customer_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "7"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ]
+                                },
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "7"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ]
+                                },
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Condition_3": {
+                            "actions": {
+                                "Terminate": {
+                                    "runAfter": {},
+                                    "type": "Terminate",
+                                    "inputs": {
+                                        "runError": {
+                                            "code": "Error",
+                                            "message": "@variables('ErrorMessage')"
+                                        },
+                                        "runStatus": "Failed"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "For_each": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "not": {
+                                            "equals": [
+                                                "@variables('ErrorMessage')",
+                                                ""
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "For_each": {
+                            "foreach": "@body('Lists_items_present_in_table_-_Get_CIV2_Last_Batch_Job_running_Status')?['value']",
+                            "actions": {
+                                "Condition": {
+                                    "actions": {
+                                        "Condition_4": {
+                                            "actions": {},
+                                            "runAfter": {
+                                                "Lists_items_present_in_table": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "else": {
+                                                "actions": {
+                                                    "Set_variable_3": {
+                                                        "runAfter": {},
+                                                        "type": "SetVariable",
+                                                        "inputs": {
+                                                            "name": "ErrorMessage",
+                                                            "value": "No data present in staging table of CIV2"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "greater": [
+                                                            "@length(body('Lists_items_present_in_table')?['value'])",
+                                                            0
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        },
+                                        "For_each_2": {
+                                            "foreach": "@body('Lists_items_present_in_table')?['value']",
+                                            "actions": {
+                                                "Condition_2": {
+                                                    "actions": {
+                                                        "Compose": {
+                                                            "runAfter": {
+                                                                "HTTP_-_Call_CIV2_Data_Project_PwC_CIV2_EXP": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Compose",
+                                                            "inputs": "@outputs('HTTP_-_Call_CIV2_Data_Project_PwC_CIV2_EXP')['statusCode']"
+                                                        },
+                                                        "Create_file": {
+                                                            "runAfter": {
+                                                                "HTTP_2_-_Download_Data_Package": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "body": "@binary(body('HTTP_2_-_Download_Data_Package'))",
+                                                                "headers": {
+                                                                    "ReadFileMetadataFromServer": true
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "post",
+                                                                "path": "/datasets/default/files",
+                                                                "queries": {
+                                                                    "folderPath": "/uat-file01/CIV2/temp",
+                                                                    "name": "@variables('PackageName')",
+                                                                    "queryParametersSingleEncoded": true
+                                                                }
+                                                            },
+                                                            "runtimeConfiguration": {
+                                                                "contentTransfer": {
+                                                                    "transferMode": "Chunked"
+                                                                }
+                                                            }
+                                                        },
+                                                        "Delete_file": {
+                                                            "runAfter": {
+                                                                "HTTP_-_File_Transformation_in_Function_App": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "headers": {
+                                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "delete",
+                                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/CIV2/temp/',variables('PackageName')))}"
+                                                            }
+                                                        },
+                                                        "Delete_file_2": {
+                                                            "runAfter": {
+                                                                "HTTP_-_Update_with_file_Content": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "JTJmdWF0LWZpbGUwMSUyZkNJVjIlMmZDdXN0b21lci50eHQ=": "/uat-file01/CIV2/Customer.txt"
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "headers": {
+                                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "delete",
+                                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('JTJmdWF0LWZpbGUwMSUyZkNJVjIlMmZDdXN0b21lci50eHQ='))}"
+                                                            }
+                                                        },
+                                                        "Get_file_content": {
+                                                            "runAfter": {
+                                                                "Delete_file": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "get",
+                                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/CIV2/Customer.txt'))}/content",
+                                                                "queries": {
+                                                                    "inferContentType": true
+                                                                }
+                                                            }
+                                                        },
+                                                        "Get_file_metadata": {
+                                                            "runAfter": {
+                                                                "Get_file_content": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "get",
+                                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/CIV2/Customer.txt'))}"
+                                                            }
+                                                        },
+                                                        "HTTP_-_Call_CIV2_Data_Project_PwC_CIV2_EXP": {
+                                                            "runAfter": {},
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "definitionGroupId": "@{variables('DataProject')}",
+                                                                    "executionId": "",
+                                                                    "legalEntityId": "1000",
+                                                                    "packageName": "@{variables('PackageName')}",
+                                                                    "reExecute": false
+                                                                },
+                                                                "headers": {
+                                                                    "Authorization": "@variables('Token')"
+                                                                },
+                                                                "method": "POST",
+                                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                                            }
+                                                        },
+                                                        "HTTP_-_Create_Blank_File": {
+                                                            "runAfter": {
+                                                                "Set_variable_-_ContentRange2": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "headers": {
+                                                                    "FileName": "uat-file01/CIV2/Customer.txt",
+                                                                    "x-ms-content-length": "@{variables('ContentLength')}",
+                                                                    "x-ms-file-attributes": "None",
+                                                                    "x-ms-file-creation-time": "2020-02-28T03:58:06.6661551Z",
+                                                                    "x-ms-file-last-write-time": "2020-02-28T03:58:06.6661551Z",
+                                                                    "x-ms-file-permission": "Inherit",
+                                                                    "x-ms-type": "file",
+                                                                    "x-ms-version": "2019-02-02"
+                                                                },
+                                                                "method": "PUT",
+                                                                "uri": "@{concat(variables('CreateBlankFileURI'),variables('SVToken'))}"
+                                                            }
+                                                        },
+                                                        "HTTP_-_File_Transformation_in_Function_App": {
+                                                            "runAfter": {
+                                                                "Create_file": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "cloudFileShare": "uat-file01",
+                                                                    "dir": "CIV2",
+                                                                    "fileName": "@{variables('PackageName')}",
+                                                                    "newField1": "CUSTOMERNUMBER",
+                                                                    "newField10": "STREET2",
+                                                                    "newField11": "STREET3",
+                                                                    "newField12": "STREET4",
+                                                                    "newField13": "HOUSENUMBERANDSTREET",
+                                                                    "newField14": "CITY",
+                                                                    "newField15": "REGIONDESCRIPTION",
+                                                                    "newField16": "POSTALCODE",
+                                                                    "newField17": "TERMSOFPAYMENT",
+                                                                    "newField2": "TITLE",
+                                                                    "newField3": "NAME1",
+                                                                    "newField4": "NAME2",
+                                                                    "newField5": "FORMOFADDRESS",
+                                                                    "newField6": "FIRSTNAMECONTACT",
+                                                                    "newField7": "NAME1CONTACT",
+                                                                    "newField8": "FIRSTTELEPHONENUMBER",
+                                                                    "newField9": "EMAILADDRESS",
+                                                                    "oldField1": "CUSTOMERNUMBER",
+                                                                    "oldField10": "STREET2",
+                                                                    "oldField11": "STREET3",
+                                                                    "oldField12": "STREET4",
+                                                                    "oldField13": "HOUSENUMBERANDSTREET",
+                                                                    "oldField14": "CITY",
+                                                                    "oldField15": "REGIONDESCRIPTION",
+                                                                    "oldField16": "POSTALCODE",
+                                                                    "oldField17": "TERMSOFPAYMENT",
+                                                                    "oldField2": "TITLE",
+                                                                    "oldField3": "NAME1",
+                                                                    "oldField4": "NAME2",
+                                                                    "oldField5": "FORMOFADDRESS",
+                                                                    "oldField6": "FIRSTNAMECONTACT",
+                                                                    "oldField7": "NAME1CONTACT",
+                                                                    "oldField8": "FIRSTTELEPHONENUMBER",
+                                                                    "oldField9": "EMAILADDRESS",
+                                                                    "outPutFileName": "@{variables('OutputFileName')}",
+                                                                    "outputFileFormat": "txt",
+                                                                    "sheetName": "CIV2_staging",
+                                                                    "storageAccountPath": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                                                    "subDir": "temp"
+                                                                },
+                                                                "method": "POST",
+                                                                "uri": "https://pwcfointfiletranspactoexcelcsv.azurewebsites.net/api/TransFormExcelCSV?code=XdHL/TjIjh34XZzZUnPxE7xzjsqoxip5csUi5zvR79q6a3uUkNCyVw=="
+                                                            }
+                                                        },
+                                                        "HTTP_-_Get_Downloadable_URL": {
+                                                            "runAfter": {
+                                                                "Until_-_Wait_until_data_project_executed": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "executionId": "@{body('HTTP_-_Call_CIV2_Data_Project_PwC_CIV2_EXP')?['Value']}"
+                                                                },
+                                                                "headers": {
+                                                                    "Authorization": "@variables('Token')"
+                                                                },
+                                                                "method": "POST",
+                                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                                            }
+                                                        },
+                                                        "HTTP_-_Update_with_file_Content": {
+                                                            "runAfter": {
+                                                                "HTTP_-_Create_Blank_File": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "body": "@body('Get_file_content')",
+                                                                "headers": {
+                                                                    "Content-Type": "application/octet-stream",
+                                                                    "Content-length": "@{variables('ContentLength')}",
+                                                                    "FileName": "uat-file01/CIV2/Customer.txt",
+                                                                    "Range": "bytes=0-@{variables('ContentRange2')}",
+                                                                    "x-ms-write": "update"
+                                                                },
+                                                                "method": "PUT",
+                                                                "uri": "@{concat(variables('UpdateFileURI'),variables('SVToken'))}"
+                                                            }
+                                                        },
+                                                        "HTTP_2_-_Download_Data_Package": {
+                                                            "runAfter": {
+                                                                "HTTP_-_Get_Downloadable_URL": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "method": "GET",
+                                                                "uri": "@{body('HTTP_-_Get_Downloadable_URL')?['Value']}"
+                                                            }
+                                                        },
+                                                        "Set_variable_-_ContentLength": {
+                                                            "runAfter": {
+                                                                "Get_file_metadata": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "SetVariable",
+                                                            "inputs": {
+                                                                "name": "ContentLength",
+                                                                "value": "@body('Get_file_metadata')?['Size']"
+                                                            }
+                                                        },
+                                                        "Set_variable_-_ContentRange2": {
+                                                            "runAfter": {
+                                                                "Set_variable_-_ContentLength": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "SetVariable",
+                                                            "inputs": {
+                                                                "name": "ContentRange2",
+                                                                "value": "@sub(variables('ContentLength'),1)"
+                                                            }
+                                                        },
+                                                        "Set_variable_-_Execution_status": {
+                                                            "runAfter": {
+                                                                "Compose": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "SetVariable",
+                                                            "inputs": {
+                                                                "name": "ExecutionStat",
+                                                                "value": "@{outputs('Compose')}"
+                                                            }
+                                                        },
+                                                        "Until_-_Wait_until_data_project_executed": {
+                                                            "actions": {
+                                                                "Delay": {
+                                                                    "runAfter": {},
+                                                                    "type": "Wait",
+                                                                    "inputs": {
+                                                                        "interval": {
+                                                                            "count": 1,
+                                                                            "unit": "Minute"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "HTTP_-_Get_Data_project_execution_status": {
+                                                                    "runAfter": {
+                                                                        "Delay": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "Http",
+                                                                    "inputs": {
+                                                                        "body": {
+                                                                            "executionId": "@{body('HTTP_-_Call_CIV2_Data_Project_PwC_CIV2_EXP')?['Value']}"
+                                                                        },
+                                                                        "headers": {
+                                                                            "Authorization": "@variables('Token')"
+                                                                        },
+                                                                        "method": "POST",
+                                                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                                    }
+                                                                },
+                                                                "Set_variable_4": {
+                                                                    "runAfter": {
+                                                                        "HTTP_-_Get_Data_project_execution_status": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "SetVariable",
+                                                                    "inputs": {
+                                                                        "name": "ExecutionStat",
+                                                                        "value": "@{body('HTTP_-_Get_Data_project_execution_status')?['Value']}"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "runAfter": {
+                                                                "Set_variable_-_Execution_status": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "expression": "@equals(variables('ExecutionStat'), 'Succeeded')",
+                                                            "limit": {
+                                                                "count": 20,
+                                                                "timeout": "PT1H"
+                                                            },
+                                                            "type": "Until"
+                                                        }
+                                                    },
+                                                    "runAfter": {},
+                                                    "else": {
+                                                        "actions": {
+                                                            "Set_variable_2": {
+                                                                "runAfter": {},
+                                                                "type": "SetVariable",
+                                                                "inputs": {
+                                                                    "name": "ErrorMessage",
+                                                                    "value": "No data present in staging table of CIV2"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "expression": {
+                                                        "and": [
+                                                            {
+                                                                "not": {
+                                                                    "equals": [
+                                                                        "@items('For_each_2')?['CustNo']",
+                                                                        ""
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "type": "If"
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "Condition_4": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Foreach"
+                                        },
+                                        "Lists_items_present_in_table": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('PwCCIV2DetailsEnt'))}/items",
+                                                "queries": {
+                                                    "$top": 1
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "else": {
+                                        "actions": {
+                                            "Set_variable": {
+                                                "runAfter": {},
+                                                "type": "SetVariable",
+                                                "inputs": {
+                                                    "name": "ErrorMessage",
+                                                    "value": "Batch job error in D365 FO for CIV2"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each')?['Status']",
+                                                    "Finished"
+                                                ]
+                                            },
+                                            {
+                                                "equals": [
+                                                    "@formatDateTime(items('For_each')?['StartDateTime'], 'yyyy-MM-dd')",
+                                                    "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
+                                                ]
+                                            },
+                                            {
+                                                "equals": [
+                                                    "@items('For_each')?['Caption']",
+                                                    "@variables('BatchName')"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Lists_items_present_in_table_-_Get_CIV2_Last_Batch_Job_running_Status": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Get_a_record": {
+                            "runAfter": {
+                                "Initialize_variable_-_Token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('PwCIntegrationSetupSASEnts'))}/items/@{encodeURIComponent(encodeURIComponent('1000,0'))}"
+                            }
+                        },
+                        "HTTP_-_Get_Token": {
+                            "runAfter": {},
+                            "type": "Http",
+                            "inputs": {
+                                "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                "headers": {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                },
+                                "method": "POST",
+                                "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                            }
+                        },
+                        "Initialize_variable_-_Batch_Name": {
+                            "runAfter": {
+                                "Initialize_variable_-_Data_Project": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "BatchName",
+                                        "type": "string",
+                                        "value": "Customer master data batch (CIV2)"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ContentLength": {
+                            "runAfter": {
+                                "Initialize_variable_-_UpdateFileURI": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLength",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ContentRange2": {
+                            "runAfter": {
+                                "Initialize_variable_-_ContentLength": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentRange2",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_CreateBlankFileURI": {
+                            "runAfter": {
+                                "Initialize_variable_-_SVToken": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CreateBlankFileURI",
+                                        "type": "string",
+                                        "value": "https://lbh-nprd-uks-apim-01.azure-api.net/?"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Data_Project": {
+                            "runAfter": {
+                                "Initialize_variable_-_ContentRange2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "DataProject",
+                                        "type": "string",
+                                        "value": "PwC_CIV2_EXP"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Error_Message": {
+                            "runAfter": {
+                                "Initialize_variable_-_PackageName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ErrorMessage",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ExecutionStat": {
+                            "runAfter": {
+                                "Initialize_variable_-_Error_Message": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStat",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Output_File_Name": {
+                            "runAfter": {
+                                "Initialize_variable_-_Batch_Name": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "OutputFileName",
+                                        "type": "string",
+                                        "value": "Customer.txt"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_PackageName": {
+                            "runAfter": {
+                                "Initialize_variable_-_Output_File_Name": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageName",
+                                        "type": "string",
+                                        "value": "PwC_CIV2.zip"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SVToken": {
+                            "runAfter": {
+                                "Parse_JSON_-_Get_Token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SVToken",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Token": {
+                            "runAfter": {
+                                "Initialize_variable_-_ExecutionStat": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Token",
+                                        "type": "string",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_-_Get_Token')?['access_token'])}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_UpdateFileURI": {
+                            "runAfter": {
+                                "Initialize_variable_-_CreateBlankFileURI": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "UpdateFileURI",
+                                        "type": "string",
+                                        "value": "https://lbh-nprd-uks-apim-01.azure-api.net/update/?comp=range&"
+                                    }
+                                ]
+                            }
+                        },
+                        "Lists_items_present_in_table_-_Get_CIV2_Last_Batch_Job_running_Status": {
+                            "runAfter": {
+                                "Set_variable_-_SVToken": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('CBatchJobHistories'))}/items",
+                                "queries": {
+                                    "$filter": "Caption eq '@{variables('BatchName')}'",
+                                    "$orderby": "EndDateTime desc",
+                                    "$top": 1
+                                }
+                            }
+                        },
+                        "Parse_JSON_-_Get_Token": {
+                            "runAfter": {
+                                "HTTP_-_Get_Token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@body('HTTP_-_Get_Token')",
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "type": "string"
+                                        },
+                                        "expires_on": {
+                                            "type": "string"
+                                        },
+                                        "ext_expires_in": {
+                                            "type": "string"
+                                        },
+                                        "not_before": {
+                                            "type": "string"
+                                        },
+                                        "resource": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "Set_variable_-_SVToken": {
+                            "runAfter": {
+                                "Get_a_record": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "SVToken",
+                                "value": "@body('Get_a_record')?['SubscriptionKeyURL']"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "dynamicsax_1": {
+                                "connectionId": "[parameters('connections_dynamicsax_3_externalid')]",
+                                "connectionName": "dynamicsax-3",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

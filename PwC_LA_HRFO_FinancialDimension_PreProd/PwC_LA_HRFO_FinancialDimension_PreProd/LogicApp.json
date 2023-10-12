@@ -1,0 +1,2498 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_HRFO_FinancialDimension_PreProd_name": {
+            "defaultValue": "PwC_LA_HRFO_FinancialDimension_PreProd",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_3_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-3",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_webcontents_7_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/webcontents-7",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_HRFO_FinancialDimension_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 15,
+                                "startTime": "2023-10-06T11:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Minute",
+                                "interval": 15,
+                                "startTime": "2023-10-06T11:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Account_distribution_execution_id": {
+                            "runAfter": {
+                                "Financial_dimension_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "accountdistexecutionid",
+                                        "type": "string",
+                                        "value": "accountdist@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "CheckDimensionProcessStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "ProcessDimensionBatchId_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CheckDimensionProcessStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "DimensionUpdateImportStatus_Initialize_variable": {
+                            "runAfter": {
+                                "TokenOpUnit_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "DimensionUpdateImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dimension_distribution_template_-_Scope": {
+                            "actions": {
+                                "Access_token_-_Set_variable_7": {
+                                    "runAfter": {
+                                        "Parse_JSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TokenAccDist",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON')['access_token'])}"
+                                    }
+                                },
+                                "Create_file_5": {
+                                    "runAfter": {
+                                        "HTTP_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@binary(body('HTTP_4'))",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/AccountingDistribution",
+                                            "name": "HRFO.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_6": {
+                                    "runAfter": {
+                                        "Get_file_content_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_3')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/AccountingDistribution",
+                                            "name": "D365HR FO accounting distribution template import staging.xlsx",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file_8": {
+                                    "runAfter": {
+                                        "For_each_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/D365HR FO accounting distribution template import staging.xlsx'))}"
+                                    }
+                                },
+                                "Delete_file_9": {
+                                    "runAfter": {
+                                        "Delete_file_8": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/HRFO.zip'))}"
+                                    }
+                                },
+                                "Delete_staging_-_Execute_action": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {},
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('PwCD365HRFODistributionTemplate/Microsoft.Dynamics.DataEntities.Predatasouredelete'))}"
+                                    }
+                                },
+                                "Extract_archive_to_folder_3": {
+                                    "runAfter": {
+                                        "Create_file_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/extractFolderV2",
+                                        "queries": {
+                                            "destination": "/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/temp",
+                                            "overwrite": false,
+                                            "queryParametersSingleEncoded": true,
+                                            "source": "/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/HRFO.zip"
+                                        }
+                                    }
+                                },
+                                "For_each_3": {
+                                    "foreach": "@body('List_files')?['value']",
+                                    "actions": {
+                                        "Delete_file_7": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each_3')?['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "List_files": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Get_Access_token_-_HTTP_5": {
+                                    "runAfter": {
+                                        "Set_variable_6": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Get_distribution_template_package_url": {
+                                    "runAfter": {
+                                        "Until_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Invoke_an_HTTP_request_3')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_file_content_3": {
+                                    "runAfter": {
+                                        "Extract_archive_to_folder_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/temp/Financial dimension default templates.xlsx'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_package_from_function_app_-_HTTP_5": {
+                                    "runAfter": {
+                                        "Create_file_6": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "blobContainer": "dmmasthrdimensiondistributiontemplate",
+                                            "blobStorageAccountThirdFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "dataPackageFileName": "D365HR FO accounting distribution template import staging.xlsx",
+                                            "dirFirstFile": "D365HRFOIntegration",
+                                            "dirSecondFile": "D365HRFOIntegration",
+                                            "fileNameIncoming": "D365HR FO accounting distribution template import staging.xlsx",
+                                            "fileNameOutgoing": "HRFO.zip",
+                                            "fileNameSecondFile": "AccountingDistributionPackageHeader.zip",
+                                            "fileShareFirstFile": "uatprarun-file01",
+                                            "fileShareSecondFile": "uatprarun-file01",
+                                            "storageAccountFirstFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "storageAccountSecondFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "subDirFirstFile": "AccountingDistribution",
+                                            "subDirSecondFile": "D365FOPackageConfig"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://pwcfointexceltodatapackage.azurewebsites.net/api/CreateDataPackageFromExcel?code=Tb/haW8Z8wJKitFnEeThd7ZXvQH/0z4vAXurFWpP5aYCoQm10n7XWw=="
+                                    }
+                                },
+                                "HTTP_4": {
+                                    "runAfter": {
+                                        "PackageUrlAccDist-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "@variables('TalentTempUrlAccountingDistribution')"
+                                    }
+                                },
+                                "Import_the_data_-_HTTP_5": {
+                                    "runAfter": {
+                                        "Access_token_-_Set_variable_7": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCAccountingDistributionImp",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('TalentTempUrlAccountingDistribution')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('TokenAccDist')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "Invoke_an_HTTP_request_3": {
+                                    "runAfter": {
+                                        "Delete_staging_-_Execute_action": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCAccountingDistributionExp\",','\n','    \"packageName\":\"operatingunit.zip\",','\n','    \"executionId\":\"',variables('accountdistexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "List_files": {
+                                    "runAfter": {
+                                        "Process_talent_package_-_Create_file_7": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/temp'))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "PackageUrlAccDist-_Set_variable": {
+                                    "runAfter": {
+                                        "Get_distribution_template_package_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TalentTempUrlAccountingDistribution",
+                                        "value": "@{body('Get_distribution_template_package_url')['Value']}"
+                                    }
+                                },
+                                "Parse_JSON": {
+                                    "runAfter": {
+                                        "Get_Access_token_-_HTTP_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_Access_token_-_HTTP_5')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Process_talent_package_-_Create_file_7": {
+                                    "runAfter": {
+                                        "Talent_package_-_Get_file_content_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Talent_package_-_Get_file_content_4')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/Processed",
+                                            "name": "HRFO@{formatdatetime(utcnow(),'yyyyMMddhhmm')}.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Set_variable_6": {
+                                    "runAfter": {
+                                        "Get_package_from_function_app_-_HTTP_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TalentTempUrlAccountingDistribution",
+                                        "value": "@{body('Get_package_from_function_app_-_HTTP_5')}"
+                                    }
+                                },
+                                "Talent_package_-_Get_file_content_4": {
+                                    "runAfter": {
+                                        "Until_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/AccountingDistribution/HRFO.zip'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Until_3": {
+                                    "actions": {
+                                        "Delay_4": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 40,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "ExecutionStatusAccDist_-_Set_variable": {
+                                            "runAfter": {
+                                                "Get_export_summary_accounting_distribution": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ExecutionStatusAccDist",
+                                                "value": "@{body('Get_export_summary_accounting_distribution')['Value']}"
+                                            }
+                                        },
+                                        "Get_export_summary_accounting_distribution": {
+                                            "runAfter": {
+                                                "Delay_4": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Invoke_an_HTTP_request_3')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Invoke_an_HTTP_request_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ExecutionStatusAccDist'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Until_4": {
+                                    "actions": {
+                                        "Delay_5": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "HTTP_5": {
+                                            "runAfter": {
+                                                "Delay_5": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_the_data_-_HTTP_5')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('TokenAccDist')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_7": {
+                                            "runAfter": {
+                                                "HTTP_5": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ImportExecutionStatusAccDist",
+                                                "value": "@{body('HTTP_5')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_the_data_-_HTTP_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ImportExecutionStatusAccDist'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 5,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Dimension_update-_Scope": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Dimension_update-_Scope": {
+                            "actions": {
+                                "Access_token_-_Set_variable": {
+                                    "runAfter": {
+                                        "Parse_JSON_access_token": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "Token",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_access_token')['access_token'])}"
+                                    }
+                                },
+                                "Create_file": {
+                                    "runAfter": {
+                                        "HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@binary(body('HTTP'))",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/FinancialDimension",
+                                            "name": "HRFO.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_3": {
+                                    "runAfter": {
+                                        "Get_file_content": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/FinancialDimension",
+                                            "name": "D365HR FO dimension import staging.xlsx",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file": {
+                                    "runAfter": {
+                                        "For_each_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/FinancialDimension/D365HR FO dimension import staging.xlsx'))}"
+                                    }
+                                },
+                                "Delete_file_2": {
+                                    "runAfter": {
+                                        "Delete_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/FinancialDimension/HRFO.zip'))}"
+                                    }
+                                },
+                                "Delete_financialdimensionstaging_-Execute_action": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('PwCOMOperatingUnitHRImports/Microsoft.Dynamics.DataEntities.ProcessDimensionDelete'))}"
+                                    }
+                                },
+                                "Dimenion_update_check_execution_status_-Until": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 40,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Dimension_update_set_execution_status_-Set_variable": {
+                                            "runAfter": {
+                                                "Execution_summary_status_dimension_export_-_Invoke_an_HTTP_request": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ExecutionStatus",
+                                                "value": "@{body('Execution_summary_status_dimension_export_-_Invoke_an_HTTP_request')['Value']}"
+                                            }
+                                        },
+                                        "Execution_summary_status_dimension_export_-_Invoke_an_HTTP_request": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Invoke_an_HTTP_request_2')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Invoke_an_HTTP_request_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ExecutionStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Extract_archive_to_folder": {
+                                    "runAfter": {
+                                        "Create_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/extractFolderV2",
+                                        "queries": {
+                                            "destination": "/uatprarun-file01/D365HRFOIntegration/FinancialDimension/temp",
+                                            "overwrite": false,
+                                            "queryParametersSingleEncoded": true,
+                                            "source": "/uatprarun-file01/D365HRFOIntegration/FinancialDimension/HRFO.zip"
+                                        }
+                                    }
+                                },
+                                "For_each_2": {
+                                    "foreach": "@body('Temp_directory_-List_files')?['value']",
+                                    "actions": {
+                                        "Delete_file_4": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each_2')?['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Temp_directory_-List_files": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Get_access_token_-_HTTP_2": {
+                                    "runAfter": {
+                                        "Set_variable_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Get_exported_package_url_dimension_update_-Invoke_an_HTTP_request": {
+                                    "runAfter": {
+                                        "Dimenion_update_check_execution_status_-Until": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Invoke_an_HTTP_request_2')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_file_content": {
+                                    "runAfter": {
+                                        "Extract_archive_to_folder": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/FinancialDimension/temp/Financial dimension values.xlsx'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_package_file_from_function_app_-HTTP": {
+                                    "runAfter": {
+                                        "Create_file_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "blobContainer": "uathrdimensionupdate",
+                                            "blobStorageAccountThirdFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "dataPackageFileName": "D365HR FO dimension import staging.xlsx",
+                                            "dirFirstFile": "D365HRFOIntegration",
+                                            "dirSecondFile": "D365HRFOIntegration",
+                                            "fileNameIncoming": "D365HR FO dimension import staging.xlsx",
+                                            "fileNameOutgoing": "HRFO.zip",
+                                            "fileNameSecondFile": "DimensionPackageHeader.zip",
+                                            "fileShareFirstFile": "uatprarun-file01",
+                                            "fileShareSecondFile": "uatprarun-file01",
+                                            "storageAccountFirstFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "storageAccountSecondFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "subDirFirstFile": "FinancialDimension",
+                                            "subDirSecondFile": "D365FOPackageConfig"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://pwcfointexceltodatapackage.azurewebsites.net/api/CreateDataPackageFromExcel?code=Tb/haW8Z8wJKitFnEeThd7ZXvQH/0z4vAXurFWpP5aYCoQm10n7XWw=="
+                                    }
+                                },
+                                "HTTP": {
+                                    "runAfter": {
+                                        "Set_variable_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "@variables('PackageUrl')"
+                                    }
+                                },
+                                "Import_the_Data_-_HTTP_2": {
+                                    "runAfter": {
+                                        "Access_token_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCImportFinDimValues",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('TalentTempURL')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('Token')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "Invoke_an_HTTP_request_2": {
+                                    "runAfter": {
+                                        "Delete_financialdimensionstaging_-Execute_action": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCFinancialDimensionValue\",','\n','    \"packageName\":\"financialdimension.zip\",','\n','    \"executionId\":\"',variables('findimexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Parse_JSON_access_token": {
+                                    "runAfter": {
+                                        "Get_access_token_-_HTTP_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_access_token_-_HTTP_2')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Processed_Talent_Package_-_Create_file": {
+                                    "runAfter": {
+                                        "Talent_package_-_Get_file_content": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Talent_package_-_Get_file_content')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/FinancialDimension/Processed",
+                                            "name": "HRFO@{formatdatetime(utcnow(),'yyyyMMddhhmm')}.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Set_variable_2": {
+                                    "runAfter": {
+                                        "Get_exported_package_url_dimension_update_-Invoke_an_HTTP_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "PackageUrl",
+                                        "value": "@{body('Get_exported_package_url_dimension_update_-Invoke_an_HTTP_request')['Value']}"
+                                    }
+                                },
+                                "Set_variable_3": {
+                                    "runAfter": {
+                                        "Get_package_file_from_function_app_-HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TalentTempURL",
+                                        "value": "@{body('Get_package_file_from_function_app_-HTTP')}"
+                                    }
+                                },
+                                "Talent_package_-_Get_file_content": {
+                                    "runAfter": {
+                                        "Until_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/FinancialDimension/HRFO.zip'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Temp_directory_-List_files": {
+                                    "runAfter": {
+                                        "Processed_Talent_Package_-_Create_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/FinancialDimension/temp'))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "Until_2": {
+                                    "actions": {
+                                        "Delay_3": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "HTTP_3": {
+                                            "runAfter": {
+                                                "Delay_3": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_the_Data_-_HTTP_2')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('Token')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_5": {
+                                            "runAfter": {
+                                                "HTTP_3": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "DimensionUpdateImportStatus",
+                                                "value": "@{body('HTTP_3')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_the_Data_-_HTTP_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('DimensionUpdateImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Operating_unit_-_Scope": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "ExecuctionStatus_Dimension_update_-Initialize_variable": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ExecutionStatusAccDist_-_Initialize_variable": {
+                            "runAfter": {
+                                "TalentTempUrlAccountingDistribution_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStatusAccDist",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ExecutionStatusOpUnit_-_Initialize_variable": {
+                            "runAfter": {
+                                "TalentTempUrl_operating_unit_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStatusOpUnit",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Financial_dimension_execution_id": {
+                            "runAfter": {
+                                "Operating_unit_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "findimexecutionid",
+                                        "type": "string",
+                                        "value": "financialdim@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "ImportExecutionStatusAccDist_-_Initialize_variable": {
+                            "runAfter": {
+                                "TokenAccDist_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportExecutionStatusAccDist",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ImportExecutionStatusOpUnit_-_Initialize_variable": {
+                            "runAfter": {
+                                "ExecutionStatusOpUnit_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportExecutionStatusOpUnit",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TalentTempURL",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "OperatingUnitContactExportStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "CheckDimensionProcessStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "OperatingUnitContactExportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Operating_Unit_import-Initialize_variable": {
+                            "runAfter": {
+                                "Token_variable_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "OperatingUnitImportExecutionStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Operating_unit_-_Scope": {
+                            "actions": {
+                                "Access_token_operating_unit_-_Set_variable": {
+                                    "runAfter": {
+                                        "Parse_JSON_for_token": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TokenOpUnit",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_for_token')['access_token'])}"
+                                    }
+                                },
+                                "Create_file_2": {
+                                    "runAfter": {
+                                        "HTTP_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@binary(body('HTTP_2'))",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/OperatingUnit",
+                                            "name": "HRFO.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_4": {
+                                    "runAfter": {
+                                        "Get_file_content_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_2')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/OperatingUnit",
+                                            "name": "Operating unit HR import.xlsx",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file_5": {
+                                    "runAfter": {
+                                        "For_each": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/OperatingUnit/Operating unit HR import.xlsx'))}"
+                                    }
+                                },
+                                "Delete_file_6": {
+                                    "runAfter": {
+                                        "Delete_file_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/OperatingUnit/HRFO.zip'))}"
+                                    }
+                                },
+                                "Extract_archive_to_folder_2": {
+                                    "runAfter": {
+                                        "Create_file_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/extractFolderV2",
+                                        "queries": {
+                                            "destination": "/uatprarun-file01/D365HRFOIntegration/OperatingUnit/temp",
+                                            "overwrite": false,
+                                            "queryParametersSingleEncoded": true,
+                                            "source": "/uatprarun-file01/D365HRFOIntegration/OperatingUnit/HRFO.zip"
+                                        }
+                                    }
+                                },
+                                "For_each": {
+                                    "foreach": "@body('Temp_directory_operating_unit_-_List_files')?['value']",
+                                    "actions": {
+                                        "Delete_file_3": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each')?['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Temp_directory_operating_unit_-_List_files": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Get_access_token_operating_unit_-_HTTP": {
+                                    "runAfter": {
+                                        "Set_variable_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Get_exported_package_url_operating_unit-_Invoke_an_HTTP_request": {
+                                    "runAfter": {
+                                        "Until": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Invoke_an_HTTP_request')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_file_content_2": {
+                                    "runAfter": {
+                                        "Extract_archive_to_folder_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/OperatingUnit/temp/Operating unit.xlsx'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_package_file_from_function_app_-_HTTP_3": {
+                                    "runAfter": {
+                                        "Create_file_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "blobContainer": "dmmasthroperatingunit",
+                                            "blobStorageAccountThirdFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "dataPackageFileName": "Operating unit HR import.xlsx",
+                                            "dirFirstFile": "D365HRFOIntegration",
+                                            "dirSecondFile": "D365HRFOIntegration",
+                                            "fileNameIncoming": "Operating unit HR import.xlsx",
+                                            "fileNameOutgoing": "HRFO.zip",
+                                            "fileNameSecondFile": "OperatingUnitPackageHeader.zip",
+                                            "fileShareFirstFile": "uatprarun-file01",
+                                            "fileShareSecondFile": "uatprarun-file01",
+                                            "storageAccountFirstFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "storageAccountSecondFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "subDirFirstFile": "OperatingUnit",
+                                            "subDirSecondFile": "D365FOPackageConfig"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://pwcfointexceltodatapackage.azurewebsites.net/api/CreateDataPackageFromExcel?code=Tb/haW8Z8wJKitFnEeThd7ZXvQH/0z4vAXurFWpP5aYCoQm10n7XWw=="
+                                    }
+                                },
+                                "HTTP_2": {
+                                    "runAfter": {
+                                        "PackageUrlOpUnit_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "@variables('PackageUrlOpUnit')"
+                                    }
+                                },
+                                "Import_data_operating_unit_-_HTTP": {
+                                    "runAfter": {
+                                        "Access_token_operating_unit_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCOMOperatingUnit",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('TalentTempURLOpUnit')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('TokenOpUnit')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "Invoke_an_HTTP_request": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCOMOperatingUnit\",','\n','    \"packageName\":\"operatingunit.zip\",','\n','    \"executionId\":\"',variables('opunitexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "PackageUrlOpUnit_-_Set_variable": {
+                                    "runAfter": {
+                                        "Get_exported_package_url_operating_unit-_Invoke_an_HTTP_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "PackageUrlOpUnit",
+                                        "value": "@{body('Get_exported_package_url_operating_unit-_Invoke_an_HTTP_request')['Value']}"
+                                    }
+                                },
+                                "Parse_JSON_for_token": {
+                                    "runAfter": {
+                                        "Get_access_token_operating_unit_-_HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_access_token_operating_unit_-_HTTP')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Processed_Talent_package_-_Create_file_5": {
+                                    "runAfter": {
+                                        "Talent_package_operating_unit_-_Get_file_content": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Talent_package_operating_unit_-_Get_file_content')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/OperatingUnit/Processed",
+                                            "name": "HRFO@{formatdatetime(utcnow(),'yyyyMMddhhmm')}.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Set_variable_4": {
+                                    "runAfter": {
+                                        "Get_package_file_from_function_app_-_HTTP_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TalentTempURLOpUnit",
+                                        "value": "@{body('Get_package_file_from_function_app_-_HTTP_3')}"
+                                    }
+                                },
+                                "Talent_package_operating_unit_-_Get_file_content": {
+                                    "runAfter": {
+                                        "Until_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/OperatingUnit/HRFO.zip'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Temp_directory_operating_unit_-_List_files": {
+                                    "runAfter": {
+                                        "Processed_Talent_package_-_Create_file_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/OperatingUnit/temp'))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "Until": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 10,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_execution_summary_status_operating_unit_-_Invoke_an_HTTP_request": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Invoke_an_HTTP_request')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_execution_summary_status_operating_unit_-_Invoke_an_HTTP_request": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ExecutionStatusOpUnit",
+                                                "value": "@{body('Get_execution_summary_status_operating_unit_-_Invoke_an_HTTP_request')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Invoke_an_HTTP_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ExecutionStatusOpUnit'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Until_5": {
+                                    "actions": {
+                                        "Delay_6": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "HTTP_6": {
+                                            "runAfter": {
+                                                "Delay_6": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_data_operating_unit_-_HTTP')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('TokenOpUnit')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_8": {
+                                            "runAfter": {
+                                                "HTTP_6": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "OperatingUnitImportExecutionStatus",
+                                                "value": "@{body('HTTP_6')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_data_operating_unit_-_HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('OperatingUnitImportExecutionStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "OperatingUnitContactExportStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Operating_unit_contact_execution_id": {
+                            "runAfter": {
+                                "Account_distribution_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "OperatingUnitContactExecutionId",
+                                        "type": "string",
+                                        "value": "opunitcontact@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Operating_unit_execution_id": {
+                            "runAfter": {
+                                "ImportExecutionStatusAccDist_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "opunitexecutionid",
+                                        "type": "string",
+                                        "value": "operatingunit@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageUrlAccDist_-_Initialize_variable": {
+                            "runAfter": {
+                                "ExecutionStatusAccDist_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrlAccDist",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageUrlOpUnit_-_Initialize_variable": {
+                            "runAfter": {
+                                "ImportExecutionStatusOpUnit_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrlOpUnit",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageUrl_variable_-_Initialize_variable": {
+                            "runAfter": {
+                                "ExecuctionStatus_Dimension_update_-Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ProcessDimensionBatchId_-_Initialize_variable": {
+                            "runAfter": {
+                                "Operating_unit_contact_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ProcessDimensionBatchId",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Process_dimension_scope": {
+                            "actions": {
+                                "Get_access_token": {
+                                    "runAfter": {},
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Parse_JSON_2": {
+                                    "runAfter": {
+                                        "Get_access_token": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_access_token')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Process_dimension_sync": {
+                                    "runAfter": {
+                                        "Set_variable_9": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "_dataAreaId": "1000"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('Token')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/PwCD365HRFOWorkerPartyMappingImport/Microsoft.Dynamics.DataEntities.processDimension"
+                                    }
+                                },
+                                "Set_variable_9": {
+                                    "runAfter": {
+                                        "Parse_JSON_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "Token",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_2')['access_token'])}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Dimension_distribution_template_-_Scope": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Process_operating_unit_contact": {
+                            "actions": {
+                                "Delay_8": {
+                                    "runAfter": {
+                                        "Export_operating_unit_contact": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Wait",
+                                    "inputs": {
+                                        "interval": {
+                                            "count": 2,
+                                            "unit": "Minute"
+                                        }
+                                    }
+                                },
+                                "Export_operating_unit_contact": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCOperatingUnitContact\",','\n','    \"packageName\":\"operatingunitcontact.zip\",','\n','    \"executionId\":\"',variables('OperatingUnitContactExecutionId'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Operating_unit_contact_export_url": {
+                                    "runAfter": {
+                                        "Delay_8": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_operating_unit_contact')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_operating_unit_contact": {
+                                    "runAfter": {
+                                        "Get_Operating_unit_contact_export_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PWCOPERATINGUNITCONTACTIMPORT",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@{body('Get_Operating_unit_contact_export_url')['Value']}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Until_6": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Set_variable_10": {
+                            "runAfter": {
+                                "Process_dimension_scope": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ProcessDimensionBatchId",
+                                "value": "@{body('Process_dimension_sync')['Value']}"
+                            }
+                        },
+                        "TalentTempUrlAccountingDistribution_-_Initialize_variable": {
+                            "runAfter": {
+                                "DimensionUpdateImportStatus_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TalentTempUrlAccountingDistribution",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "TalentTempUrl_operating_unit_-_Initialize_variable": {
+                            "runAfter": {
+                                "Operating_Unit_import-Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TalentTempURLOpUnit",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "TokenAccDist_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageUrlAccDist_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TokenAccDist",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "TokenOpUnit_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageUrlOpUnit_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TokenOpUnit",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Token_variable_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageUrl_variable_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Token",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Until_6": {
+                            "actions": {
+                                "Delay_7": {
+                                    "runAfter": {},
+                                    "type": "Wait",
+                                    "inputs": {
+                                        "interval": {
+                                            "count": 1,
+                                            "unit": "Minute"
+                                        }
+                                    }
+                                },
+                                "For_each_4": {
+                                    "foreach": "@body('Lists_items_present_in_table')?['value']",
+                                    "actions": {
+                                        "Condition": {
+                                            "actions": {
+                                                "Set_variable_11": {
+                                                    "runAfter": {},
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "CheckDimensionProcessStatus",
+                                                        "value": "Succeeded"
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {},
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "not": {
+                                                            "equals": [
+                                                                "@items('For_each_4')?['Status']",
+                                                                "Executing"
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Lists_items_present_in_table": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Lists_items_present_in_table": {
+                                    "runAfter": {
+                                        "Delay_7": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('CBatchJobHistories'))}/items",
+                                        "queries": {
+                                            "$filter": "BatchJobId eq @{variables('ProcessDimensionBatchId')}",
+                                            "$orderby": "EndDateTime desc",
+                                            "$top": 1
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Set_variable_10": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": "@equals(variables('CheckDimensionProcessStatus'), 'Succeeded')",
+                            "limit": {
+                                "count": 20,
+                                "timeout": "PT1H"
+                            },
+                            "type": "Until"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_3_externalid')]",
+                                "connectionName": "dynamicsax-3",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "dynamicsax_1": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents_1": {
+                                "connectionId": "[parameters('connections_webcontents_7_externalid')]",
+                                "connectionName": "webcontents-7",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

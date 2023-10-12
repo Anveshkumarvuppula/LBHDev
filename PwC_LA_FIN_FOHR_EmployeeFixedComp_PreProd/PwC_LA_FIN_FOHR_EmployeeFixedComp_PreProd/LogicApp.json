@@ -1,0 +1,660 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_FIN_FOHR_EmployeeFixedComp_PreProd_name": {
+            "defaultValue": "PwC_LA_FIN_FOHR_EmployeeFixedComp_PreProd",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_webcontents_7_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/webcontents-7",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_FIN_FOHR_EmployeeFixedComp_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "9",
+                                        "10",
+                                        "11",
+                                        "12",
+                                        "17",
+                                        "18",
+                                        "19",
+                                        "20",
+                                        "21",
+                                        "13",
+                                        "14",
+                                        "15",
+                                        "16"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ]
+                                },
+                                "startTime": "2022-09-06T00:45:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "9",
+                                        "10",
+                                        "11",
+                                        "12",
+                                        "17",
+                                        "18",
+                                        "19",
+                                        "20",
+                                        "21",
+                                        "13",
+                                        "14",
+                                        "15",
+                                        "16"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ]
+                                },
+                                "startTime": "2022-09-06T00:45:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "EmployeeFixedCompExpStatus_-_Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmployeeFixedCompExpStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "EmployeeFixedCompImportStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "EmployeeFixedCompPackageUrl_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmployeeFixedCompImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "EmployeeFixedCompPackageUrl_-_Initialize_variable": {
+                            "runAfter": {
+                                "EmployeeFixedCompExpStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmployeeFixedCompPackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Employee_Fixed_Compensation": {
+                            "actions": {
+                                "Check_Employee_Fixed_Compensation_Export": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Employee_Fixed_Compensation_export_status": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Export_Employee_Fixed_Compensation')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_Employee_Fixed_Compensation_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EmployeeFixedCompExpStatus",
+                                                "value": "@body('Get_Employee_Fixed_Compensation_export_status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Employee_Fixed_Compensation": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EmployeeFixedCompExpStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Employee_Fixed_Compensation_import_status": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Invoke_an_HTTP_request": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Import_Employee_Fixed_Compensation')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_3": {
+                                            "runAfter": {
+                                                "Invoke_an_HTTP_request": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EmployeeFixedCompImportStatus",
+                                                "value": "@{body('Invoke_an_HTTP_request')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Employee_Fixed_Compensation": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EmployeeFixedCompImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Create_file": {
+                                    "runAfter": {
+                                        "HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@binary(body('HTTP'))",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation",
+                                            "name": "HRFO.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_2": {
+                                    "runAfter": {
+                                        "Get_file_content": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation",
+                                            "name": "Employee fixed compensation.xlsx",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_processed_file": {
+                                    "runAfter": {
+                                        "Get_file_content_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_2')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/Processed",
+                                            "name": "HRFO@{formatdatetime(utcnow(),'yyyyMMddhhmm')}.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file_2": {
+                                    "runAfter": {
+                                        "For_each": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/Employee fixed compensation.xlsx'))}"
+                                    }
+                                },
+                                "Delete_file_3": {
+                                    "runAfter": {
+                                        "Delete_file_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/HRFO.zip'))}"
+                                    }
+                                },
+                                "Export_Employee_Fixed_Compensation": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCEmployeeFixedCompExp",
+                                            "legalEntityId": "1000",
+                                            "packageName": "employeefixedcompensation.zip",
+                                            "reExecute": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage'))}"
+                                    }
+                                },
+                                "Extract_archive_to_folder": {
+                                    "runAfter": {
+                                        "Create_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/extractFolderV2",
+                                        "queries": {
+                                            "destination": "/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/temp",
+                                            "overwrite": true,
+                                            "queryParametersSingleEncoded": true,
+                                            "source": "/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/HRFO.zip"
+                                        }
+                                    }
+                                },
+                                "For_each": {
+                                    "foreach": "@body('List_files')?['value']",
+                                    "actions": {
+                                        "Delete_file": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each')?['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "List_files": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Get_Employee_Fixed_Compensation_Url": {
+                                    "runAfter": {
+                                        "Check_Employee_Fixed_Compensation_Export": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "executionId": "@body('Export_Employee_Fixed_Compensation')?['value']"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl'))}"
+                                    }
+                                },
+                                "Get_file_content": {
+                                    "runAfter": {
+                                        "Extract_archive_to_folder": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/temp/D365FO HR employee compensation fixed plan export.xlsx'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_file_content_2": {
+                                    "runAfter": {
+                                        "Check_Employee_Fixed_Compensation_import_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/HRFO.zip'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "HTTP": {
+                                    "runAfter": {
+                                        "Get_Employee_Fixed_Compensation_Url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "@body('Get_Employee_Fixed_Compensation_Url')?['value']"
+                                    }
+                                },
+                                "HTTP_2": {
+                                    "runAfter": {
+                                        "Create_file_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "blobContainer": "uatsbxfoemployeecomp",
+                                            "blobStorageAccountThirdFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=0S0cObXzhtL8PPpzvFPFOKCU0wvlguS5z+yDV8pxSrV/iKeZtYDqzuR8PX78nGHey8ZtAQzXlMIcfdXH2pTidQ==;EndpointSuffix=core.windows.net",
+                                            "dataPackageFileName": "Employee fixed compensation.xlsx",
+                                            "dirFirstFile": "D365HRFOIntegration",
+                                            "dirSecondFile": "D365HRFOIntegration",
+                                            "fileNameIncoming": "Employee fixed compensation.xlsx",
+                                            "fileNameOutgoing": "HRFO.zip",
+                                            "fileNameSecondFile": "EmployeeFixedCompensationPackageHeader.zip",
+                                            "fileShareFirstFile": "uat-file01",
+                                            "fileShareSecondFile": "uat-file01",
+                                            "storageAccountFirstFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=0S0cObXzhtL8PPpzvFPFOKCU0wvlguS5z+yDV8pxSrV/iKeZtYDqzuR8PX78nGHey8ZtAQzXlMIcfdXH2pTidQ==;EndpointSuffix=core.windows.net",
+                                            "storageAccountSecondFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=0S0cObXzhtL8PPpzvFPFOKCU0wvlguS5z+yDV8pxSrV/iKeZtYDqzuR8PX78nGHey8ZtAQzXlMIcfdXH2pTidQ==;EndpointSuffix=core.windows.net",
+                                            "subDirFirstFile": "EmployeeFixedCompensation",
+                                            "subDirSecondFile": "D365HRPackageConfig"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://pwcfointexceltodatapackage.azurewebsites.net/api/CreateDataPackageFromExcel?code=Tb/haW8Z8wJKitFnEeThd7ZXvQH/0z4vAXurFWpP5aYCoQm10n7XWw=="
+                                    }
+                                },
+                                "Import_Employee_Fixed_Compensation": {
+                                    "runAfter": {
+                                        "Set_variable_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"packageUrl\":\"',variables('EmployeeFixedCompPackageUrl'),'\",','\n','    \"definitionGroupId\":\"PwCEmpFixedCompImp\",','\n','    \"executionId\":\"\",','\n','    \"execute\":true,','\n','    \"overwrite\":true,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "List_files": {
+                                    "runAfter": {
+                                        "Create_processed_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/uat-file01/D365HRFOIntegration/EmployeeFixedCompensation/temp'))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "Set_variable_2": {
+                                    "runAfter": {
+                                        "HTTP_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "EmployeeFixedCompPackageUrl",
+                                        "value": "@{body('HTTP_2')}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "EmployeeFixedCompImportStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents": {
+                                "connectionId": "[parameters('connections_webcontents_7_externalid')]",
+                                "connectionName": "webcontents-7",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
