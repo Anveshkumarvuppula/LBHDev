@@ -1,0 +1,1851 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_FIN_HRFO_JobPositionNew_PreProd_name": {
+            "defaultValue": "PwC_LA_FIN_HRFO_JobPositionNew_PreProd",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_dynamicsax_3_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-3",
+            "type": "String"
+        },
+        "connections_webcontents_7_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/webcontents-7",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_FIN_HRFO_JobPositionNew_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 20,
+                                "startTime": "2023-10-06T11:50:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Minute",
+                                "interval": 20,
+                                "startTime": "2023-10-06T11:50:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "ExecuctionStatus_-Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Import_execution_status_-_Initialize_variable": {
+                            "runAfter": {
+                                "TalentTempUrl_-Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportExecutionStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {
+                                "JobHierarchyImpStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PositionDurationExp",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PositionDurationImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "JobHierarchyImpStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "JobPositionHierarchyurl_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobHierarchyImpStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "JobPosHierarchyExpStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "PositionDetailsImpStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobPosHierarchyExpStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "JobPositionHierarchyurl_-_Initialize_variable": {
+                            "runAfter": {
+                                "JobPosHierarchyExpStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobPositionHierarchyurl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Job_Position-Scope": {
+                            "actions": {
+                                "Check_execution_status_Job_position_export_-Until": {
+                                    "actions": {
+                                        "Delay_4": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Execution_status_job_position_export_-_Set_variable": {
+                                            "runAfter": {
+                                                "Invoke_an_HTTP_request": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ExecutionStatus",
+                                                "value": "@{body('Invoke_an_HTTP_request')['Value']}"
+                                            }
+                                        },
+                                        "Invoke_an_HTTP_request": {
+                                            "runAfter": {
+                                                "Delay_4": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Job_position_export_-Invoke_an_HTTP_request')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Job_position_export_-Invoke_an_HTTP_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ExecutionStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Create_file": {
+                                    "runAfter": {
+                                        "Get_package_url_job_position-HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@binary(body('Get_package_url_job_position-HTTP'))",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/JobPosition",
+                                            "name": "HRFO.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_2": {
+                                    "runAfter": {
+                                        "Get_file_content": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/JobPosition",
+                                            "name": "D365HR FO job position import.xlsx",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file_2": {
+                                    "runAfter": {
+                                        "For_each": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/JobPosition/D365HR FO job position import.xlsx'))}"
+                                    }
+                                },
+                                "Delete_file_3": {
+                                    "runAfter": {
+                                        "Delete_file_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/JobPosition/HRFO.zip'))}"
+                                    }
+                                },
+                                "Extract_archive_to_folder": {
+                                    "runAfter": {
+                                        "Create_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/extractFolderV2",
+                                        "queries": {
+                                            "destination": "/uatprarun-file01/D365HRFOIntegration/JobPosition/temp",
+                                            "overwrite": false,
+                                            "queryParametersSingleEncoded": true,
+                                            "source": "/uatprarun-file01/D365HRFOIntegration/JobPosition/HRFO.zip"
+                                        }
+                                    }
+                                },
+                                "For_each": {
+                                    "foreach": "@body('List_files')?['value']",
+                                    "actions": {
+                                        "Delete_file": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each')?['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "List_files": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Get_Job_position_export_url_-Invoke_an_HTTP_request": {
+                                    "runAfter": {
+                                        "Check_execution_status_Job_position_export_-Until": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Job_position_export_-Invoke_an_HTTP_request')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_access_token_-_HTTP_2": {
+                                    "runAfter": {
+                                        "TalentTempUrl_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Get_file_content": {
+                                    "runAfter": {
+                                        "Extract_archive_to_folder": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/JobPosition/temp/Position default dimensions.xlsx'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_file_content_2": {
+                                    "runAfter": {
+                                        "Until_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/JobPosition/HRFO.zip'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_package_file_from_function_app_-_HTTP_2": {
+                                    "runAfter": {
+                                        "Create_file_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "blobContainer": "dmmasthrposition",
+                                            "blobStorageAccountThirdFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "dataPackageFileName": "D365HR FO job position import.xlsx",
+                                            "dirFirstFile": "D365HRFOIntegration",
+                                            "dirSecondFile": "D365HRFOIntegration",
+                                            "fileNameIncoming": "D365HR FO job position import.xlsx",
+                                            "fileNameOutgoing": "HRFO.zip",
+                                            "fileNameSecondFile": "JobPositionPackageHeader.zip",
+                                            "fileShareFirstFile": "uatprarun-file01",
+                                            "fileShareSecondFile": "uatprarun-file01",
+                                            "storageAccountFirstFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "storageAccountSecondFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "subDirFirstFile": "JobPosition",
+                                            "subDirSecondFile": "D365FOPackageConfig"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://pwcfointexceltodatapackage.azurewebsites.net/api/CreateDataPackageFromExcel?code=Tb/haW8Z8wJKitFnEeThd7ZXvQH/0z4vAXurFWpP5aYCoQm10n7XWw=="
+                                    }
+                                },
+                                "Get_package_url_job_position-HTTP": {
+                                    "runAfter": {
+                                        "Package_url_organization_hierarchy_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "@variables('PackageUrl')"
+                                    }
+                                },
+                                "Import_from_package_-_HTTP": {
+                                    "runAfter": {
+                                        "Job_position_import_token_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCJobPositionImp",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('TalentTempURL')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('Token')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "Job_position_export_-Invoke_an_HTTP_request": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCPositionDimExport\",','\n','    \"packageName\":\"positiondim.zip\",','\n','    \"executionId\":\"',variables('jobpositionexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Job_position_import_token_-_Set_variable": {
+                                    "runAfter": {
+                                        "Parse_JSON_for_auth_token": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "Token",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_for_auth_token')['access_token'])}"
+                                    }
+                                },
+                                "List_files": {
+                                    "runAfter": {
+                                        "Processed_Talent_Package_-_Create_file": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "metadata": {
+                                        "JTJmbGJoLWRldiUyZkQzNjVUYWxlbnRGT0ludGVncmF0aW9uJTJmSm9iUG9zaXRpb24lMmZ0ZW1w": "/lbh-dev/D365TalentFOIntegration/JobPosition/temp",
+                                        "JTJmbGJoLWRldiUyZkQzNjVUYWxlbnRGT0ludGVncmF0aW9uJTJmT3JnYW5pemF0aW9uSGllcmFyY2h5JTJmdGVtcA==": "/lbh-dev/D365TalentFOIntegration/OrganizationHierarchy/temp"
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/JobPosition/temp'))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "Package_url_organization_hierarchy_-_Set_variable": {
+                                    "runAfter": {
+                                        "Get_Job_position_export_url_-Invoke_an_HTTP_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "PackageUrl",
+                                        "value": "@{body('Get_Job_position_export_url_-Invoke_an_HTTP_request')['Value']}"
+                                    }
+                                },
+                                "Parse_JSON_for_auth_token": {
+                                    "runAfter": {
+                                        "Get_access_token_-_HTTP_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_access_token_-_HTTP_2')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Process_position_dimension_allocation": {
+                                    "runAfter": {
+                                        "Delete_file_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "_dataAreaId": "1000"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax_2']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('PwCD365HRFOJobPositionImport/Microsoft.Dynamics.DataEntities.processDimensionAllocation'))}"
+                                    }
+                                },
+                                "Processed_Talent_Package_-_Create_file": {
+                                    "runAfter": {
+                                        "Get_file_content_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_2')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/JobPosition/Processed",
+                                            "name": "HRFO@{formatdatetime(utcnow(),'yyyyMMddhhmm')}.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "TalentTempUrl_-_Set_variable": {
+                                    "runAfter": {
+                                        "Get_package_file_from_function_app_-_HTTP_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TalentTempUrl",
+                                        "value": "@body('Get_package_file_from_function_app_-_HTTP_2')"
+                                    }
+                                },
+                                "Until_4": {
+                                    "actions": {
+                                        "Delay_6": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 40,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Org_hierarchy_summary_-_HTTP": {
+                                            "runAfter": {
+                                                "Delay_6": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_from_package_-_HTTP')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('Token')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_2": {
+                                            "runAfter": {
+                                                "Get_Org_hierarchy_summary_-_HTTP": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ImportExecutionStatus",
+                                                "value": "@{body('Get_Org_hierarchy_summary_-_HTTP')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_from_package_-_HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ImportExecutionStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 2,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Job_Position_Hierarchy-Scope": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Job_Position_Hierarchy-Scope": {
+                            "actions": {
+                                "Check_Job_Position_Hierarchy_import_status": {
+                                    "actions": {
+                                        "Delay_5": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Execute_action_6": {
+                                            "runAfter": {
+                                                "Delay_5": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Execute_action_5')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_7": {
+                                            "runAfter": {
+                                                "Execute_action_6": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "JobHierarchyImpStatus",
+                                                "value": "@body('Execute_action_6')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Execute_action_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('JobHierarchyImpStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Job_Position_hierarchy_export_status": {
+                                    "actions": {
+                                        "Delay_3": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Job_Position_Hierarchy_export_status": {
+                                            "runAfter": {
+                                                "Delay_3": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Job_Position_hierarchy')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_5": {
+                                            "runAfter": {
+                                                "Get_Job_Position_Hierarchy_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "JobPosHierarchyExpStatus",
+                                                "value": "@{body('Get_Job_Position_Hierarchy_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Job_Position_hierarchy": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('JobPosHierarchyExpStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Execute_action_5": {
+                                    "runAfter": {
+                                        "Set_variable_6": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCPositionHierarchyImp",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('JobPositionHierarchyurl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Export_Job_Position_hierarchy": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCPositionHierarchies\",','\n','    \"packageName\":\"positionhierarchies.zip\",','\n','    \"executionId\":\"',variables('positionhierarchyexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Job_Position_Hierarchy_url": {
+                                    "runAfter": {
+                                        "Check_Job_Position_hierarchy_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Job_Position_hierarchy')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Set_variable_6": {
+                                    "runAfter": {
+                                        "Get_Job_Position_Hierarchy_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "JobPositionHierarchyurl",
+                                        "value": "@{body('Get_Job_Position_Hierarchy_url')['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Position_details": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Job_position_execution_id": {
+                            "runAfter": {
+                                "Position_hierarchy_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "jobpositionexecutionid",
+                                        "type": "string",
+                                        "value": "jobposition@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageUrl_variable_-_Initialize_variable": {
+                            "runAfter": {
+                                "Import_execution_status_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PositionDetailsExportStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "Token_variable_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PositionDetailsExportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PositionDetailsImpStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "PositionDetailsUrl_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PositionDetailsImpStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PositionDetailsUrl_-_Initialize_variable": {
+                            "runAfter": {
+                                "PositionDetailsExportStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PositionDetailsUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Position_details": {
+                            "actions": {
+                                "Check_position_details_export_status": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Position_details_export_status": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export__position_details')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_Position_details_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "PositionDetailsExportStatus",
+                                                "value": "@{body('Get_Position_details_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export__position_details": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('PositionDetailsExportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Create_file_3": {
+                                    "runAfter": {
+                                        "Get_package_url_position_details": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@binary(body('Get_package_url_position_details'))",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/PositionDetails",
+                                            "name": "HRFO.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_4": {
+                                    "runAfter": {
+                                        "Get_file_content_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_3')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/PositionDetails",
+                                            "name": "D365 HR FO sync position details.xlsx",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_5": {
+                                    "runAfter": {
+                                        "Get_file_content_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_4')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/uatprarun-file01/D365HRFOIntegration/PositionDetails/Processed",
+                                            "name": "HRFO@{formatdatetime(utcnow(),'yyyyMMddHHmm')}.zip",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file_5": {
+                                    "runAfter": {
+                                        "For_each_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/PositionDetails/D365 HR FO sync position details.xlsx'))}"
+                                    }
+                                },
+                                "Delete_file_6": {
+                                    "runAfter": {
+                                        "Delete_file_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/PositionDetails/HRFO.zip'))}"
+                                    }
+                                },
+                                "Execute_action_3": {
+                                    "runAfter": {
+                                        "Get_package_file_from_function_app_for_Position_details": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCPositionDetailsImport",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@{body('Get_package_file_from_function_app_for_Position_details')}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Export__position_details": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCPositionDetails\",','\n','    \"packageName\":\"positiondetails.zip\",','\n','    \"executionId\":\"',variables('positiondetailsexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Extract_archive_to_folder_2": {
+                                    "runAfter": {
+                                        "Create_file_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/extractFolderV2",
+                                        "queries": {
+                                            "destination": "/uatprarun-file01/D365HRFOIntegration/PositionDetails/temp",
+                                            "overwrite": false,
+                                            "queryParametersSingleEncoded": true,
+                                            "source": "/uatprarun-file01/D365HRFOIntegration/PositionDetails/HRFO.zip"
+                                        }
+                                    }
+                                },
+                                "For_each_2": {
+                                    "foreach": "@body('List_files_2')?['value']",
+                                    "actions": {
+                                        "Delete_file_4": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each_2')?['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "List_files_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Get_file_content_3": {
+                                    "runAfter": {
+                                        "Extract_archive_to_folder_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/PositionDetails/temp/Position details.xlsx'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_file_content_4": {
+                                    "runAfter": {
+                                        "Until": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/PositionDetails/HRFO.zip'))}/content",
+                                        "queries": {
+                                            "inferContentType": true
+                                        }
+                                    }
+                                },
+                                "Get_package_file_from_function_app_for_Position_details": {
+                                    "runAfter": {
+                                        "Create_file_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "blobContainer": "dmmasthrpositiondetails",
+                                            "blobStorageAccountThirdFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "dataPackageFileName": "D365 HR FO sync position details.xlsx",
+                                            "dirFirstFile": "D365HRFOIntegration",
+                                            "dirSecondFile": "D365HRFOIntegration",
+                                            "fileNameIncoming": "D365 HR FO sync position details.xlsx",
+                                            "fileNameOutgoing": "HRFO.zip",
+                                            "fileNameSecondFile": "PositionDetailsPackageHeader.zip",
+                                            "fileShareFirstFile": "uatprarun-file01",
+                                            "fileShareSecondFile": "uatprarun-file01",
+                                            "storageAccountFirstFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "storageAccountSecondFile": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                            "subDirFirstFile": "PositionDetails",
+                                            "subDirSecondFile": "D365FOPackageConfig"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://pwcfointexceltodatapackage.azurewebsites.net/api/CreateDataPackageFromExcel?code=Tb/haW8Z8wJKitFnEeThd7ZXvQH/0z4vAXurFWpP5aYCoQm10n7XWw=="
+                                    }
+                                },
+                                "Get_package_url_position_details": {
+                                    "runAfter": {
+                                        "Set_variable_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "@variables('PositionDetailsUrl')"
+                                    }
+                                },
+                                "Get_position_details_url": {
+                                    "runAfter": {
+                                        "Check_position_details_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export__position_details')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "List_files_2": {
+                                    "runAfter": {
+                                        "Create_file_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/uatprarun-file01/D365HRFOIntegration/PositionDetails/temp'))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "Set_variable_4": {
+                                    "runAfter": {
+                                        "Get_position_details_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "PositionDetailsUrl",
+                                        "value": "@{body('Get_position_details_url')['Value']}"
+                                    }
+                                },
+                                "Until": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Execute_action_4": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Execute_action_3')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_3": {
+                                            "runAfter": {
+                                                "Execute_action_4": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "PositionDetailsImpStatus",
+                                                "value": "@body('Execute_action_4')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Execute_action_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('PositionDetailsImpStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Position_duration": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Position_details_execution_id": {
+                            "runAfter": {
+                                "Position_duration_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "positiondetailsexecutionid",
+                                        "type": "string",
+                                        "value": "positiondetails@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Position_duration": {
+                            "actions": {
+                                "Export_Position_Duration": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCPositionDurationExp\",','\n','    \"packageName\":\"positionduration.zip\",','\n','    \"executionId\":\"',variables('positiondurationexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Position_Duration_url": {
+                                    "runAfter": {
+                                        "Until_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Position_Duration')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Position_Duration": {
+                                    "runAfter": {
+                                        "Get_Position_Duration_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCPositionDurationImport",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@{body('Get_Position_Duration_url')['Value']}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Until_2": {
+                                    "actions": {
+                                        "Delay_7": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Invoke_an_HTTP_request_3": {
+                                            "runAfter": {
+                                                "Delay_7": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Position_Duration')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_8": {
+                                            "runAfter": {
+                                                "Invoke_an_HTTP_request_3": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "PositionDurationExp",
+                                                "value": "@{body('Invoke_an_HTTP_request_3')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Position_Duration": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('PositionDurationExp'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Until_3": {
+                                    "actions": {
+                                        "Delay_8": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Position_Duration_Import_Status": {
+                                            "runAfter": {
+                                                "Delay_8": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_Position_Duration')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_9": {
+                                            "runAfter": {
+                                                "Get_Position_Duration_Import_Status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "PositionDurationImportStatus",
+                                                "value": "@body('Get_Position_Duration_Import_Status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Position_Duration": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('PositionDurationImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Job_position_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Position_duration_execution_id": {
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "positiondurationexecutionid",
+                                        "type": "string",
+                                        "value": "positionduration@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Position_hierarchy_execution_id": {
+                            "runAfter": {
+                                "Position_details_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "positionhierarchyexecutionid",
+                                        "type": "string",
+                                        "value": "positionhierarchy@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "TalentTempUrl_-Initialize_variable": {
+                            "runAfter": {
+                                "ExecuctionStatus_-Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TalentTempUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Token_variable_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageUrl_variable_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Token",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "dynamicsax_1": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "dynamicsax_2": {
+                                "connectionId": "[parameters('connections_dynamicsax_3_externalid')]",
+                                "connectionName": "dynamicsax-3",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents_1": {
+                                "connectionId": "[parameters('connections_webcontents_7_externalid')]",
+                                "connectionName": "webcontents-7",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_HR_TOT1_HRPosition_PreProd_name": {
+            "value": null
+        },
+        "connections_azurefile_28_externalid": {
+            "value": null
+        },
+        "connections_azurefile_1_externalid": {
+            "value": null
+        },
+        "connections_dynamicsax_5_externalid": {
+            "value": null
+        },
+        "connections_sftpwithssh_7_externalid": {
+            "value": null
+        },
+        "connections_smtp_1_externalid": {
+            "value": null
+        }
+    }
+}
