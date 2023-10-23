@@ -1,0 +1,1316 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_HR_CIV1_EmployeeInfo_PreProd_name": {
+            "defaultValue": "PwC_LA_HR_CIV1_EmployeeInfo_PreProd",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_smtp_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/smtp-1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_HR_CIV1_EmployeeInfo_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "13",
+                                        "23"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ]
+                                },
+                                "startTime": "2022-04-27T12:30:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "13",
+                                        "23"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ]
+                                },
+                                "startTime": "2022-04-27T12:30:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Check_content_length_for_logic_processing": {
+                            "actions": {
+                                "Until": {
+                                    "actions": {
+                                        "Condition": {
+                                            "actions": {
+                                                "HTTP": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "body": "@substring(variables('Filecontentvariable'),variables('ContentLengthIncrease3'),variables('SliceFactor'))",
+                                                        "headers": {
+                                                            "Content-Length": "@{add(variables('MetadataLength'), variables('SliceFactor'))}",
+                                                            "FileName": "uat-file01/CIV1/HR.txt",
+                                                            "Range": "bytes=@{variables('ContentLengthIncrease')}-@{add(variables('ContentLengthIncrease2'), variables('MetadataLength'))}",
+                                                            "x-ms-type": "application/octet-stream",
+                                                            "x-ms-write": "update"
+                                                        },
+                                                        "method": "PUT",
+                                                        "uri": "@{concat(variables('UpdateFileURI'),variables('SVToken'))}"
+                                                    }
+                                                },
+                                                "Set_variable": {
+                                                    "runAfter": {
+                                                        "HTTP": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "TempVariable",
+                                                        "value": "@add(add(variables('ContentLengthIncrease2'), variables('MetadataLength')), 1) "
+                                                    }
+                                                },
+                                                "Set_variable_10": {
+                                                    "runAfter": {
+                                                        "Set_variable_2": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "ContentLengthIncrease3",
+                                                        "value": "@sub(variables('ContentLengthIncrease'), variables('MetaDataLength3'))"
+                                                    }
+                                                },
+                                                "Set_variable_2": {
+                                                    "runAfter": {
+                                                        "Set_variable": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "ContentLengthIncrease",
+                                                        "value": "@variables('TempVariable')"
+                                                    }
+                                                },
+                                                "Set_variable_3": {
+                                                    "runAfter": {
+                                                        "Set_variable_10": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "ContentLengthIncrease2",
+                                                        "value": "@add(variables('ContentLengthIncrease'), sub(variables('SliceFactor'),1))"
+                                                    }
+                                                },
+                                                "Set_variable_4": {
+                                                    "runAfter": {
+                                                        "Set_variable_3": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "TempVariable",
+                                                        "value": "@sub(variables('ContentLengthChecker'), variables('SliceFactor'))"
+                                                    }
+                                                },
+                                                "Set_variable_5": {
+                                                    "runAfter": {
+                                                        "Set_variable_4": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "ContentLengthChecker",
+                                                        "value": "@variables('TempVariable')"
+                                                    }
+                                                },
+                                                "Set_variable_7": {
+                                                    "runAfter": {
+                                                        "Set_variable_5": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "MetadataLength",
+                                                        "value": 0
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {},
+                                            "else": {
+                                                "actions": {
+                                                    "HTTP_2": {
+                                                        "runAfter": {},
+                                                        "type": "Http",
+                                                        "inputs": {
+                                                            "body": "@substring(variables('Filecontentvariable'),add(variables('ContentLengthIncrease3'),0), sub(sub(length(variables('Filecontentvariable')),variables('ContentLengthIncrease3')),1))",
+                                                            "headers": {
+                                                                "Content-Type": "application/octet-stream",
+                                                                "Content-length": "@{add(sub(sub(length(variables('Filecontentvariable')), 1)   , add(variables('ContentLengthIncrease3'), variables('MetadataLength2'))) , 0)}",
+                                                                "FileName": "uat-file01/CIV1/HR.txt",
+                                                                "Range": "bytes=@{add(variables('ContentLengthIncrease'), variables('MetadataLength2'))}-@{add(sub(length(variables('Filecontentvariable')), 2), variables('MetaDataLength3'))}",
+                                                                "x-ms-write": "update"
+                                                            },
+                                                            "method": "PUT",
+                                                            "uri": "@{concat(variables('UpdateFileURI'),variables('SVToken'))}"
+                                                        }
+                                                    },
+                                                    "Set_variable_8": {
+                                                        "runAfter": {
+                                                            "HTTP_2": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "SetVariable",
+                                                        "inputs": {
+                                                            "name": "TempVariable",
+                                                            "value": "@sub(variables('ContentLengthChecker'), variables('ContentLength'))"
+                                                        }
+                                                    },
+                                                    "Set_variable_9": {
+                                                        "runAfter": {
+                                                            "Set_variable_8": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "SetVariable",
+                                                        "inputs": {
+                                                            "name": "ContentLengthChecker",
+                                                            "value": "@variables('TempVariable')"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "greater": [
+                                                            "@variables('ContentLengthChecker')",
+                                                            "@variables('SliceFactor')"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "expression": "@lessOrEquals(variables('ContentLengthChecker'), 0)",
+                                    "limit": {
+                                        "count": 60,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Set_temp_variable_stage_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "else": {
+                                "actions": {
+                                    "HTTP_Update_file": {
+                                        "runAfter": {},
+                                        "type": "Http",
+                                        "inputs": {
+                                            "body": "@body('Get_file_content')",
+                                            "headers": {
+                                                "Content-Type": "application/octet-stream",
+                                                "Content-length": "@{variables('ContentLength')}",
+                                                "FileName": "uat-file01/CIV1/HR.txt",
+                                                "Range": "bytes=0-@{variables('ContentRange2')}",
+                                                "x-ms-write": "update"
+                                            },
+                                            "method": "PUT",
+                                            "uri": "@{concat(variables('UpdateFileURI'),variables('SVToken'))}"
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "greaterOrEquals": [
+                                            "@variables('ContentLength')",
+                                            "@variables('SliceFactor')"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "Compose": {
+                            "runAfter": {
+                                "Invoke_http_request_for_data_job_execution": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Compose",
+                            "inputs": "@outputs('Invoke_http_request_for_data_job_execution')['statusCode']"
+                        },
+                        "Create_file": {
+                            "runAfter": {
+                                "Initialize_data_package_name": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "@binary(body('Download_datapackage'))",
+                                "headers": {
+                                    "ReadFileMetadataFromServer": true
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/datasets/default/files",
+                                "queries": {
+                                    "folderPath": "/uat-file01/CIV1/temp",
+                                    "name": "@variables('PackageName')",
+                                    "queryParametersSingleEncoded": true
+                                }
+                            },
+                            "runtimeConfiguration": {
+                                "contentTransfer": {
+                                    "transferMode": "Chunked"
+                                }
+                            }
+                        },
+                        "Delete_file": {
+                            "runAfter": {
+                                "Check_content_length_for_logic_processing": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "metadata": {
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZ0ZW1wJTJmUHdDX0NJVjEuemlw": "/uat-file01/CIV1/temp/PwC_CIV1.zip"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "headers": {
+                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                    }
+                                },
+                                "method": "delete",
+                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZ0ZW1wJTJmUHdDX0NJVjEuemlw'))}"
+                            }
+                        },
+                        "Delete_file_2": {
+                            "runAfter": {
+                                "Delete_file": [
+                                    "Failed"
+                                ]
+                            },
+                            "metadata": {
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUi50eHQ=": "/uat-file01/CIV1/HR.txt"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "headers": {
+                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                    }
+                                },
+                                "method": "delete",
+                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/CIV1/HR.txt'))}"
+                            }
+                        },
+                        "Download_datapackage": {
+                            "runAfter": {
+                                "Get_data_package_url": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "method": "GET",
+                                "uri": "@{body('Get_data_package_url')?['Value']}"
+                            }
+                        },
+                        "File_slice_factor": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SliceFactor",
+                                        "type": "integer",
+                                        "value": 100000
+                                    }
+                                ]
+                            }
+                        },
+                        "File_transformation": {
+                            "runAfter": {
+                                "Final_output_file_name_set": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "cloudFileShare": "uat-file01",
+                                    "dir": "CIV1",
+                                    "fileName": "@{variables('PackageName')}",
+                                    "newField1": "PERSONNELNUMBER",
+                                    "newField10": "DISTRICT",
+                                    "newField11": "CITY",
+                                    "newField12": "COUNTY",
+                                    "newField13": "ZIPCODE",
+                                    "newField14": "AGE",
+                                    "newField15": "BIRTHDATE",
+                                    "newField16": "GENDER",
+                                    "newField17": "IDENTIFICATIONNUMBER",
+                                    "newField18": "WORKCONTRACTTEXT",
+                                    "newField19": "ORIGINALHIREDATETIME",
+                                    "newField2": "STARTDATEHARROW",
+                                    "newField20": "EXPECTEDDUEDATE",
+                                    "newField21": "ESSENTIALCARUSER",
+                                    "newField22": "TEACHERSLOSDATE",
+                                    "newField23": "TEACHERSLOSYEARS",
+                                    "newField24": "ETHNICORIGIN",
+                                    "newField25": "ETHNICORIGINTEXT",
+                                    "newField26": "DISABLED",
+                                    "newField27": "RELIGIOUSDENOMINATION",
+                                    "newField28": "RELIGIOUSDENOMINATIONTXT",
+                                    "newField29": "MILITARYSTATUS",
+                                    "newField3": "LEAVEDATE",
+                                    "newField30": "MILITARYSTATUSTEXT",
+                                    "newField31": "VISAELIGIBILITY",
+                                    "newField32": "PASSPORTNUMBER",
+                                    "newField33": "PERMISSIONNUM",
+                                    "newField34": "POSITIONID",
+                                    "newField35": "POSITIONTEXT",
+                                    "newField36": "POSRECSTARTDATE",
+                                    "newField37": "POSRECENDDATE",
+                                    "newField38": "SECONDARYCONTRACT",
+                                    "newField39": "PAYSCALEGROUP",
+                                    "newField4": "FORMOFADDRESSKEY",
+                                    "newField40": "PAYSCALELEVEL",
+                                    "newField41": "BASICPAYCHANGEDONDATE",
+                                    "newField42": "BASICPAYSTARTDATE",
+                                    "newField43": "BASICPAYENDDATE",
+                                    "newField44": "CODE",
+                                    "newField45": "ANNUALSALARY",
+                                    "newField46": "ANNUALSALARYEFFECTIVEDATE",
+                                    "newField47": "ACTINGUPPAYSCALEGROUP",
+                                    "newField48": "ACTINGUPPAYSCALELEVEL",
+                                    "newField49": "ACTINGUPCHANGEDONDATE",
+                                    "newField5": "PERSONALTITLE",
+                                    "newField50": "ACTINGUPSTARTDATE",
+                                    "newField51": "ACTINGUPENDDATE",
+                                    "newField52": "EMPLOYMENTPERCENTAGE",
+                                    "newField53": "HOURSPERWEEK",
+                                    "newField54": "WORKINGTIMECHANGEDONDATE",
+                                    "newField55": "WORKINGTIMESTARTDATE",
+                                    "newField56": "WORKINGTIMEENDDATE",
+                                    "newField57": "REDUNDANCYDATE",
+                                    "newField58": "DEPARTMENT",
+                                    "newField59": "BUILDINGNAME",
+                                    "newField6": "LASTNAME",
+                                    "newField60": "BUILDINGHOUSENUMANDSTREET1",
+                                    "newField61": "BUILDINGHOUSENUMANDSTREET2",
+                                    "newField62": "BUILDINGCITY",
+                                    "newField63": "BUILDINGPOSTALCODE",
+                                    "newField64": "RUNDATE",
+                                    "newField7": "FIRSTNAME",
+                                    "newField8": "BUILDINGCOMPLIMENT",
+                                    "newField9": "STREET",
+                                    "oldField1": "PERSONNELNUMBER",
+                                    "oldField10": "DISTRICT",
+                                    "oldField11": "CITY",
+                                    "oldField12": "COUNTY",
+                                    "oldField13": "ZIPCODE",
+                                    "oldField14": "AGE",
+                                    "oldField15": "BIRTHDATE",
+                                    "oldField16": "GENDER",
+                                    "oldField17": "IDENTIFICATIONNUMBER",
+                                    "oldField18": "WORKCONTRACTTEXT",
+                                    "oldField19": "ORIGINALHIREDATETIME",
+                                    "oldField2": "STARTDATEHARROW",
+                                    "oldField20": "EXPECTEDDUEDATE",
+                                    "oldField21": "ESSENTIALCARUSER",
+                                    "oldField22": "TEACHERSLOSDATE",
+                                    "oldField23": "TEACHERSLOSYEARS",
+                                    "oldField24": "ETHNICORIGIN",
+                                    "oldField25": "ETHNICORIGINTEXT",
+                                    "oldField26": "DISABLED",
+                                    "oldField27": "RELIGIOUSDENOMINATION",
+                                    "oldField28": "RELIGIOUSDENOMINATIONTXT",
+                                    "oldField29": "MILITARYSTATUS",
+                                    "oldField3": "LEAVEDATE",
+                                    "oldField30": "MILITARYSTATUSTEXT",
+                                    "oldField31": "VISAELIGIBILITY",
+                                    "oldField32": "PASSPORTNUMBER",
+                                    "oldField33": "PERMISSIONNUM",
+                                    "oldField34": "POSITIONID",
+                                    "oldField35": "POSITIONTEXT",
+                                    "oldField36": "POSRECSTARTDATE",
+                                    "oldField37": "POSRECENDDATE",
+                                    "oldField38": "SECONDARYCONTRACT",
+                                    "oldField39": "PAYSCALEGROUP",
+                                    "oldField4": "FORMOFADDRESSKEY",
+                                    "oldField40": "PAYSCALELEVEL",
+                                    "oldField41": "BASICPAYCHANGEDONDATE",
+                                    "oldField42": "BASICPAYSTARTDATE",
+                                    "oldField43": "BASICPAYENDDATE",
+                                    "oldField44": "CODE",
+                                    "oldField45": "ANNUALSALARY",
+                                    "oldField46": "ANNUALSALARYEFFECTIVEDATE",
+                                    "oldField47": "ACTINGUPPAYSCALEGROUP",
+                                    "oldField48": "ACTINGUPPAYSCALELEVEL",
+                                    "oldField49": "ACTINGUPCHANGEDONDATE",
+                                    "oldField5": "PERSONALTITLE",
+                                    "oldField50": "ACTINGUPSTARTDATE",
+                                    "oldField51": "ACTINGUPENDDATE",
+                                    "oldField52": "EMPLOYMENTPERCENTAGE",
+                                    "oldField53": "HOURSPERWEEK",
+                                    "oldField54": "WORKINGTIMECHANGEDONDATE",
+                                    "oldField55": "WORKINGTIMESTARTDATE",
+                                    "oldField56": "WORKINGTIMEENDDATE",
+                                    "oldField57": "REDUNDANCYDATE",
+                                    "oldField58": "DEPARTMENT",
+                                    "oldField59": "BUILDINGNAME",
+                                    "oldField6": "LASTNAME",
+                                    "oldField60": "BUILDINGHOUSENUMANDSTREET1",
+                                    "oldField61": "BUILDINGHOUSENUMANDSTREET2",
+                                    "oldField62": "BUILDINGCITY",
+                                    "oldField63": "BUILDINGPOSTALCODE",
+                                    "oldField64": "RUNDATE",
+                                    "oldField7": "FIRSTNAME",
+                                    "oldField8": "BUILDINGCOMPLIMENT",
+                                    "oldField9": "STREET",
+                                    "outPutFileName": "@{variables('OutputFileName')}",
+                                    "outputFileFormat": "txt",
+                                    "sheetName": "civ1",
+                                    "storageAccountPath": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                    "subDir": "temp"
+                                },
+                                "method": "POST",
+                                "uri": "https://pwcfointfiletranspactoexcelcsv.azurewebsites.net/api/TransFormExcelCSV?code=XdHL/TjIjh34XZzZUnPxE7xzjsqoxip5csUi5zvR79q6a3uUkNCyVw=="
+                            }
+                        },
+                        "Final_output_file_name_set": {
+                            "runAfter": {
+                                "Create_file": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "OutputFileName",
+                                        "type": "string",
+                                        "value": "HR.txt"
+                                    }
+                                ]
+                            }
+                        },
+                        "Get_a_record": {
+                            "runAfter": {
+                                "Initialize_token_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('PwCIntegrationSetupSASEnts'))}/items/@{encodeURIComponent(encodeURIComponent('1000,0'))}"
+                            }
+                        },
+                        "Get_data_package_url": {
+                            "runAfter": {
+                                "Wait_until_data_project_executed": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "executionId": "@{body('Invoke_http_request_for_data_job_execution')?['Value']}"
+                                },
+                                "headers": {
+                                    "Authorization": "@variables('Token')"
+                                },
+                                "method": "POST",
+                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                            }
+                        },
+                        "Get_file_content": {
+                            "runAfter": {
+                                "File_transformation": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "metadata": {
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUi50eHQ=": "/uat-file01/CIV1/HR.txt",
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUlIudHh0": "/uat-file01/CIV1/HRR.txt"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/CIV1/HR.txt'))}/content",
+                                "queries": {
+                                    "inferContentType": true
+                                }
+                            }
+                        },
+                        "Get_file_metadata": {
+                            "runAfter": {
+                                "Get_file_content": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "metadata": {
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUi50eHQ=": "/uat-file01/CIV1/HR.txt",
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUjIudHh0": "/uat-file01/CIV1/HR2.txt",
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUjMudHh0": "/uat-file01/CIV1/HR3.txt",
+                                "JTJmdWF0LWZpbGUwMSUyZkNJVjElMmZIUlIudHh0": "/uat-file01/CIV1/HRR.txt"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/uat-file01/CIV1/HR.txt'))}"
+                            }
+                        },
+                        "Get_token_from_app": {
+                            "runAfter": {
+                                "Initialize_variable_-_ContentRange2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                "headers": {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                },
+                                "method": "POST",
+                                "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                            }
+                        },
+                        "HTTP_Create_file": {
+                            "runAfter": {
+                                "Set_content_range_2": [
+                                    "Succeeded",
+                                    "TimedOut"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "headers": {
+                                    "FileName": "uat-file01/CIV1/HR.txt",
+                                    "x-ms-content-length": "@{sub(variables('ContentLength'),1)}",
+                                    "x-ms-file-attributes": "None",
+                                    "x-ms-file-creation-time": "2020-02-28T03:58:06.6661551Z",
+                                    "x-ms-file-last-write-time": "2020-02-28T03:58:06.6661551Z",
+                                    "x-ms-file-permission": "Inherit",
+                                    "x-ms-type": "file",
+                                    "x-ms-version": "2019-02-02"
+                                },
+                                "method": "PUT",
+                                "uri": "@{concat(variables('CreateBlankFileURI'),variables('SVToken'))}"
+                            }
+                        },
+                        "Initialize_data_package_name": {
+                            "runAfter": {
+                                "Download_datapackage": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageName",
+                                        "type": "string",
+                                        "value": "PwC_CIV1.zip"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_execution_stat": {
+                            "runAfter": {
+                                "Compose": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStat",
+                                        "type": "string",
+                                        "value": "@{outputs('Compose')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_token_variable": {
+                            "runAfter": {
+                                "Initialize_variable_-_UpdateFileURI": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Token",
+                                        "type": "string",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_for_auth_token')['access_token'])}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_1": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLengthIncrease3",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ContentLength": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_8": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLength",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ContentRange2": {
+                            "runAfter": {
+                                "Initialize_variable_-_ContentLength": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentRange2",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_CreateBlankFileURI": {
+                            "runAfter": {
+                                "Initialize_variable_-_SVToken": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CreateBlankFileURI",
+                                        "type": "string",
+                                        "value": "https://lbh-nprd-uks-apim-01.azure-api.net/?"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SVToken": {
+                            "runAfter": {
+                                "Parse_JSON_for_auth_token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SVToken",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_UpdateFileURI": {
+                            "runAfter": {
+                                "Initialize_variable_-_CreateBlankFileURI": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "UpdateFileURI",
+                                        "type": "string",
+                                        "value": "https://lbh-nprd-uks-apim-01.azure-api.net/update/?comp=range&"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "MetaDataLength3",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_1": {
+                            "runAfter": {
+                                "File_slice_factor": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TempFileContentVariable",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_2": {
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "MetadataLength",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_3": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "MetaDataLength2",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_4": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_3": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "FileContentVariable",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_5": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_4": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TempVariable",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_6": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_5": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLengthChecker",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_7": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_6": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLengthIncrease",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_file_slice_8": {
+                            "runAfter": {
+                                "Initialize_variable_file_slice_7": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLengthIncrease2",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Invoke_http_request_for_data_job_execution": {
+                            "runAfter": {
+                                "Set_variable_-_SVToken": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "definitionGroupId": "PwC_CIV1_EXP",
+                                    "executionId": "",
+                                    "legalEntityId": "1000",
+                                    "packageName": "PwC_CIV1.zip",
+                                    "reExecute": false
+                                },
+                                "headers": {
+                                    "Authorization": "@variables('Token')"
+                                },
+                                "method": "POST",
+                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                            }
+                        },
+                        "Parse_JSON_for_auth_token": {
+                            "runAfter": {
+                                "Get_token_from_app": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@body('Get_token_from_app')",
+                                "schema": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "type": "string"
+                                        },
+                                        "expires_on": {
+                                            "type": "string"
+                                        },
+                                        "ext_expires_in": {
+                                            "type": "string"
+                                        },
+                                        "not_before": {
+                                            "type": "string"
+                                        },
+                                        "resource": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "token_type",
+                                        "expires_in",
+                                        "ext_expires_in",
+                                        "expires_on",
+                                        "not_before",
+                                        "resource",
+                                        "access_token"
+                                    ],
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "Send_Email_(V3)": {
+                            "runAfter": {
+                                "Get_file_metadata": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "Attachments": [
+                                        {
+                                            "ContentData": "@{base64(body('Get_file_content'))}",
+                                            "FileName": "HR.txt"
+                                        }
+                                    ],
+                                    "Body": "<p>This contains CIV1 file generated.</p>",
+                                    "CC": "Menelaos.Menelaou@harrow.gov.uk ",
+                                    "From": "D365_MailSys_FO_Dev@harrow.gov.uk",
+                                    "Subject": "CIV1 file (Pre Prod)",
+                                    "To": "D365.support@harrow.gov.uk"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['smtp']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/SendEmailV3"
+                            }
+                        },
+                        "Set_content_checker": {
+                            "runAfter": {
+                                "HTTP_Create_file": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ContentLengthChecker",
+                                "value": "@variables('ContentLength')"
+                            }
+                        },
+                        "Set_content_length_checker": {
+                            "runAfter": {
+                                "Set_temp_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ContentLengthChecker",
+                                "value": "@variables('TempVariable')"
+                            }
+                        },
+                        "Set_content_length_with_metadata": {
+                            "runAfter": {
+                                "Send_Email_(V3)": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ContentLength",
+                                "value": "@body('Get_file_metadata')?['Size']"
+                            }
+                        },
+                        "Set_content_range_2": {
+                            "runAfter": {
+                                "Set_content_length_with_metadata": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ContentRange2",
+                                "value": "@sub(variables('ContentLength'),1)"
+                            }
+                        },
+                        "Set_file_length_without_meta_data": {
+                            "runAfter": {
+                                "Set_first_end_byte": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "FileContentVariable",
+                                "value": "@{body('Get_file_content')}"
+                            }
+                        },
+                        "Set_first_end_byte": {
+                            "runAfter": {
+                                "Set_initial_bye_value": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ContentLengthIncrease2",
+                                "value": "@sub(variables('SliceFactor'),1)"
+                            }
+                        },
+                        "Set_initial_bye_value": {
+                            "runAfter": {
+                                "Set_content_checker": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "ContentLengthIncrease",
+                                "value": 0
+                            }
+                        },
+                        "Set_meta_data_length": {
+                            "runAfter": {
+                                "Set_file_length_without_meta_data": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "MetadataLength",
+                                "value": 0
+                            }
+                        },
+                        "Set_temp_variable": {
+                            "runAfter": {
+                                "Set_variable_11": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "TempVariable",
+                                "value": "@sub(variables('ContentLengthChecker'), variables('Metadatalength'))"
+                            }
+                        },
+                        "Set_temp_variable_stage_2": {
+                            "runAfter": {
+                                "Set_content_length_checker": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "TempVariable",
+                                "value": "@length(variables('TempFileContentVariable'))"
+                            }
+                        },
+                        "Set_variable_-_SVToken": {
+                            "runAfter": {
+                                "Get_a_record": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "SVToken",
+                                "value": "@body('Get_a_record')?['SubscriptionKeyURL']"
+                            }
+                        },
+                        "Set_variable_11": {
+                            "runAfter": {
+                                "Set_meta_data_length": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "MetaDataLength3",
+                                "value": "@variables('MetadataLength')"
+                            }
+                        },
+                        "Wait_until_data_project_executed": {
+                            "actions": {
+                                "Delay": {
+                                    "runAfter": {},
+                                    "type": "Wait",
+                                    "inputs": {
+                                        "interval": {
+                                            "count": 5,
+                                            "unit": "Second"
+                                        }
+                                    }
+                                },
+                                "Get_execution_summary_status": {
+                                    "runAfter": {
+                                        "Delay": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "executionId": "@{body('Invoke_http_request_for_data_job_execution')?['Value']}"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('Token')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                    }
+                                },
+                                "Set_execution_status": {
+                                    "runAfter": {
+                                        "Get_execution_summary_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "ExecutionStat",
+                                        "value": "@{body('Get_execution_summary_status')?['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Initialize_execution_stat": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": "@equals(variables('ExecutionStat'), 'Succeeded')",
+                            "limit": {
+                                "count": 20,
+                                "timeout": "PT1H"
+                            },
+                            "type": "Until"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax_1": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "smtp": {
+                                "connectionId": "[parameters('connections_smtp_1_externalid')]",
+                                "connectionName": "smtp-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/smtp"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

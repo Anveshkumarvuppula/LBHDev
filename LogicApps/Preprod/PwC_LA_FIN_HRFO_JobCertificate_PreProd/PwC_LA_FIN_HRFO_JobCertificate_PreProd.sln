@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33927.289
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "PwC_LA_FIN_HRFO_JobCertificate_PreProd", "PwC_LA_FIN_HRFO_JobCertificate_PreProd\PwC_LA_FIN_HRFO_JobCertificate_PreProd.deployproj", "{FAA324C6-FEF2-46E1-A96D-C59BA8B478DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAA324C6-FEF2-46E1-A96D-C59BA8B478DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA324C6-FEF2-46E1-A96D-C59BA8B478DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA324C6-FEF2-46E1-A96D-C59BA8B478DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA324C6-FEF2-46E1-A96D-C59BA8B478DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B9947C7-7833-4A04-AA34-77268F0CEEAC}
+	EndGlobalSection
+EndGlobal
