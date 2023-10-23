@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33927.289
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "LBH_LA_FIN_FMS3a_GLLineImport", "LBH_LA_FIN_FMS3a_GLLineImport\LBH_LA_FIN_FMS3a_GLLineImport.deployproj", "{4C3A4B25-ED65-4043-A66B-6A6969CA4811}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C3A4B25-ED65-4043-A66B-6A6969CA4811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3A4B25-ED65-4043-A66B-6A6969CA4811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3A4B25-ED65-4043-A66B-6A6969CA4811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3A4B25-ED65-4043-A66B-6A6969CA4811}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E1136DF-8829-4865-968E-6C53FDAD50FE}
+	EndGlobalSection
+EndGlobal

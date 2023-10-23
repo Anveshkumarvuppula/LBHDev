@@ -1,0 +1,98 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_ACCMoveAFSFiles_Prod_name": {
+            "defaultValue": "PwC_LA_ACCMoveAFSFiles_Prod",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_ACCMoveAFSFiles_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Service": "Dynamics F&O",
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Hour",
+                                "interval": 1
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "HTTP_-_ACC1_Move_Files_to_secured_AFS": {
+                            "runAfter": {},
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "Source": "/prd-file01/ACC1/Processed",
+                                    "Target": "prd-file01/ACC1/Processed"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-09.uksouth.logic.azure.com:443/workflows/9904ad0cc6d048de8d66773bfd89bfa6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0HBkGqxeOBnmcepFfBCFScQ_BfUfzNGcN5B_smhofF0"
+                            }
+                        },
+                        "HTTP_-_ACC3_AP_Move_Files_to_secured_AFS": {
+                            "runAfter": {
+                                "HTTP_-_ACC1_Move_Files_to_secured_AFS": [
+                                    "Succeeded",
+                                    "TimedOut",
+                                    "Skipped",
+                                    "Failed"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "Source": "/prd-file01/ACC3(AP)/Processed",
+                                    "Target": "prd-file01/ACC3(AP)/Processed"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-09.uksouth.logic.azure.com:443/workflows/9904ad0cc6d048de8d66773bfd89bfa6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0HBkGqxeOBnmcepFfBCFScQ_BfUfzNGcN5B_smhofF0"
+                            }
+                        },
+                        "HTTP_-_ACC3_AR_Move_Files_to_secured_AFS": {
+                            "runAfter": {
+                                "HTTP_-_ACC3_AP_Move_Files_to_secured_AFS": [
+                                    "Succeeded",
+                                    "TimedOut",
+                                    "Skipped",
+                                    "Failed"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "Source": "/prd-file01/ACC3(AR)/Processed",
+                                    "Target": "prd-file01/ACC3(AR)/Processed"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-09.uksouth.logic.azure.com:443/workflows/9904ad0cc6d048de8d66773bfd89bfa6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0HBkGqxeOBnmcepFfBCFScQ_BfUfzNGcN5B_smhofF0"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {}
+            }
+        }
+    ]
+}

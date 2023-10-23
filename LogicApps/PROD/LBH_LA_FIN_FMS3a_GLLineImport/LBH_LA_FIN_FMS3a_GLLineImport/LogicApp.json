@@ -1,0 +1,1206 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_FIN_FMS3a_GLLineImport_New_Prod_name": {
+            "defaultValue": "PwC_LA_FIN_FMS3a_GLLineImport_New_Prod",
+            "type": "String"
+        },
+        "connections_azureblob_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azureblob",
+            "type": "String"
+        },
+        "connections_azurefile_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azurefile",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/dynamicsax",
+            "type": "String"
+        },
+        "connections_smtp_1_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/smtp-1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_FIN_FMS3a_GLLineImport_New_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Week",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "9",
+                                        "12",
+                                        "15",
+                                        "18"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ],
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ]
+                                },
+                                "startTime": "2023-05-05T08:58:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Week",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "9",
+                                        "12",
+                                        "15",
+                                        "18"
+                                    ],
+                                    "minutes": [
+                                        0
+                                    ],
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ]
+                                },
+                                "startTime": "2023-05-05T08:58:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Condition_2": {
+                            "actions": {
+                                "Delay_3": {
+                                    "runAfter": {},
+                                    "type": "Wait",
+                                    "inputs": {
+                                        "interval": {
+                                            "count": 10,
+                                            "unit": "Minute"
+                                        }
+                                    }
+                                },
+                                "Run_journal_creation_batch": {
+                                    "runAfter": {
+                                        "Delay_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "_dataAreaId": "1000"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('Token')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "@{variables('EnvironmentURL')}/data/PwCGLLineSIM3aEnt/Microsoft.Dynamics.DataEntities.triggerBatchJob"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "For_each_-_Iterate_each_file_inside_storage_location": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "else": {
+                                "actions": {
+                                    "Terminate": {
+                                        "runAfter": {},
+                                        "type": "Terminate",
+                                        "inputs": {
+                                            "runStatus": "Succeeded"
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "equals": [
+                                            "@variables('D365 Import Success')",
+                                            1
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "Delay": {
+                            "runAfter": {
+                                "HTTP_-_Move_files_from_Secured_to_Intermediate_AFS": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Wait",
+                            "inputs": {
+                                "interval": {
+                                    "count": 10,
+                                    "unit": "Minute"
+                                }
+                            }
+                        },
+                        "For_each_-_Iterate_each_file_inside_storage_location": {
+                            "foreach": "@body('List_files_-_Get_SIM3a_text_file_from_storage')?['value']",
+                            "actions": {
+                                "Condition": {
+                                    "actions": {
+                                        "Create_file_-_Create_file_in_error_folder_for_duplicate": {
+                                            "runAfter": {
+                                                "Get_file_content_Get_file_content_from_SIM3a_for_duplicate_file": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": "@body('Get_file_content_Get_file_content_from_SIM3a_for_duplicate_file')",
+                                                "headers": {
+                                                    "ReadFileMetadataFromServer": true
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/default/files",
+                                                "queries": {
+                                                    "folderPath": "/@{variables('IntermediateFileShareName')}/FMS3a/Error",
+                                                    "name": "@variables('SIM3aFileName')",
+                                                    "queryParametersSingleEncoded": true
+                                                }
+                                            },
+                                            "runtimeConfiguration": {
+                                                "contentTransfer": {
+                                                    "transferMode": "Chunked"
+                                                }
+                                            }
+                                        },
+                                        "Delete_file_-_Delete_file_from_orig_folder_duplicate": {
+                                            "runAfter": {
+                                                "Create_file_-_Create_file_in_error_folder_for_duplicate": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "metadata": {
+                                                "JTJmbGJoLWRldiUyZlNJTTNhJTJmc291cmNlJTJmUkQxMjIwMTkudmF0LnR4dA==": "/lbh-dev/SIM3a/source/RD122019.vat.txt"
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',variables('SIM3aFileName')))}"
+                                            }
+                                        },
+                                        "Get_file_content_Get_file_content_from_SIM3a_for_duplicate_file": {
+                                            "runAfter": {
+                                                "Set_variable": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',variables('SIM3aFileName')))}/content",
+                                                "queries": {
+                                                    "inferContentType": true
+                                                }
+                                            }
+                                        },
+                                        "Send_Email_(V3)_2": {
+                                            "runAfter": {
+                                                "Delete_file_-_Delete_file_from_orig_folder_duplicate": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>The file @{variables('SIM3aFileName')} has encountered error - Duplicate file.&nbsp;</p>",
+                                                    "From": "lbh-prd-d365-mail-sys@harrowcouncil.onmicrosoft.com",
+                                                    "Subject": "FMS3a Inbound File Error - @{variables('SIM3aFileName')}",
+                                                    "To": "@variables('SendEmailTo')"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['smtp_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/SendEmailV3"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Set_variable_-_Duplicate_file_name_temp": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "Duplicate file name",
+                                                "value": "@{concat(variables('DuplicateFileNameTmp'),',',variables('Sim3aFIleName'))}"
+                                            }
+                                        },
+                                        "Set_variable_-_Duplicate_file_name_temp": {
+                                            "runAfter": {},
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "DuplicateFileNameTmp",
+                                                "value": "@variables('Duplicate file name')"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "For_each": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "else": {
+                                        "actions": {
+                                            "Create_file-_Create_file_in_error_folder": {
+                                                "runAfter": {
+                                                    "Get_file_content-Get_file_content_from_SIM3a_tmp_for_error": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "body": "@body('Get_file_content-Get_file_content_from_SIM3a_tmp_for_error')",
+                                                    "headers": {
+                                                        "ReadFileMetadataFromServer": true
+                                                    },
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "post",
+                                                    "path": "/datasets/default/files",
+                                                    "queries": {
+                                                        "folderPath": "/@{variables('IntermediateFileShareName')}/FMS3a/Error",
+                                                        "name": "@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}",
+                                                        "queryParametersSingleEncoded": true
+                                                    }
+                                                },
+                                                "runtimeConfiguration": {
+                                                    "contentTransfer": {
+                                                        "transferMode": "Chunked"
+                                                    }
+                                                }
+                                            },
+                                            "Create_file-_Error_handling": {
+                                                "runAfter": {
+                                                    "Get_file_content": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "body": "@body('Get_file_content')",
+                                                    "headers": {
+                                                        "ReadFileMetadataFromServer": true
+                                                    },
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "post",
+                                                    "path": "/datasets/default/files",
+                                                    "queries": {
+                                                        "folderPath": "/@{variables('IntermediateFileShareName')}/FMS3a/Error",
+                                                        "name": "@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}",
+                                                        "queryParametersSingleEncoded": true
+                                                    }
+                                                },
+                                                "runtimeConfiguration": {
+                                                    "contentTransfer": {
+                                                        "transferMode": "Chunked"
+                                                    }
+                                                }
+                                            },
+                                            "Create_file_-_Create_file_in_success_folder": {
+                                                "runAfter": {
+                                                    "Get_file_content_-_Get_file_content_from_SIM3a_file": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "body": "@body('Get_file_content_-_Get_file_content_from_SIM3a_file')",
+                                                    "headers": {
+                                                        "ReadFileMetadataFromServer": true
+                                                    },
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "post",
+                                                    "path": "/datasets/default/files",
+                                                    "queries": {
+                                                        "folderPath": "/@{variables('IntermediateFileShareName')}/FMS3a/Success",
+                                                        "name": "@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}",
+                                                        "queryParametersSingleEncoded": true
+                                                    }
+                                                },
+                                                "runtimeConfiguration": {
+                                                    "contentTransfer": {
+                                                        "transferMode": "Chunked"
+                                                    }
+                                                }
+                                            },
+                                            "Delay_2": {
+                                                "runAfter": {
+                                                    "HTTP_-_Invoke_http_request": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Wait",
+                                                "inputs": {
+                                                    "interval": {
+                                                        "count": 10,
+                                                        "unit": "Second"
+                                                    }
+                                                }
+                                            },
+                                            "Delay_4": {
+                                                "runAfter": {
+                                                    "Set_variable_for_token": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Wait",
+                                                "inputs": {
+                                                    "interval": {
+                                                        "count": 10,
+                                                        "unit": "Second"
+                                                    }
+                                                }
+                                            },
+                                            "Delete_blob": {
+                                                "runAfter": {
+                                                    "Delete_file_-_Delete_orig_file_inside_temp": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/sim3a/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName'],'.zip'))}"
+                                                }
+                                            },
+                                            "Delete_blob_-_Delete_package_blob": {
+                                                "runAfter": {
+                                                    "Delete_file_-_Delete_file_from_temp_folder": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "metadata": {
+                                                    "JTJmc2ltM2ElMmZTSU0zYS56aXA=": "/sim3a/SIM3a.zip"
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azureblob_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/sim3a/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName'],'.zip'))}"
+                                                }
+                                            },
+                                            "Delete_file": {
+                                                "runAfter": {
+                                                    "Delete_blob_-_Delete_package_blob": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/PackageManifest/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName'],'.xlsx'))}"
+                                                }
+                                            },
+                                            "Delete_file-_Delete_file_from_orig_folder": {
+                                                "runAfter": {
+                                                    "Create_file-_Create_file_in_error_folder": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']))}"
+                                                }
+                                            },
+                                            "Delete_file_-_Delete_file_from_temp_folder": {
+                                                "runAfter": {
+                                                    "Create_file_-_Create_file_in_success_folder": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',body('Create_file_-_Create_file_in_success_folder')?['DisplayName']))}"
+                                                }
+                                            },
+                                            "Delete_file_-_Delete_orig_file_inside_temp": {
+                                                "runAfter": {
+                                                    "Create_file-_Error_handling": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']))}"
+                                                }
+                                            },
+                                            "Delete_file_2": {
+                                                "runAfter": {
+                                                    "Delete_blob": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "delete",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/PackageManifest/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName'],'.xlsx'))}"
+                                                }
+                                            },
+                                            "Get_file_content": {
+                                                "runAfter": {
+                                                    "HTTP_-_Invoke_http_request": [
+                                                        "Failed",
+                                                        "Skipped",
+                                                        "TimedOut"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "get",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',variables('SIM3aFileName')))}/content",
+                                                    "queries": {
+                                                        "inferContentType": true
+                                                    }
+                                                }
+                                            },
+                                            "Get_file_content-Get_file_content_from_SIM3a_tmp_for_error": {
+                                                "runAfter": {
+                                                    "HTTP": [
+                                                        "Failed",
+                                                        "Skipped",
+                                                        "TimedOut"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "get",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',variables('SIM3aFileName')))}/content",
+                                                    "queries": {
+                                                        "inferContentType": true
+                                                    }
+                                                }
+                                            },
+                                            "Get_file_content_-_Get_file_content_from_SIM3a_file": {
+                                                "runAfter": {
+                                                    "Delay_2": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "get",
+                                                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source/',items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']))}/content",
+                                                    "queries": {
+                                                        "inferContentType": true
+                                                    }
+                                                }
+                                            },
+                                            "HTTP": {
+                                                "runAfter": {
+                                                    "HTTP-_Convert_text_file_to_Excel": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Http",
+                                                "inputs": {
+                                                    "body": {
+                                                        "blobContainer": "sim3a",
+                                                        "blobStorageAccountThirdFile": "@{variables('IntermediateFileShareConStr')}",
+                                                        "dataPackageFileName": "SIM3a data import to staging ent.xlsx",
+                                                        "dirFirstFile": "FMS3a",
+                                                        "dirSecondFile": "FMS3a",
+                                                        "fileNameIncoming": "@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}.xlsx",
+                                                        "fileNameOutgoing": "@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}.zip",
+                                                        "fileNameSecondFile": "PackageHeader.zip",
+                                                        "fileShareFirstFile": "@{variables('IntermediateFileShareName')}",
+                                                        "fileShareSecondFile": "@{variables('IntermediateFileShareName')}",
+                                                        "storageAccountFirstFile": "@{variables('IntermediateFileShareConStr')}",
+                                                        "storageAccountSecondFile": "@{variables('IntermediateFileShareConStr')}",
+                                                        "subDirFirstFile": "PackageManifest",
+                                                        "subDirSecondFile": "PackageManifest"
+                                                    },
+                                                    "method": "POST",
+                                                    "uri": "https://pwcfointegrationexceltodatapackagev01.azurewebsites.net/api/CreateDataPackageFromExcel?code=a7wTmYgXNWMGBwVOtZ8q3DmlIDfCrgSp7POnyKcIAagzXdJn8dkQWw=="
+                                                }
+                                            },
+                                            "HTTP-_Convert_text_file_to_Excel": {
+                                                "runAfter": {},
+                                                "type": "Http",
+                                                "inputs": {
+                                                    "body": {
+                                                        "dir": "FMS3a",
+                                                        "field1": "VAT1",
+                                                        "field2": "VAT2",
+                                                        "field3": "MAINACC",
+                                                        "field4": "DEBITAMOUNT",
+                                                        "field5": "CREDITAMOUNT",
+                                                        "field6": "FILEINFO1",
+                                                        "field7": "FILEINFO2",
+                                                        "field8": "FILEINFO3",
+                                                        "fieldSheetName": "JournalCreation",
+                                                        "fileName": "@items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']",
+                                                        "fileNameOutPut": "@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}.xlsx",
+                                                        "fileShare": "@{variables('IntermediateFileShareName')}",
+                                                        "storageAccount": "@{variables('IntermediateFileShareConStr')}",
+                                                        "subDir": "Source",
+                                                        "subDirOutPut": "PackageManifest"
+                                                    },
+                                                    "method": "POST",
+                                                    "uri": "https://pwcfointegrationtexttoexcelconversionv01.azurewebsites.net/api/TextToExcelConversion?code=zc1emUwnWUyJc6/zqhxzvgogb16pHBTVTk/bwzpcamTQHObrMvqyMw=="
+                                                }
+                                            },
+                                            "HTTP_-_Get_access_token": {
+                                                "runAfter": {
+                                                    "Set_variable_-_Set_package_url": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Http",
+                                                "inputs": {
+                                                    "body": "client_id=@{variables('CnientID')}&client_secret=@{variables('ClientSecret')}&grant_type=client_credentials&resource=@{variables('EnvironmentURL')}",
+                                                    "headers": {
+                                                        "Content-Type": "application/x-www-form-urlencoded"
+                                                    },
+                                                    "method": "POST",
+                                                    "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                                }
+                                            },
+                                            "HTTP_-_Invoke_http_request": {
+                                                "runAfter": {
+                                                    "Delay_4": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Http",
+                                                "inputs": {
+                                                    "body": {
+                                                        "definitionGroupId": "PwC_SIM3a_Import",
+                                                        "execute": true,
+                                                        "executionId": "",
+                                                        "legalEntityId": "1000",
+                                                        "overwrite": true,
+                                                        "packageUrl": "@body('HTTP')"
+                                                    },
+                                                    "headers": {
+                                                        "Authorization": "@variables('Token')"
+                                                    },
+                                                    "method": "POST",
+                                                    "uri": "@{variables('EnvironmentURL')}/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                                }
+                                            },
+                                            "Parse_JSON_for_auth_token": {
+                                                "runAfter": {
+                                                    "HTTP_-_Get_access_token": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "ParseJson",
+                                                "inputs": {
+                                                    "content": "@body('HTTP_-_Get_access_token')",
+                                                    "schema": {
+                                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                                        "properties": {
+                                                            "access_token": {
+                                                                "type": "string"
+                                                            },
+                                                            "expires_in": {
+                                                                "type": "string"
+                                                            },
+                                                            "expires_on": {
+                                                                "type": "string"
+                                                            },
+                                                            "ext_expires_in": {
+                                                                "type": "string"
+                                                            },
+                                                            "not_before": {
+                                                                "type": "string"
+                                                            },
+                                                            "resource": {
+                                                                "type": "string"
+                                                            },
+                                                            "token_type": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "token_type",
+                                                            "expires_in",
+                                                            "ext_expires_in",
+                                                            "expires_on",
+                                                            "not_before",
+                                                            "resource",
+                                                            "access_token"
+                                                        ],
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "Send_Email_(V3)_3": {
+                                                "runAfter": {
+                                                    "HTTP-_Convert_text_file_to_Excel": [
+                                                        "Failed"
+                                                    ]
+                                                },
+                                                "type": "ApiConnection",
+                                                "inputs": {
+                                                    "body": {
+                                                        "Body": "<p>The file @{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']} has encountered error - Mapping convention error.</p>",
+                                                        "From": "lbh-prd-d365-mail-sys@harrowcouncil.onmicrosoft.com",
+                                                        "Subject": "FMS3a Inbound File Error - @{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}",
+                                                        "To": "@variables('SendEmailTo')"
+                                                    },
+                                                    "host": {
+                                                        "connection": {
+                                                            "name": "@parameters('$connections')['smtp_1']['connectionId']"
+                                                        }
+                                                    },
+                                                    "method": "post",
+                                                    "path": "/SendEmailV3"
+                                                }
+                                            },
+                                            "Set_variable_-_Set_package_url": {
+                                                "runAfter": {
+                                                    "HTTP": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "SetVariable",
+                                                "inputs": {
+                                                    "name": "PackageUrl",
+                                                    "value": "@{body('HTTP-_Convert_text_file_to_Excel')}"
+                                                }
+                                            },
+                                            "Set_variable_2": {
+                                                "runAfter": {
+                                                    "Delete_file": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "SetVariable",
+                                                "inputs": {
+                                                    "name": "D365 Import Success",
+                                                    "value": 1
+                                                }
+                                            },
+                                            "Set_variable_for_token": {
+                                                "runAfter": {
+                                                    "Parse_JSON_for_auth_token": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "SetVariable",
+                                                "inputs": {
+                                                    "name": "Token",
+                                                    "value": "@{concat('Bearer ',body('Parse_JSON_for_auth_token')['access_token'])}"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@variables('RecordCheck')",
+                                                    "@variables('SIM3aFileName')"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                },
+                                "For_each": {
+                                    "foreach": "@body('Lists_items_present_in_table')?['value']",
+                                    "actions": {
+                                        "Set_variable_-_Record_check": {
+                                            "runAfter": {},
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "RecordCheck",
+                                                "value": "@items('For_each')?['FileInfo3']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Lists_items_present_in_table": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "Lists_items_present_in_table": {
+                                    "runAfter": {
+                                        "Set_variable_-_Set_text_file_name": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('PwCGLLineSIM3aEnt'))}/items",
+                                        "queries": {
+                                            "$filter": "FileInfo3 eq '@{items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']}'",
+                                            "$top": 1
+                                        }
+                                    }
+                                },
+                                "Set_variable_-_Set_text_file_name": {
+                                    "runAfter": {},
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "SIM3aFileName",
+                                        "value": "@items('For_each_-_Iterate_each_file_inside_storage_location')?['DisplayName']"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "runtimeConfiguration": {
+                                "concurrency": {
+                                    "repetitions": 1
+                                }
+                            }
+                        },
+                        "HTTP_-_Move_files_from_Secured_to_Intermediate_AFS": {
+                            "runAfter": {
+                                "Initialize_variable_-_SendEmailTo": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "Source": "@{variables('SecuredFileShareName')}/FMS3a/Source",
+                                    "Target": "@{variables('IntermediateFileShareName')}/FMS3a/Source"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-14.uksouth.logic.azure.com:443/workflows/260dfe64fe3a4ae5b66c8f3b932aee99/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KTxELVIvNqApDNZlhNJ2RH5byt9LOKXYBeNrMLAUoZ4"
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {
+                                "Initialize_variable_-_Duplicate_filen_name_temp": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "RecordCheck",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ClientId": {
+                            "runAfter": {
+                                "Initialize_variable_-_EnvironmentURL": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CnientID",
+                                        "type": "string",
+                                        "value": "3e724262-bfc2-4407-95f9-17028e172cbe"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ClientSecret": {
+                            "runAfter": {
+                                "Initialize_variable_-_ClientId": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ClientSecret",
+                                        "type": "string",
+                                        "value": "KkR8Q~Jp1Y2BfP60rkieGNszqp2zlU1y5CvNracw"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Duplicate_file_name": {
+                            "runAfter": {
+                                "Initialize_variable_-_Text_file_name": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Duplicate file name",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Duplicate_filen_name_temp": {
+                            "runAfter": {
+                                "Initialize_variable_-_Duplicate_file_name": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "DuplicateFileNameTmp",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_EnvironmentURL": {
+                            "runAfter": {
+                                "Initialize_variable_-_IntermediateFileShareConStr": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EnvironmentURL",
+                                        "type": "string",
+                                        "value": "https://lbh-fo-prod.operations.dynamics.com"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_IntermediateFileShareConStr": {
+                            "runAfter": {
+                                "Initialize_variable_-_IntermediateFileShareName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IntermediateFileShareConStr",
+                                        "type": "string",
+                                        "value": "DefaultEndpointsProtocol=https;AccountName=lbhprduksfnodiagsetsa;AccountKey=ewIrriluemqgeWWVImmKZkyOfgarMNSVCcyHjhuqVpf2rwYAcaPyddCJB6ZwLVbLu0dAhcAv13eN0uGt9ii5ag==;EndpointSuffix=core.windows.net"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_IntermediateFileShareName": {
+                            "runAfter": {
+                                "Initialize_variable_-_SecuredFileShareName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IntermediateFileShareName",
+                                        "type": "string",
+                                        "value": "prd-file01"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SecuredFileShareName": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SecuredFileShareName",
+                                        "type": "string",
+                                        "value": "prd-file01"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SendEmailTo": {
+                            "runAfter": {
+                                "Initialize_variable_-_ClientSecret": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SendEmailTo",
+                                        "type": "string",
+                                        "value": "fmsteam@harrow.gov.uk"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_Text_file_name": {
+                            "runAfter": {
+                                "List_files_-_Get_SIM3a_text_file_from_storage": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SIM3aFileName",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "D365 Import Success",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_Import_package_url": {
+                            "runAfter": {
+                                "Delay": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_Token_variable": {
+                            "runAfter": {
+                                "Initialize_variable_Import_package_url": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Token",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "List_files_-_Get_SIM3a_text_file_from_storage": {
+                            "runAfter": {
+                                "Initialize_variable_Token_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "metadata": {
+                                "JTJmbGJoLWRldiUyZlNJTTNhJTJmc291cmNl": "/lbh-dev/SIM3a/source",
+                                "JTJmbGJoLWRldiUyZlNJTTNhJTJmdGVtcA==": "/lbh-dev/SIM3a/temp",
+                                "JTJmbGJoLXNpdHNhdCUyZlNJTTNhJTJmc291cmNl": "/lbh-sitsat/SIM3a/source"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile_2']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/',variables('IntermediateFileShareName'),'/FMS3a/Source'))}",
+                                "queries": {
+                                    "nextPageMarker": "",
+                                    "useFlatListing": false
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azureblob": {
+                                "connectionId": "[parameters('connections_azureblob_externalid')]",
+                                "connectionName": "azureblob",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
+                            },
+                            "azureblob_1": {
+                                "connectionId": "[parameters('connections_azureblob_externalid')]",
+                                "connectionName": "azureblob",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
+                            },
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_externalid')]",
+                                "connectionName": "azurefile",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "azurefile_2": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax_1": {
+                                "connectionId": "[parameters('connections_dynamicsax_externalid')]",
+                                "connectionName": "dynamicsax",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "smtp_1": {
+                                "connectionId": "[parameters('connections_smtp_1_externalid')]",
+                                "connectionName": "smtp-1",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/smtp"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
