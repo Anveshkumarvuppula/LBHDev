@@ -1,0 +1,656 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_5ed54"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_sendmail": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crd52_sharedsendmail_1d8ed"
+        },
+        "api": {
+          "name": "shared_sendmail"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "Worker_Bank_Account_Main": {
+          "metadata": {
+            "operationMetadataId": "d7083f1f-8ecf-4ab3-8f31-1e0d0e546cbc"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 4,
+              "subscriptionRequest/entityname": "mserp_hcmworkerbankaccountentity",
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/filteringattributes": "cdm_routingnumber,cdm_routingnumbertype,cdm_bankaccountnumber,"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Get_a_row_by_ID": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "4a537be1-9491-41e4-96eb-7722c8845cab"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmworkerentities",
+              "recordId": "@triggerOutputs()?['body/_mserp_fk_worker_id_value']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Initialize_variable_Is_Correct_Initialized": {
+          "runAfter": {
+            "Get_a_row_by_ID": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b680cf78-311b-4f58-b23e-9efffd322b65"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "IsCorrect",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Status_Information_Initialize": {
+          "runAfter": {
+            "Initialize_variable_Is_Correct_Initialized": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5d42627d-2b79-4206-a1b5-3bcecb44ec17"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "StatusInformation",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Bank_Account_Num": {
+          "runAfter": {
+            "Initialize_variable_Status_Information_Initialize": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "93f59855-4c29-40bf-bcf3-2c0883be4a4f"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "BankAccountNum",
+                "type": "string",
+                "value": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Bank_Account_Length": {
+          "runAfter": {
+            "Initialize_variable_Bank_Account_Num": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ea2a3c3d-4372-4950-843e-35fe9e98b509"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "BankAccountLength",
+                "type": "integer",
+                "value": "@length(variables('BankAccountNum'))"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Bank_Sort_Code": {
+          "runAfter": {
+            "Initialize_variable_Bank_Account_Length": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7ff5040d-0ea1-44f4-8092-1611538a862a"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "BankSortCode",
+                "type": "string",
+                "value": "@triggerOutputs()?['body/mserp_routingnumber']"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Bank_Sort_Code_Length": {
+          "runAfter": {
+            "Initialize_variable_Bank_Sort_Code": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "97ac2231-dc14-4361-8e57-53cd3e08a305"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "BankSortCodeLength",
+                "type": "integer",
+                "value": "@length(variables('BankSortCode'))"
+              }
+            ]
+          }
+        },
+        "BankAccountRoutingTypeCheck": {
+          "actions": {
+            "Condition": {
+              "actions": {
+                "Human_Resource_Parameter_List": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "b5100bbf-1ba6-4a67-b0fc-df75c095dcce"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "ListRecords",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "mserp_hcmparametersentities",
+                      "$filter": "mserp_dataareaid eq '1000'"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Loqate_Bank_Account_API": {
+                  "runAfter": {
+                    "Human_Resource_Parameter_List": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "53492664-77f3-46c5-9d9d-c5b701abb417"
+                  },
+                  "type": "Http",
+                  "inputs": {
+                    "method": "GET",
+                    "uri": "https://api.addressy.com/BankAccountValidation/Interactive/Validate/v2.00/json.ws?Key=JJ92-XY74-YC96-MW97&AccountNumber=@{variables('BankAccountNum')}&SortCode=@{variables('BankSortCode')}"
+                  }
+                },
+                "Loqate_API_Get_Json": {
+                  "runAfter": {
+                    "Loqate_Bank_Account_API": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "05edaef2-1c56-45ff-9cf2-77bb175b9d50"
+                  },
+                  "type": "ParseJson",
+                  "inputs": {
+                    "content": "@body('Loqate_Bank_Account_API')",
+                    "schema": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "IsCorrect": {
+                            "type": "string"
+                          },
+                          "IsDirectDebitCapable": {
+                            "type": "string"
+                          },
+                          "StatusInformation": {
+                            "type": "string"
+                          },
+                          "CorrectedSortCode": {
+                            "type": "string"
+                          },
+                          "CorrectedAccountNumber": {
+                            "type": "string"
+                          },
+                          "IBAN": {
+                            "type": "string"
+                          },
+                          "Bank": {
+                            "type": "string"
+                          },
+                          "BankBIC": {
+                            "type": "string"
+                          },
+                          "Branch": {
+                            "type": "string"
+                          },
+                          "BranchBIC": {
+                            "type": "string"
+                          },
+                          "ContactAddressLine1": {
+                            "type": "string"
+                          },
+                          "ContactAddressLine2": {
+                            "type": "string"
+                          },
+                          "ContactPostTown": {
+                            "type": "string"
+                          },
+                          "ContactPostcode": {
+                            "type": "string"
+                          },
+                          "ContactPhone": {
+                            "type": "string"
+                          },
+                          "ContactFax": {
+                            "type": "string"
+                          },
+                          "FasterPaymentsSupported": {
+                            "type": "string"
+                          },
+                          "CHAPSSupported": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "IsCorrect",
+                          "IsDirectDebitCapable",
+                          "StatusInformation",
+                          "CorrectedSortCode",
+                          "CorrectedAccountNumber",
+                          "IBAN",
+                          "Bank",
+                          "BankBIC",
+                          "Branch",
+                          "BranchBIC",
+                          "ContactAddressLine1",
+                          "ContactAddressLine2",
+                          "ContactPostTown",
+                          "ContactPostcode",
+                          "ContactPhone",
+                          "ContactFax",
+                          "FasterPaymentsSupported",
+                          "CHAPSSupported"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "Variables_value_set_from_Json": {
+                  "foreach": "@body('Loqate_API_Get_Json')",
+                  "actions": {
+                    "Set_information_variable_value_set": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "6345dd95-f281-46e6-b3ab-034e85a82cba"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "StatusInformation",
+                        "value": "@items('Variables_value_set_from_Json')['StatusInformation']"
+                      }
+                    },
+                    "Is_correct_variable_value_set": {
+                      "runAfter": {
+                        "Set_information_variable_value_set": [
+                          "Succeeded"
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "819b9746-f132-4159-9189-2dbab3773099"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "IsCorrect",
+                        "value": "@items('Variables_value_set_from_Json')['IsCorrect']"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Loqate_API_Get_Json": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "4086bb0b-0d3e-4bcd-8eb8-faf98f7d86cf"
+                  },
+                  "type": "Foreach"
+                },
+                "Condition_Is_Correct_Check": {
+                  "actions": {
+                    "Update_a_record_Worker_Bank_Account_when_IsCorrect_value_is_true": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "b8770ec4-2e6c-4b93-a7c1-dffc738053c5"
+                      },
+                      "type": "OpenApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connectionName": "shared_commondataserviceforapps",
+                          "operationId": "UpdateRecord",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                        },
+                        "parameters": {
+                          "entityName": "mserp_hcmworkerbankaccountentities",
+                          "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
+                          "item/mserp_lbhloqatevalidationtxt": "@variables('StatusInformation')"
+                        },
+                        "authentication": "@parameters('$authentication')"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Variables_value_set_from_Json": [
+                      "Succeeded"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Update_a_row": {
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "74328206-e66b-438e-82b5-423ab8041f43"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connectionName": "shared_commondataserviceforapps",
+                            "operationId": "UpdateRecord",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                          },
+                          "parameters": {
+                            "entityName": "mserp_hcmworkerbankaccountentities",
+                            "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
+                            "item/mserp_lbhloqatevalidationtxt": "@variables('StatusInformation')"
+                          },
+                          "authentication": "@parameters('$authentication')"
+                        }
+                      },
+                      "Send_an_email_notification_(V3)": {
+                        "runAfter": {
+                          "Update_a_row": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "6045a24e-cf58-4477-a196-1f1656501a35"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connectionName": "shared_sendmail",
+                            "operationId": "SendEmailV3",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+                          },
+                          "parameters": {
+                            "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;",
+                            "request/subject": "Bank account not validated",
+                            "request/text": "<p>Hi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee (Id - ) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
+                          },
+                          "authentication": "@parameters('$authentication')"
+                        }
+                      }
+                    }
+                  },
+                  "expression": {
+                    "equals": [
+                      "@variables('IsCorrect')",
+                      "True"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "dc1739f5-b56e-440c-a4ac-954b3b321f2f"
+                  },
+                  "type": "If"
+                }
+              },
+              "runAfter": {},
+              "else": {
+                "actions": {
+                  "Worker_bank_account_update_when_account_number_validation_failed": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "92c6037d-3615-40f5-9d71-0a916b41e102"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "UpdateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "mserp_hcmworkerbankaccountentities",
+                        "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
+                        "item/mserp_lbhloqatevalidationtxt": "AccountNumber/SortCodeInvalid"
+                      },
+                      "authentication": "@parameters('$authentication')"
+                    }
+                  },
+                  "Send_an_email_notification_(V3)_3": {
+                    "runAfter": {
+                      "Worker_bank_account_update_when_account_number_validation_failed": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "d1dc4b3f-3abc-4e15-86cd-6c6dd63731cd"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_sendmail",
+                        "operationId": "SendEmailV3",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+                      },
+                      "parameters": {
+                        "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;",
+                        "request/subject": "Bank account not validated",
+                        "request/text": "<p>Hi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee (Id - ) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
+                      },
+                      "authentication": "@parameters('$authentication')"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "and": [
+                  {
+                    "greaterOrEquals": [
+                      "@variables('BankAccountLength')",
+                      6
+                    ]
+                  },
+                  {
+                    "lessOrEquals": [
+                      "@variables('BankAccountLength')",
+                      10
+                    ]
+                  },
+                  {
+                    "greaterOrEquals": [
+                      "@variables('BankSortCodeLength')",
+                      6
+                    ]
+                  },
+                  {
+                    "lessOrEquals": [
+                      "@variables('BankSortCodeLength')",
+                      8
+                    ]
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "31700848-6c2e-4219-8e15-acbc1d6bb1d6"
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "Initialize_variable_Bank_Sort_Code_Length": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {
+              "Update_a_record_Worker_bank_account_routing_type_not_SC": {
+                "runAfter": {},
+                "metadata": {
+                  "operationMetadataId": "27b9ebec-3491-4b29-970e-fcd9456e806a"
+                },
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_commondataserviceforapps",
+                    "operationId": "UpdateRecord",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                  },
+                  "parameters": {
+                    "entityName": "mserp_hcmworkerbankaccountentities",
+                    "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']"
+                  },
+                  "authentication": "@parameters('$authentication')"
+                }
+              }
+            }
+          },
+          "expression": {
+            "equals": [
+              "@triggerOutputs()?['body/mserp_routingnumber']",
+              754400007
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "09706cba-c2d4-4d44-94ec-b2d3215c1e88"
+          },
+          "type": "If"
+        },
+        "Is_Primary_check": {
+          "actions": {
+            "Worker_bank_account_is_primary_update_list": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "1dbdf1dd-1944-4057-961a-29d55c8792ad"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmworkerbankaccountentities",
+                  "fetchXml": "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"false\">\n  <entity name=\"cdm_workerbankaccount\">\n    <attribute name=\"cdm_workerbankaccountid\" />\n    <attribute name=\"cdm_workerbankaccountnumber\" />\n    <attribute name=\"createdon\" />\n    <attribute name=\"cdm_workerid\" />\n    <attribute name=\"cdm_pwcisprimary_custom\" />\n    <order attribute=\"cdm_workerbankaccountnumber\" descending=\"false\" />\n    <filter type=\"and\">\n      <condition attribute=\"cdm_workerid\" operator=\"eq\" uitype=\"cdm_worker\" value=\"{@{outputs('Update_a_record_Worker_Bank_Account_when_IsCorrect_value_is_true')?['body/_mserp_fk_worker_id_value']}}\" />\n      <condition attribute=\"cdm_workerbankaccountnumber\" operator=\"ne\" value=\"@{outputs('Update_a_record_Worker_Bank_Account_when_IsCorrect_value_is_true')?['body/mserp_hcmworkerbankaccountentityid']}\" />\n      <condition attribute=\"cdm_pwcisprimary_custom\" operator=\"eq\" value=\"1\" />\n    </filter>\n  </entity>\n</fetch>"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Worker_bank_account_is_primary_update_loop": {
+              "foreach": "@outputs('Worker_bank_account_is_primary_update_list')?['body/value']",
+              "actions": {
+                "Worker_bank_account_is_primary_update": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "71cded42-1f9e-4b5b-9b25-f80879d1dcb1"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "mserp_hcmworkerbankaccountentities",
+                      "recordId": "@items('Worker_bank_account_is_primary_update_loop')?['mserp_hcmworkerbankaccountentityid']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "runAfter": {
+                "Worker_bank_account_is_primary_update_list": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "be918ef5-5dee-42ad-8113-50f1aed9bb89"
+              },
+              "type": "Foreach"
+            }
+          },
+          "runAfter": {
+            "BankAccountRoutingTypeCheck": [
+              "Succeeded"
+            ]
+          },
+          "expression": {
+            "equals": [
+              "@outputs('Update_a_record_Worker_Bank_Account_when_IsCorrect_value_is_true')?['body/mserp_pwcisprimary_custom']",
+              true
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6a78ea5f-50cb-4192-88f7-6240646aa3cb"
+          },
+          "type": "If"
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
