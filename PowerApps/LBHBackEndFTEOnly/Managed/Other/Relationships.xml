@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_crbb7_lbhannualleavedays" />
+  <EntityRelationship Name="business_unit_crbb7_localgovernmentleavedays" />
+  <EntityRelationship Name="lk_crbb7_lbhannualleavedays_createdby" />
+  <EntityRelationship Name="lk_crbb7_lbhannualleavedays_modifiedby" />
+  <EntityRelationship Name="lk_crbb7_localgovernmentleavedays_createdby" />
+  <EntityRelationship Name="lk_crbb7_localgovernmentleavedays_modifiedby" />
+  <EntityRelationship Name="owner_crbb7_lbhannualleavedays" />
+  <EntityRelationship Name="owner_crbb7_localgovernmentleavedays" />
+  <EntityRelationship Name="team_crbb7_lbhannualleavedays" />
+  <EntityRelationship Name="team_crbb7_localgovernmentleavedays" />
+  <EntityRelationship Name="user_crbb7_lbhannualleavedays" />
+  <EntityRelationship Name="user_crbb7_localgovernmentleavedays" />
+</EntityRelationships>
