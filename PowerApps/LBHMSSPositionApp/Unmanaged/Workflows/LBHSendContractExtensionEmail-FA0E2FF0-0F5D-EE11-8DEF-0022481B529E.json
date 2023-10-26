@@ -1,0 +1,379 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps_2": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_113e2"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_afe0e"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_sendmail_1": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedsendmail_49c4a"
+        },
+        "api": {
+          "name": "shared_sendmail"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "6d45852f-772b-48a9-95bf-607dfd4dcb87"
+          },
+          "type": "Request",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "PositionNumber": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "00c84848-c2f6-4b98-9fb6-a64015729165"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PositionNumber",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Set_variable": {
+          "runAfter": {
+            "PositionNumber": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "3bb62ab7-01ed-4955-8b59-d73789f64c9b"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "PositionNumber",
+            "value": "@{triggerBody()['Setvariable_Value']}"
+          }
+        },
+        "Manager": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "1aa72571-7b42-4cca-a6e2-98785962cf5a"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ManagerName",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "ManagerSet": {
+          "runAfter": {
+            "Manager": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e031a430-2ef1-491a-b87d-46268134fd63"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "ManagerName",
+            "value": "@triggerBody()['ManagerSet_Value']"
+          }
+        },
+        "Employee": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "c1a3fd31-d6df-4936-8760-050d25161b46"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "EmployeeName",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "EmpNumber": {
+          "runAfter": {
+            "Employee": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "616145af-1a27-4112-a87f-691162e9a37c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "EmployeeNumber",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Contract": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "c05c21f2-b3e8-460b-ab0d-4a2a6e67afc2"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Contract End Date",
+                "type": "string",
+                "value": "@triggerBody()['SetContract_Value']"
+              }
+            ]
+          }
+        },
+        "SetContract": {
+          "runAfter": {
+            "Contract": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "58459146-0762-4293-b1ff-e37d77581aaa"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "Contract End Date",
+            "value": "@{triggerBody()['SetContract_Value']}"
+          }
+        },
+        "EndDate": {
+          "runAfter": {
+            "SetContract": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f6b210d9-92a9-4269-9368-4990af5c521c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "EndDate",
+                "type": "string",
+                "value": "@{formatDateTime(variables('Contract End Date'), 'dd/MM/yyyy hh:mm tt')}"
+              }
+            ]
+          }
+        },
+        "GetPosition": {
+          "runAfter": {
+            "EmpNumber": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d213bcb3-f988-4f65-9a20-4dad0ad0a74a"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps_2",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmjobpositiondualwriteentities",
+              "$filter": "mserp_hcmjobpositiondualwriteentityId eq '@{triggerBody()['Setvariable_Value']}'",
+              "$top": 1
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('GetPosition')?['body/value']",
+          "actions": {
+            "List_rows": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "1297b2d8-b573-4523-bbe7-1eaa8c581702"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositionworkerassignmentv2entities",
+                  "$filter": "mserp_FK_Position_id eq '@{items('Apply_to_each')?['mserp_hcmjobpositiondualwriteentityid']}'",
+                  "$orderby": "mserp_validfrom desc",
+                  "$top": 1
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Apply_to_each_2": {
+              "foreach": "@outputs('List_rows')?['body/value']",
+              "actions": {
+                "Get_a_row_by_ID": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "d6df57c4-1081-4711-a8b2-4aadd296a24c"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps_1",
+                      "operationId": "GetItem",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "mserp_hcmworkerentities",
+                      "recordId": "@items('Apply_to_each_2')?['_mserp_fk_worker_id_value']"
+                    },
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
+                  }
+                },
+                "Set_variable_2": {
+                  "runAfter": {
+                    "Get_a_row_by_ID": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "cf373daf-02c2-4aa3-b216-1976487d24d6"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "EmployeeNumber",
+                    "value": "@outputs('Get_a_row_by_ID')?['body/crbb7_fullname']"
+                  }
+                },
+                "Set_variable_3": {
+                  "runAfter": {
+                    "Set_variable_2": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "5edd970d-68fb-43d0-aaeb-43e185683c07"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "EmployeeNumber",
+                    "value": "@outputs('Get_a_row_by_ID')?['body/crbb7_name']"
+                  }
+                }
+              },
+              "runAfter": {
+                "List_rows": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "0ce15c6c-a0a0-41be-a9da-8db6fd153d53"
+              },
+              "type": "Foreach"
+            }
+          },
+          "runAfter": {
+            "GetPosition": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "0f7f7416-357f-4a7e-bdcf-8ce6147dba72"
+          },
+          "type": "Foreach"
+        },
+        "Send_an_email_notification_(V3)": {
+          "runAfter": {
+            "Set_variable": [
+              "Succeeded"
+            ],
+            "ManagerSet": [
+              "Succeeded"
+            ],
+            "EndDate": [
+              "Succeeded"
+            ],
+            "Apply_to_each": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "4a2b68b9-f70c-4d89-ac93-99fdd5a61e56"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sendmail_1",
+              "operationId": "SendEmailV3",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+            },
+            "parameters": {
+              "request/to": "yaminia@hcl.com;anveshkumar.v@hcl.com;",
+              "request/subject": "TEST    Extension of Contract - @{variables('EmployeeName')}@{variables('EmployeeNumber')}@{variables('PositionNumber')}",
+              "request/text": "<p>The employee has had a contract extension:-<br>\n<br>\nNew contract end date : &nbsp;@{variables('EndDate')}<br>\nManagers name : &nbsp;@{variables('ManagerName')}</p>"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
