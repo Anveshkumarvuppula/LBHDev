@@ -3,21 +3,21 @@
   <SolutionManifest>
     <UniqueName>LBHBuySellLeaveRequest</UniqueName>
     <LocalizedNames>
-      <LocalizedName description="LBH Buy Sell Leave Request" languagecode="1033" />
+      <LocalizedName description="LBHBuySellLeaveRequest" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.4</Version>
+    <Version>10.0.95</Version>
     <Managed>0</Managed>
     <Publisher>
-      <UniqueName>Crbe06c</UniqueName>
+      <UniqueName>Cr5bf49</UniqueName>
       <LocalizedNames>
         <LocalizedName description="CDS Default Publisher" languagecode="1033" />
       </LocalizedNames>
       <Descriptions />
       <EMailAddress xsi:nil="true"></EMailAddress>
       <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
-      <CustomizationPrefix>crd52</CustomizationPrefix>
-      <CustomizationOptionValuePrefix>76712</CustomizationOptionValuePrefix>
+      <CustomizationPrefix>crbb7</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>82910</CustomizationOptionValuePrefix>
       <Addresses>
         <Address>
           <AddressNumber>1</AddressNumber>
@@ -78,22 +78,22 @@
       </Addresses>
     </Publisher>
     <RootComponents>
-      <RootComponent type="29" id="{304556ee-c871-ee11-8179-0022481b5dbb}" behavior="0" />
-      <RootComponent type="29" id="{404caeb4-c971-ee11-8179-0022481b5dbb}" behavior="0" />
-      <RootComponent type="29" id="{936f9668-c971-ee11-8179-0022481b5836}" behavior="0" />
+      <RootComponent type="29" id="{22809185-fa61-ee11-8df0-0022481b5ee5}" behavior="0" />
+      <RootComponent type="29" id="{c609a973-fb61-ee11-8df0-0022481b5ee5}" behavior="0" />
+      <RootComponent type="29" id="{e81d731f-fb61-ee11-8df0-0022481b529e}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedsendmail_1d8ed" solution="Active" id.connectionreferencelogicalname="crd52_sharedsendmail_1d8ed" />
-        <Dependent type="29" displayName="LBH Buy Leave Request Confirmation" id="{304556ee-c871-ee11-8179-0022481b5dbb}" />
+        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
+        <Dependent type="29" displayName="LBH Buy Leave Request Confirmation" id="{22809185-fa61-ee11-8df0-0022481b5ee5}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedsendmail_1d8ed" solution="Active" id.connectionreferencelogicalname="crd52_sharedsendmail_1d8ed" />
-        <Dependent type="29" displayName="LBH Sell Leave Request Confirmation" id="{404caeb4-c971-ee11-8179-0022481b5dbb}" />
+        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
+        <Dependent type="29" displayName="LBH Sell Leave Request Confirmation" id="{c609a973-fb61-ee11-8df0-0022481b5ee5}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedsendmail_1d8ed" solution="Active" id.connectionreferencelogicalname="crd52_sharedsendmail_1d8ed" />
-        <Dependent type="29" displayName="LBH Manager Confirmation" id="{936f9668-c971-ee11-8179-0022481b5836}" />
+        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
+        <Dependent type="29" displayName="LBH Manager Confirmation" id="{e81d731f-fb61-ee11-8df0-0022481b529e}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>

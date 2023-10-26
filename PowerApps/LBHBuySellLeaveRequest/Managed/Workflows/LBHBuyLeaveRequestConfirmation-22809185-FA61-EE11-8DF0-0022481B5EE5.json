@@ -1,19 +1,19 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_microsoftforms": {
+      "shared_microsoftforms_2": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crd52_sharedmicrosoftforms_8688c"
+          "connectionReferenceLogicalName": "crbb7_sharedmicrosoftforms_ef66f"
         },
         "api": {
           "name": "shared_microsoftforms"
         }
       },
-      "shared_sendmail": {
+      "shared_sendmail_2": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crd52_sharedsendmail_1d8ed"
+          "connectionReferenceLogicalName": "crbb7_Mail"
         },
         "api": {
           "name": "shared_sendmail"
@@ -34,15 +34,15 @@
         }
       },
       "triggers": {
-        "Connections": {
+        "When_a_new_response_is_submitted": {
           "splitOn": "@triggerOutputs()?['body/value']",
           "metadata": {
-            "operationMetadataId": "417c946e-e2c0-4a63-8f17-33915653c5c8"
+            "operationMetadataId": "2d5cae7c-fa2c-43ab-a3ef-2653968816b5"
           },
           "type": "OpenApiConnectionWebhook",
           "inputs": {
             "host": {
-              "connectionName": "shared_microsoftforms",
+              "connectionName": "shared_microsoftforms_2",
               "operationId": "CreateFormWebhook",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
@@ -57,12 +57,12 @@
         "Get_response_details": {
           "runAfter": {},
           "metadata": {
-            "operationMetadataId": "346981e0-467a-4dd0-8896-8c6aa24db116"
+            "operationMetadataId": "f5873059-2924-4b56-99bf-3cbfafd8b6d9"
           },
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_microsoftforms",
+              "connectionName": "shared_microsoftforms_2",
               "operationId": "GetFormResponseById",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
@@ -80,12 +80,12 @@
             ]
           },
           "metadata": {
-            "operationMetadataId": "690580cd-efef-430d-a475-e7904af30f8e"
+            "operationMetadataId": "d32b8b61-74f6-4fd7-bae2-0a26c59aff9c"
           },
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_sendmail",
+              "connectionName": "shared_sendmail_2",
               "operationId": "SendEmailV3",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
@@ -99,7 +99,7 @@
         }
       }
     },
-    "templateName": null
+    "templateName": ""
   },
   "schemaVersion": "1.0.0.0"
 }

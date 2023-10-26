@@ -1,19 +1,19 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_microsoftforms": {
+      "shared_microsoftforms_1": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crd52_sharedmicrosoftforms_8688c"
+          "connectionReferenceLogicalName": "crbb7_sharedmicrosoftforms_c69c9"
         },
         "api": {
           "name": "shared_microsoftforms"
         }
       },
-      "shared_sendmail": {
+      "shared_sendmail_2": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crd52_sharedsendmail_1d8ed"
+          "connectionReferenceLogicalName": "crbb7_Mail"
         },
         "api": {
           "name": "shared_sendmail"
@@ -37,17 +37,17 @@
         "When_a_new_response_is_submitted": {
           "splitOn": "@triggerOutputs()?['body/value']",
           "metadata": {
-            "operationMetadataId": "2aa25595-a8ef-453a-ab78-d168fb329dfa"
+            "operationMetadataId": "17fc10ca-25b8-4cfb-983b-0f17c0f1ba5b"
           },
           "type": "OpenApiConnectionWebhook",
           "inputs": {
             "host": {
-              "connectionName": "shared_microsoftforms",
+              "connectionName": "shared_microsoftforms_1",
               "operationId": "CreateFormWebhook",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUNaODRMR0VWNjdOQUlKRUk3R1ZCMFJLVy4u"
+              "form_id": "U5nD0tuoPEyX8tLcdvs-LPiloywIGY9MvtgXuNP7-yZUNFc3QVZERktVMk5ET0w4OVA2WklJMlpLUS4u"
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -57,17 +57,17 @@
         "Get_response_details": {
           "runAfter": {},
           "metadata": {
-            "operationMetadataId": "8c8871d9-2191-49c9-8305-50802cb232e4"
+            "operationMetadataId": "c17c1813-2631-4026-ae96-97845f325a7c"
           },
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_microsoftforms",
+              "connectionName": "shared_microsoftforms_1",
               "operationId": "GetFormResponseById",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUNaODRMR0VWNjdOQUlKRUk3R1ZCMFJLVy4u",
+              "form_id": "U5nD0tuoPEyX8tLcdvs-LPiloywIGY9MvtgXuNP7-yZUNFc3QVZERktVMk5ET0w4OVA2WklJMlpLUS4u",
               "response_id": "@triggerOutputs()?['body/resourceData/responseId']"
             },
             "authentication": "@parameters('$authentication')"
@@ -80,19 +80,19 @@
             ]
           },
           "metadata": {
-            "operationMetadataId": "245391e9-971e-4e93-a58e-ffe50a2f0b26"
+            "operationMetadataId": "e56db7c7-fa9a-409b-8453-67ede0b38766"
           },
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_sendmail",
+              "connectionName": "shared_sendmail_2",
               "operationId": "SendEmailV3",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
             "parameters": {
               "request/to": "test.payroll@harrow.gov.uk;",
-              "request/subject": "@{outputs('Get_response_details')?['body/rcfde10290c0346d8be6bd81662af47a8']}, Manager buy/sell leave confirmation ",
-              "request/text": "<p>Employee: @{outputs('Get_response_details')?['body/rcfde10290c0346d8be6bd81662af47a8']}<br>\n<br>\nBudget manager approval: @{outputs('Get_response_details')?['body/r4d9e577183364dc4a5510cef7523e027']}<br>\n<br>\nDate approval received:<br>\n@{outputs('Get_response_details')?['body/r86ed4665b7824fe0a6678b6410631a23']}<br>\n<br>\nManager email:<br>\n@{outputs('Get_response_details')?['body/responder']}</p>"
+              "request/subject": "Sell Leave Request Confirmation - @{outputs('Get_response_details')?['body/responder']}, @{outputs('Get_response_details')?['body/submitDate']}",
+              "request/text": "<p>I confirm I have taken, or planned to take, 28 day’s leave, including bank holidays (pro rata for part time staff), before your application will be considered. &nbsp;Please ensure that you have planned how you intend to take the required 28 days (including bank holidays) prior to completing this application.<br>\n<br>\n@{outputs('Get_response_details')?['body/r7fd631f4370a440f88413d1732c5c412']}<br>\n<br>\nI understand that if my request to sell back some of my annual leave is granted, I will receive a one-off payment which will be subject to national insurance and tax deductions.<br>\n<br>\n@{outputs('Get_response_details')?['body/r90309269fb9143df9a367a06ce97baad']}<br>\n<br>\nI authorise the London Borough of Harrow to pay back money to my salary in accordance with this scheme.<br>\n<br>\n@{outputs('Get_response_details')?['body/ra479743473bf456daf753dea075a9b4c']}</p>"
             },
             "authentication": "@parameters('$authentication')"
           }
