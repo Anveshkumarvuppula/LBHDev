@@ -1,10 +1,10 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_microsoftforms": {
+      "shared_microsoftforms_1": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crd52_sharedmicrosoftforms_8688c"
+          "connectionReferenceLogicalName": "crbb7_sharedmicrosoftforms_042d1"
         },
         "api": {
           "name": "shared_microsoftforms"
@@ -13,7 +13,7 @@
       "shared_sendmail_1": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crd52_sharedsendmail_1d8ed"
+          "connectionReferenceLogicalName": "crbb7_Mail"
         },
         "api": {
           "name": "shared_sendmail"
@@ -34,15 +34,15 @@
         }
       },
       "triggers": {
-        "Exit_Interview_completed": {
+        "When_a_new_response_is_submitted": {
           "splitOn": "@triggerOutputs()?['body/value']",
           "metadata": {
-            "operationMetadataId": "d37148db-5357-4f68-8134-0243f86d2117"
+            "operationMetadataId": "545ae55d-5a76-46ae-a0c7-183b23ff1658"
           },
           "type": "OpenApiConnectionWebhook",
           "inputs": {
             "host": {
-              "connectionName": "shared_microsoftforms",
+              "connectionName": "shared_microsoftforms_1",
               "operationId": "CreateFormWebhook",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
@@ -57,12 +57,12 @@
         "Get_response_details": {
           "runAfter": {},
           "metadata": {
-            "operationMetadataId": "4e8138ce-d762-42ad-84f1-bd7ee58060b8"
+            "operationMetadataId": "c090c0b2-ed80-4831-b825-697e6360582f"
           },
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_microsoftforms",
+              "connectionName": "shared_microsoftforms_1",
               "operationId": "GetFormResponseById",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
@@ -99,7 +99,7 @@
         }
       }
     },
-    "templateName": null
+    "templateName": ""
   },
   "schemaVersion": "1.0.0.0"
 }

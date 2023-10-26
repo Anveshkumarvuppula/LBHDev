@@ -6,18 +6,18 @@
       <LocalizedName description="LBH ExitInterview" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.2</Version>
+    <Version>10.0.95</Version>
     <Managed>1</Managed>
     <Publisher>
-      <UniqueName>Crbe06c</UniqueName>
+      <UniqueName>Cr5bf49</UniqueName>
       <LocalizedNames>
         <LocalizedName description="CDS Default Publisher" languagecode="1033" />
       </LocalizedNames>
       <Descriptions />
       <EMailAddress xsi:nil="true"></EMailAddress>
       <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
-      <CustomizationPrefix>crd52</CustomizationPrefix>
-      <CustomizationOptionValuePrefix>76712</CustomizationOptionValuePrefix>
+      <CustomizationPrefix>crbb7</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>82910</CustomizationOptionValuePrefix>
       <Addresses>
         <Address>
           <AddressNumber>1</AddressNumber>
@@ -78,16 +78,12 @@
       </Addresses>
     </Publisher>
     <RootComponents>
-      <RootComponent type="29" id="{5db186e5-c771-ee11-8179-0022481b5dbb}" behavior="0" />
+      <RootComponent type="29" id="{5a1718fd-f861-ee11-8df0-0022481b529e}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedmicrosoftforms_8688c" solution="Active" id.connectionreferencelogicalname="crd52_sharedmicrosoftforms_8688c" />
-        <Dependent type="29" displayName="LBH Exit Interview Flow" id="{5db186e5-c771-ee11-8179-0022481b5dbb}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedsendmail_1d8ed" solution="Active" id.connectionreferencelogicalname="crd52_sharedsendmail_1d8ed" />
-        <Dependent type="29" displayName="LBH Exit Interview Flow" id="{5db186e5-c771-ee11-8179-0022481b5dbb}" />
+        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
+        <Dependent type="29" displayName="LBH Exit Interview Flow" id="{5a1718fd-f861-ee11-8df0-0022481b529e}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
