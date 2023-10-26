@@ -6,18 +6,18 @@
       <LocalizedName description="LBH LoqateBankValidation_US25514" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.70</Version>
+    <Version>10.0.95</Version>
     <Managed>1</Managed>
     <Publisher>
-      <UniqueName>Crbe06c</UniqueName>
+      <UniqueName>Cr5bf49</UniqueName>
       <LocalizedNames>
         <LocalizedName description="CDS Default Publisher" languagecode="1033" />
       </LocalizedNames>
       <Descriptions />
       <EMailAddress xsi:nil="true"></EMailAddress>
       <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
-      <CustomizationPrefix>crd52</CustomizationPrefix>
-      <CustomizationOptionValuePrefix>76712</CustomizationOptionValuePrefix>
+      <CustomizationPrefix>crbb7</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>82910</CustomizationOptionValuePrefix>
       <Addresses>
         <Address>
           <AddressNumber>1</AddressNumber>
@@ -78,30 +78,191 @@
       </Addresses>
     </Publisher>
     <RootComponents>
-      <RootComponent type="29" id="{3d5df2e1-6e6e-ee11-9ae7-0022481b5836}" behavior="0" />
+      <RootComponent type="1" schemaName="mserp_hcmparametersentity" behavior="0" />
+      <RootComponent type="1" schemaName="mserp_hcmworkerbankaccountentity" behavior="0" />
+      <RootComponent type="1" schemaName="mserp_hcmworkerentity" behavior="0" />
+      <RootComponent type="29" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmemployeev2entity" displayName="Employee V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmemploymententity" displayName="Employment (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
+      </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmparametersentity" displayName="Human resources parameters (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
-        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{3d5df2e1-6e6e-ee11-9ae7-0022481b5836}" />
+        <Dependent type="1" schemaName="mserp_hcmparametersentity" displayName="Human resources parameters (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmparametersentity" displayName="Human resources parameters (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmparametersentity" displayName="Human resources parameters (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionentity" displayName="Positions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmententity" displayName="Position worker assignments (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
-        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{3d5df2e1-6e6e-ee11-9ae7-0022481b5836}" />
+        <Dependent type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
-        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{3d5df2e1-6e6e-ee11-9ae7-0022481b5836}" />
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="connectionreference" displayName="new_sharedcommondataserviceforapps_5ed54" solution="LBHClearOffPositionDetails (1.0.0.1)" id.connectionreferencelogicalname="new_sharedcommondataserviceforapps_5ed54" />
-        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{3d5df2e1-6e6e-ee11-9ae7-0022481b5836}" />
+        <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_payrollbankaccountdisbursemententity" displayName="Bank account disbursements (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_payrollbankaccountdisbursemententity" displayName="Bank account disbursements (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cdm_companycode" displayName="Company Code" parentSchemaName="cdm_company" parentDisplayName="Company" solution="Dynamics365Company (2.2.2.132)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cdm_companyid" displayName="Company" parentSchemaName="cdm_company" parentDisplayName="Company" solution="Dynamics365Company (2.2.2.132)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_bankaccountnumber" displayName="Bank account number" parentSchemaName="mserp_hcmworkerbankaccountentity" parentDisplayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_dataareaid_id" displayName="Company" parentSchemaName="mserp_hcmparametersentity" parentDisplayName="Human resources parameters (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_fk_worker_id" displayName="Worker" parentSchemaName="mserp_hcmworkerbankaccountentity" parentDisplayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmworkerentityid" displayName="Worker (mserp)" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_personnelnumber" displayName="Personnel number" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_pwcisprimary_custom" displayName="Is primary" parentSchemaName="mserp_hcmworkerbankaccountentity" parentDisplayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_routingnumber" displayName=" Routing number" parentSchemaName="mserp_hcmworkerbankaccountentity" parentDisplayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_routingnumbertype" displayName="Routing number type" parentSchemaName="mserp_hcmworkerbankaccountentity" parentDisplayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBHBankAccountValidationUsingLoqate" id="{fa47b34e-285c-ee11-8def-0022481b5ee5}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
