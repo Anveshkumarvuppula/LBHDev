@@ -1,0 +1,209 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_5ed54"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_a_row_is_added,_modified_or_deleted": {
+          "metadata": {
+            "operationMetadataId": "7613a745-fce5-409e-b0aa-e7b70db32e17"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 4,
+              "subscriptionRequest/entityname": "mserp_hcmpositionworkerassignmentv2entity",
+              "subscriptionRequest/scope": 4
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Initialize_variable_-_AssignmentEndDate": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "9815e08f-c24a-40e5-a5c2-433465d53583"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "AssignmentEndDate",
+                "type": "string",
+                "value": "@triggerOutputs()?['body/mserp_validto']"
+              }
+            ]
+          }
+        },
+        "Get_a_row_by_ID_-_Job_Position_Entity": {
+          "runAfter": {
+            "Initialize_variable_-_AssignmentEndDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1b2d00ff-2fcd-49b9-b0df-2e1f8565f2e6"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmjobpositiondualwriteentities",
+              "recordId": "@triggerOutputs()?['body/mserp_positionid']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "List_rows_-_Position_Details": {
+          "runAfter": {
+            "Get_a_row_by_ID_-_Job_Position_Entity": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "264ba331-7492-463c-a3d5-f81ab18096c9"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmpositiondetailentities",
+              "$filter": "mserp_positionid eq '@{outputs('Get_a_row_by_ID_-_Job_Position_Entity')?['body/mserp_positionid']}'"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Filter_array": {
+          "runAfter": {
+            "List_rows_-_Position_Details": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a1be21e4-c280-4366-bdb6-d4d75f6562a1"
+          },
+          "type": "Query",
+          "inputs": {
+            "from": "@outputs('List_rows_-_Position_Details')?['body/value']",
+            "where": "@lessOrEquals(item()?['mserp_validfrom'], variables('AssignmentEndDate'))"
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@body('Filter_array')",
+          "actions": {
+            "Apply_to_each_2": {
+              "foreach": "@outputs('List_rows_-_Position_Details')?['body/value']",
+              "actions": {
+                "Update_a_row": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "3eae5577-d94a-4f6e-a336-2408992b18dc"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "mserp_hcmpositiondetailentities",
+                      "recordId": "@items('Apply_to_each_2')?['mserp_hcmpositiondetailentityid']",
+                      "item/mserp_jobid": "@items('Apply_to_each_2')?['mserp_jobid']",
+                      "item/mserp_positionid": "@items('Apply_to_each_2')?['mserp_positionid']",
+                      "item/mserp_validto": "@variables('AssignmentEndDate')"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Add_a_new_row": {
+                  "runAfter": {
+                    "Update_a_row": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "fcd494f1-27e8-4dfc-b0b6-5ca6052565b3"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "mserp_hcmpositiondetailentities",
+                      "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
+                      "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
+                      "item/mserp_availableforassignment": "@outputs('Update_a_row')?['body/mserp_availableforassignment']",
+                      "item/mserp_compensationregionid": "@null",
+                      "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
+                      "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
+                      "item/mserp_validfrom": "@addSeconds(variables('AssignmentEndDate'),1)",
+                      "item/mserp_jobfamilyid": "@outputs('Update_a_row')?['body/mserp_jobfamilyid']",
+                      "item/mserp_fulltimeequivalent": "@outputs('Update_a_row')?['body/mserp_fulltimeequivalent']",
+                      "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "de43baa0-653f-409c-ac69-a9cc1d1dcd80"
+              },
+              "type": "Foreach"
+            }
+          },
+          "runAfter": {
+            "Filter_array": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f82a51f2-1e9d-4883-9cc3-3fae8d712f2a"
+          },
+          "type": "Foreach"
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
