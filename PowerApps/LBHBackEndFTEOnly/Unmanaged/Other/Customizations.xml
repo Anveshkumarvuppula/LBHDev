@@ -19,13 +19,6 @@
       <statecode>0</statecode>
       <statuscode>1</statuscode>
     </connectionreference>
-    <connectionreference connectionreferencelogicalname="crbb7_sharedplanner_37ad4">
-      <connectionreferencedisplayname>Planner LBHBackEndFTEOnly-37ad4</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_planner</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
   </connectionreferences>
   <Languages>
     <Language>1033</Language>

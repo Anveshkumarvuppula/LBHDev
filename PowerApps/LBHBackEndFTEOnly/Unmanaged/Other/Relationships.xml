@@ -6,6 +6,13 @@
   <EntityRelationship Name="lk_crbb7_lbhannualleavedays_modifiedby" />
   <EntityRelationship Name="lk_crbb7_localgovernmentleavedays_createdby" />
   <EntityRelationship Name="lk_crbb7_localgovernmentleavedays_modifiedby" />
+  <EntityRelationship Name="mserp_FK_HcmEmploymentEntity_EmployedWorker" />
+  <EntityRelationship Name="mserp_FK_HcmJobEntity_JobFunction" />
+  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_CompensationRegion" />
+  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_Job" />
+  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_Position" />
+  <EntityRelationship Name="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" />
+  <EntityRelationship Name="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" />
   <EntityRelationship Name="owner_crbb7_lbhannualleavedays" />
   <EntityRelationship Name="owner_crbb7_localgovernmentleavedays" />
   <EntityRelationship Name="team_crbb7_lbhannualleavedays" />
