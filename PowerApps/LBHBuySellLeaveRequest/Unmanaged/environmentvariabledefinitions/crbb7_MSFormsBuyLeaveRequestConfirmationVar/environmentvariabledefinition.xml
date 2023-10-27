@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_MSFormsBuyLeaveRequestConfirmationVar">
+  <defaultvalue>LBH DEV Buy Annual Leave Confirmation </defaultvalue>
+  <displayname default="MSFormsBuyLeaveRequestConfirmationVar">
+    <label description="MSFormsBuyLeaveRequestConfirmationVar" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.96</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>
