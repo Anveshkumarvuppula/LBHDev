@@ -8,7 +8,7 @@
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_042d1",
-      "ConnectionId": "1452d4eeb44d49c681791ae986fe266c",
+      "ConnectionId": "8c3263eea2254ae48556d7682e2dae1b",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     }
   ]

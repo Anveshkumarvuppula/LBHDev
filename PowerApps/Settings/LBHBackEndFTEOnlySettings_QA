@@ -8,7 +8,7 @@
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_shareddynamicsax_5b162",
-      "ConnectionId": "172a45d7096146dd87183d2906e8f4f7",
+      "ConnectionId": "41f2be60bddf46378885c693546a738e",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
     }
   ]
