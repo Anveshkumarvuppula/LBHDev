@@ -31,6 +31,13 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "MSFormsExitInterviewVar (crbb7_MSFormsExitInterviewVar)": {
+          "defaultValue": "LBH DEV Exit Interview",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSFormsExitInterviewVar"
+          }
         }
       },
       "triggers": {
@@ -47,7 +54,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUNVIyWUhJNVZKVVMwTzZFRTgyVE5CMEpNVy4u"
+              "form_id": "@parameters('MSFormsExitInterviewVar (crbb7_MSFormsExitInterviewVar)')"
             },
             "authentication": "@parameters('$authentication')"
           }
