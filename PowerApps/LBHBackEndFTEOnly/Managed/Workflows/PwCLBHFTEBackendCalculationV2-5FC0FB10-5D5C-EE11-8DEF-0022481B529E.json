@@ -31,6 +31,13 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "entityEnvVariable (crbb7_entityEnvVariable)": {
+          "defaultValue": "lbh-fo-preprod.sandbox.operations.dynamics.com",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_entityEnvVariable"
+          }
         }
       },
       "triggers": {
@@ -47,7 +54,7 @@
             },
             "parameters": {
               "subscriptionRequest/message": 4,
-              "subscriptionRequest/entityname": "crbb7_jobposition",
+              "subscriptionRequest/entityname": "mserp_hcmjobpositiondualwriteentity",
               "subscriptionRequest/scope": 4
             },
             "authentication": "@parameters('$authentication')"
@@ -68,8 +75,8 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
             "parameters": {
-              "entityName": "crbb7_jobpositions",
-              "recordId": "@triggerOutputs()?['body/crbb7_jobpositionid']"
+              "entityName": "mserp_hcmjobpositiondualwriteentities",
+              "recordId": "@triggerOutputs()?['body/mserp_hcmjobpositiondualwriteentityid']"
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -91,8 +98,8 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
             "parameters": {
-              "entityName": "crbb7_jobs",
-              "recordId": "@outputs('GetPosition')?['body/_crbb7_job_value']"
+              "entityName": "mserp_hcmjobentities",
+              "recordId": "@outputs('GetPosition')?['body/mserp_jobid']"
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -114,8 +121,8 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
             "parameters": {
-              "entityName": "crbb7_jobfunctions",
-              "recordId": "@outputs('GetJob')?['body/_crbb7_jobfunction_value']"
+              "entityName": "mserp_hcmjobfunctionentities",
+              "recordId": "@outputs('GetJob')?['body/_mserp_fk_jobfunction_id_value']"
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -137,9 +144,9 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
             },
             "parameters": {
-              "dataset": "lbh-fo-preprod.sandbox.operations.dynamics.com",
+              "dataset": "@parameters('entityEnvVariable (crbb7_entityEnvVariable)')",
               "table": "PHROccupationsCollection",
-              "id": "1000,@{outputs('GetJobFunction')?['body/crbb7_name']},2008-01-01T12:00:00Z"
+              "id": "1000,@{outputs('GetJob')?['body/_mserp_fk_jobfunction_id_value']},2008-01-01T12:00:00Z"
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -161,7 +168,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
             },
             "parameters": {
-              "dataset": "lbh-fo-preprod.sandbox.operations.dynamics.com",
+              "dataset": "@parameters('entityEnvVariable (crbb7_entityEnvVariable)')",
               "table": "PHRUnionAfflnsCollection",
               "id": "@{outputs('GetOccupation')?['body/dataAreaId']},@{outputs('GetOccupation')?['body/UnionAfflnCode']},2005-01-01T12:00:00Z"
             },
@@ -259,7 +266,7 @@
               {
                 "name": "Year",
                 "type": "string",
-                "value": "formatDateTime(utcNow(),'yyyy')"
+                "value": "@{formatDateTime(utcNow(),'yyyy')}"
               }
             ]
           }
@@ -432,8 +439,8 @@
             },
             "parameters": {
               "entityName": "mserp_hcmpositiondetailentities",
-              "$filter": "mshr_positionid eq '@{outputs('GetPosition')?['body/crbb7_name']}'",
-              "$orderby": "mshr_validto desc",
+              "$filter": "mserp_positionid eq '@{outputs('GetPosition')?['body/mserp_hcmjobpositiondualwriteentityid']}'",
+              "$orderby": "mserp_validto desc",
               "$top": 1
             },
             "authentication": "@parameters('$authentication')"
@@ -495,7 +502,7 @@
                     },
                     "parameters": {
                       "entityName": "mserp_hcmpositionworkerassignmentv2entities",
-                      "$filter": "_cdm_jobpositionid_value eq'@{outputs('GetPosition')?['body/crbb7_jobpositionid']}'"
+                      "$filter": "mserp_FK_job_id eq'@{outputs('GetPosition')?['body/mserp_hcmjobpositiondualwriteentityid']}'"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
@@ -516,7 +523,7 @@
                           "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                         },
                         "parameters": {
-                          "entityName": "crbb7_workers",
+                          "entityName": "mserp_hcmworkerentities",
                           "recordId": "@items('Find_Worker')?['_mserp_fk_worker_id_value']"
                         },
                         "authentication": "@parameters('$authentication')"
@@ -534,7 +541,7 @@
                       "type": "AppendToStringVariable",
                       "inputs": {
                         "name": "WorkerNumber",
-                        "value": "@outputs('Get_Worker')?['body/crbb7_name']"
+                        "value": "@outputs('Get_Worker')?['body/mserp_hcmworkerentityid']"
                       }
                     },
                     "ListEmployment": {
@@ -554,9 +561,9 @@
                           "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                         },
                         "parameters": {
-                          "entityName": "crbb7_employments",
-                          "$select": "crbb7_EmploymentId",
-                          "$filter": "_cdm_workerid_value eq'@{items('Find_Worker')?['_mserp_fk_worker_id_value']}'"
+                          "entityName": "mserp_hcmemploymententities",
+                          "$select": "mserp_hcmemploymententityId",
+                          "$filter": "mserp_FK_EmployedWorker_id eq'@{outputs('Get_Worker')?['body/mserp_hcmworkerentityid']}'"
                         },
                         "authentication": "@parameters('$authentication')"
                       }
@@ -574,7 +581,7 @@
                             "operationMetadataId": "5fbeb18a-b165-41c1-b4ed-5a740cb1baa1"
                           },
                           "type": "Compose",
-                          "inputs": "@ticks(outputs('GetPositionDetails')?['body/mshr_validfrom'])"
+                          "inputs": "@ticks(outputs('GEtPositionDetails')?['body/mserp_validfrom'])"
                         },
                         "EmployeesHarrowServiceUpToEffectivedate": {
                           "runAfter": {
@@ -961,7 +968,7 @@
                                               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                                             },
                                             "parameters": {
-                                              "entityName": "crbb7_lbhannualleavedayses",
+                                              "entityName": "crbb7_localgovernmentleavedayses",
                                               "$filter": "crbb7_years eq @{outputs('Total_Service')}",
                                               "$top": 1
                                             },
@@ -1053,8 +1060,8 @@
                               },
                               "expression": {
                                 "equals": [
-                                  "@outputs('GetEmploymentStartDate')?['body/crbb7_employmentstartdate']",
-                                  "@outputs('Get_Worker')?['body/crbb7_originalhiredate']"
+                                  "@outputs('GetEmploymentStartDate')?['body/mserp_employmentstartdate']",
+                                  "@outputs('Get_Worker')?['body/mserp_originalhiredatetime']"
                                 ]
                               },
                               "metadata": {
@@ -1087,9 +1094,9 @@
                               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                             },
                             "parameters": {
-                              "entityName": "crbb7_employments",
-                              "recordId": "@items('Apply_to_each_3')?['crbb7_employmentid']",
-                              "$select": "crbb7_EmploymentStartDate"
+                              "entityName": "mserp_hcmemploymententities",
+                              "recordId": "@items('Apply_to_each_3')?['mserp_hcmemploymententityid']",
+                              "$select": "mserp_employmentstartdate"
                             },
                             "authentication": "@parameters('$authentication')"
                           }
@@ -1104,7 +1111,7 @@
                             "operationMetadataId": "8c12f14a-3a42-4aef-8081-3ebb5e7848c9"
                           },
                           "type": "Compose",
-                          "inputs": "@ticks(outputs('GetEmploymentStartDate')?['body/cdm_employmentstartdate'])"
+                          "inputs": "@ticks(outputs('GetEmploymentStartDate')?['body/mserp_employmentstartdate'])"
                         },
                         "Set_LBH_Service": {
                           "runAfter": {
@@ -1275,7 +1282,7 @@
                             "operationMetadataId": "cd0d5292-fcb3-4f4d-aa18-686c2b539346"
                           },
                           "type": "Compose",
-                          "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mshr_validfrom'], 'yyyy')"
+                          "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mserp_validfrom'], 'yyyy')"
                         },
                         "Set_variable_7,_Month_Number": {
                           "runAfter": {
@@ -1416,7 +1423,7 @@
                     "operationMetadataId": "2ad96f82-5164-4f67-bbbb-cc55f00ef5e7"
                   },
                   "type": "Compose",
-                  "inputs": "@mul(outputs('GetPositionDetails')?['body/mshr_pwcpositionhoursperweek_custom'], outputs('GetPositionDetails')?['body/mshr_pwcpositionweeksperyear_custom'])"
+                  "inputs": "@mul(outputs('GetPositionDetails')?['body/mshr_pwcpositionhoursperweek_custom'], outputs('GetPositionDetails')?['body/mserp_pwcpositionweeksperyear_custom'])"
                 },
                 "FTECalculation": {
                   "runAfter": {
@@ -1481,7 +1488,8 @@
                     "parameters": {
                       "entityName": "mserp_hcmpositiondetailentities",
                       "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
-                      "item/mserp_fulltimeequivalent": "@body('Format_number_3')"
+                      "item/mserp_pwcemploymentfactor_custom": "@outputs('Format_number')?['body']",
+                      "item/mserp_fulltimeequivalent": "@outputs('Format_number_3')?['body']"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
@@ -1574,7 +1582,7 @@
               },
               "expression": {
                 "equals": [
-                  "@outputs('GetPositionDetails')?['body/crbb7_termtimeemployee']",
+                  "@outputs('GetPositionDetails')?['body/mserp_pwctermtime_custom']",
                   0
                 ]
               },

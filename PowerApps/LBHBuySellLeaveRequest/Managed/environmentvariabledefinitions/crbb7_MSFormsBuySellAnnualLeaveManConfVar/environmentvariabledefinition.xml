@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_MSFormsBuySellAnnualLeaveManConfVar">
+  <defaultvalue>LBH DEV Buy/Sell Annual Leave Manager Confirmation </defaultvalue>
+  <displayname default="MSFormsBuySellAnnualLeaveManConfVar">
+    <label description="MSFormsBuySellAnnualLeaveManConfVar" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.96</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

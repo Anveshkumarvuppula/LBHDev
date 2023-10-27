@@ -31,6 +31,13 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "MSFormsBuySellAnnualLeaveManConfVar (crbb7_MSFormsBuySellAnnualLeaveManConfVar)": {
+          "defaultValue": "LBH DEV Buy/Sell Annual Leave Manager Confirmation ",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar"
+          }
         }
       },
       "triggers": {
@@ -47,7 +54,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUNaODRMR0VWNjdOQUlKRUk3R1ZCMFJLVy4u"
+              "form_id": "@parameters('MSFormsBuySellAnnualLeaveManConfVar (crbb7_MSFormsBuySellAnnualLeaveManConfVar)')"
             },
             "authentication": "@parameters('$authentication')"
           }

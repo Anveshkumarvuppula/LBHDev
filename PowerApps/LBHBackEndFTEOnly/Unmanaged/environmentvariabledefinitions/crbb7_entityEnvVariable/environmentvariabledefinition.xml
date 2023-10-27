@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_entityEnvVariable">
+  <defaultvalue>lbh-fo-preprod.sandbox.operations.dynamics.com</defaultvalue>
+  <displayname default="F&amp;SCConnectionStringVariable">
+    <label description="F&amp;SCConnectionStringVariable" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.95</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

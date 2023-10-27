@@ -385,7 +385,8 @@
                           "entityName": "mserp_hcmworkerbankaccountentities",
                           "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
                           "item/mserp_pwcbankacverified_custom": 200000001,
-                          "item/mserp_pwcisprimary_custom": 200000001
+                          "item/mserp_pwcisprimary_custom": 200000001,
+                          "item/mserp_lbhloqatevalidationtxt": "@variables('StatusInformation')"
                         },
                         "authentication": "@parameters('$authentication')"
                       }
@@ -413,7 +414,8 @@
                           "parameters": {
                             "entityName": "mserp_hcmworkerbankaccountentities",
                             "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
-                            "item/mserp_pwcbankacverified_custom": 200000000
+                            "item/mserp_pwcbankacverified_custom": 200000000,
+                            "item/mserp_lbhloqatevalidationtxt": "@variables('StatusInformation')"
                           },
                           "authentication": "@parameters('$authentication')"
                         }
@@ -435,9 +437,9 @@
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                           },
                           "parameters": {
-                            "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;",
+                            "request/to": "test.payroll@harrow.gov.uk;",
                             "request/subject": "Bank account not validated",
-                            "request/text": "<p><span style=\"font-family: georgia\">Hi ,<br>\n<br>\nThe Bank account number </span><span style=\"font-family: georgia\">@{variables('BankAccountNum')}</span><span style=\"font-family: georgia\"> and sort code </span><span style=\"font-family: georgia\">@{variables('BankSortCode')}</span><span style=\"font-family: georgia\"> for Employee (Id - </span>) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
+                            "request/text": "<p><span style=\"font-family: georgia\">Hi ,<br>\n<br>\nThe Bank account number </span><span style=\"font-family: georgia\">@{variables('BankAccountNum')}</span><span style=\"font-family: georgia\"> and sort code </span><span style=\"font-family: georgia\">@{variables('BankSortCode')}</span><span style=\"font-family: georgia\"> for Employee </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}</span><span style=\"font-family: georgia\">(Id - </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}</span><span style=\"font-family: georgia\">) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</span></p>"
                           },
                           "authentication": "@parameters('$authentication')"
                         }
@@ -474,7 +476,8 @@
                       "parameters": {
                         "entityName": "mserp_hcmworkerbankaccountentities",
                         "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
-                        "item/mserp_pwcbankacverified_custom": 200000000
+                        "item/mserp_pwcbankacverified_custom": 200000000,
+                        "item/mserp_lbhloqatevalidationtxt": "AccountNumber/SortCodeInvalid"
                       },
                       "authentication": "@parameters('$authentication')"
                     }
@@ -496,9 +499,9 @@
                         "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                       },
                       "parameters": {
-                        "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;",
+                        "request/to": "test.payroll@harrow.gov.uk;",
                         "request/subject": "Bank account not validated",
-                        "request/text": "<p>Hi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee (Id - ) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
+                        "request/text": "<p>Hi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee @{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}(Id - @{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
                       },
                       "authentication": "@parameters('$authentication')"
                     }
@@ -561,7 +564,8 @@
                   "parameters": {
                     "entityName": "mserp_hcmworkerbankaccountentities",
                     "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
-                    "item/mserp_pwcbankacverified_custom": 200000000
+                    "item/mserp_pwcbankacverified_custom": 200000000,
+                    "item/mserp_lbhloqatevalidationtxt": "Loqate validation not perform"
                   },
                   "authentication": "@parameters('$authentication')"
                 }

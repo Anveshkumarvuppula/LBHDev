@@ -31,6 +31,13 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)": {
+          "defaultValue": "LBH DEV Buy Annual Leave Confirmation ",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar"
+          }
         }
       },
       "triggers": {
@@ -47,7 +54,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUOVFSU0tRV0o5MjU2UjBSVTEwSDdHQUxKOC4u"
+              "form_id": "@parameters('MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)')"
             },
             "authentication": "@parameters('$authentication')"
           }
