@@ -1,0 +1,33 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar",
+      "Value": ""
+    },
+    {
+      "SchemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar",
+      "Value": ""
+    },
+    {
+      "SchemaName": "crbb7_MSFormsSellLeaveRequestConfVar",
+      "Value": ""
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_c69c9",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_edfa2",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_ef66f",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    }
+  ]
+}

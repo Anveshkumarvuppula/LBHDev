@@ -1,0 +1,15 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_entityEnvVariable",
+      "Value": "lbh-fo-preprod.sandbox.operations.dynamics.com"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_shareddynamicsax_5b162",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    }
+  ]
+}
