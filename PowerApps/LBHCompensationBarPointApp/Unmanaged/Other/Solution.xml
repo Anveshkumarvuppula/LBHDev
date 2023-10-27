@@ -6,7 +6,7 @@
       <LocalizedName description="LBH Compensation Bar Point App" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.95</Version>
+    <Version>10.0.103</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -218,6 +218,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" displayName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmcompfixedemplentityid" displayName="Employee fixed compensation (mserp)" parentSchemaName="mserp_hcmcompfixedemplentity" parentDisplayName="Employee fixed compensation (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="2" schemaName="mserp_hcmcompfixedemplentityid" displayName="Employee fixed compensation (mserp)" parentSchemaName="mserp_hcmcompfixedemplentity" parentDisplayName="Employee fixed compensation (mserp)" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
