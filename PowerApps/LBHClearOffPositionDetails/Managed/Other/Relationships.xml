@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_CompensationRegion" />
+  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_Job" />
+  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_Position" />
+  <EntityRelationship Name="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" />
+  <EntityRelationship Name="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" />
+</EntityRelationships>

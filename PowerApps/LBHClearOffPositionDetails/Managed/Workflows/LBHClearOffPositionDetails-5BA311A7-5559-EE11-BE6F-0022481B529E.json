@@ -146,7 +146,9 @@
                       "recordId": "@items('Apply_to_each_2')?['mserp_hcmpositiondetailentityid']",
                       "item/mserp_jobid": "@items('Apply_to_each_2')?['mserp_jobid']",
                       "item/mserp_positionid": "@items('Apply_to_each_2')?['mserp_positionid']",
-                      "item/mserp_validto": "@variables('AssignmentEndDate')"
+                      "item/mserp_validto": "@variables('AssignmentEndDate')",
+                      "item/mserp_pwcprobperiod_custom": "@{null}\n",
+                      "item/mserp_pwcredundancydate_custom": "@null"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
@@ -178,7 +180,14 @@
                       "item/mserp_validfrom": "@addSeconds(variables('AssignmentEndDate'),1)",
                       "item/mserp_jobfamilyid": "@outputs('Update_a_row')?['body/mserp_jobfamilyid']",
                       "item/mserp_fulltimeequivalent": "@outputs('Update_a_row')?['body/mserp_fulltimeequivalent']",
-                      "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']"
+                      "item/mserp_pwcirregularpattern_custom": 200000000,
+                      "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
+                      "item/mserp_pwcprobcompleted_custom": 200000000,
+                      "item/mserp_pwcprobperiod_custom": "@{null}\n\n",
+                      "item/mserp_lbhpositionreasonchange": 200000015,
+                      "item/mserp_pwcredundancydate_custom": "@null",
+                      "item/mserp_pwccontractenddate_custom": "@null",
+                      "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']"
                     },
                     "authentication": "@parameters('$authentication')"
                   }

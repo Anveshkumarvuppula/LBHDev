@@ -6,7 +6,7 @@
       <LocalizedName description="LBH Clear Off Position Details" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.95</Version>
+    <Version>10.0.103</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>DefaultPublisheroperationslbhfodev11</UniqueName>
@@ -80,9 +80,30 @@
       </Addresses>
     </Publisher>
     <RootComponents>
+      <RootComponent type="1" schemaName="mserp_hcmjobpositiondualwriteentity" behavior="0" />
+      <RootComponent type="1" schemaName="mserp_hcmpositiondetailentity" behavior="0" />
+      <RootComponent type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" behavior="0" />
       <RootComponent type="29" id="{5ba311a7-5559-ee11-be6f-0022481b529e}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmcompensationregionentity" displayName="Compensation regions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmjobentity" displayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" />
+      </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
@@ -93,13 +114,193 @@
         <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
+        <Dependent type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
         <Dependent type="29" displayName="LBHClearOffPositionDetails" id="{5ba311a7-5559-ee11-be6f-0022481b529e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="29" displayName="LBHClearOffPositionDetails" id="{5ba311a7-5559-ee11-be6f-0022481b529e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_fk_compensationregion_id" displayName="Compensation regions" parentSchemaName="mserp_hcmpositiondetailentity" parentDisplayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_fk_job_id" displayName="Jobs" parentSchemaName="mserp_hcmpositiondetailentity" parentDisplayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_fk_position_id" displayName="Positions V2" parentSchemaName="mserp_hcmpositiondetailentity" parentDisplayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_fk_position_id" displayName="Positions V2" parentSchemaName="mserp_hcmpositionworkerassignmentv2entity" parentDisplayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_fk_worker_id" displayName="Worker" parentSchemaName="mserp_hcmpositionworkerassignmentv2entity" parentDisplayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmcompensationregionentityid" displayName="Compensation regions (mserp)" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmjobentityid" displayName="Jobs (mserp)" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmpositionv2entityid" displayName="Positions V2 (mserp)" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmpositionv2entityid" displayName="Positions V2 (mserp)" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_hcmworkerentityid" displayName="Worker (mserp)" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_jobid" displayName="Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Job" displayName="mserp_FK_HcmPositionDetailEntity_Job" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_location" displayName="Location" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" displayName="mserp_FK_HcmPositionDetailEntity_CompensationRegion" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_personnelnumber" displayName="Personnel number" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_positionid" displayName="Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="mserp_positionid" displayName="Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
