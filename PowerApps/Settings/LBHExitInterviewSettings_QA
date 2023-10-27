@@ -2,13 +2,13 @@
   "EnvironmentVariables": [
     {
       "SchemaName": "crbb7_MSFormsExitInterviewVar",
-      "Value": ""
+      "Value": "LBH QA Exit Interview"
     }
   ],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_042d1",
-      "ConnectionId": "",
+      "ConnectionId": "1452d4eeb44d49c681791ae986fe266c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     }
   ]

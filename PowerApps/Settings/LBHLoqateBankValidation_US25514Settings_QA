@@ -3,17 +3,17 @@
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_Mail",
-      "ConnectionId": "",
+      "ConnectionId": "f8f98064ae1644d1b5fba50e0b51655a",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
     },
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_afe0e",
-      "ConnectionId": "",
+      "ConnectionId": "c8fe11a6c196491989d5a93ac7452fc7",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "crbb7_sharedsendmail_49c4a",
-      "ConnectionId": "",
+      "ConnectionId": "f8f98064ae1644d1b5fba50e0b51655a",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
     }
   ]

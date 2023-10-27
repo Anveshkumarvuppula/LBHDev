@@ -2,31 +2,31 @@
   "EnvironmentVariables": [
     {
       "SchemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar",
-      "Value": ""
+      "Value": "LBH QA Buy Annual Leave Confirmation"
     },
     {
       "SchemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar",
-      "Value": ""
+      "Value": "LBH QA Buy/Sell Annual Leave Manager Confirmation"
     },
     {
       "SchemaName": "crbb7_MSFormsSellLeaveRequestConfVar",
-      "Value": ""
+      "Value": "LBH QA Selling Annual Leave Confirmation"
     }
   ],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_c69c9",
-      "ConnectionId": "",
+      "ConnectionId": "1452d4eeb44d49c681791ae986fe266c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_edfa2",
-      "ConnectionId": "",
+      "ConnectionId": "1452d4eeb44d49c681791ae986fe266c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_ef66f",
-      "ConnectionId": "",
+      "ConnectionId": "1452d4eeb44d49c681791ae986fe266c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     }
   ]
