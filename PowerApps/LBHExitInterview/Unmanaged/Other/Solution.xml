@@ -6,7 +6,7 @@
       <LocalizedName description="LBH ExitInterview" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.108</Version>
+    <Version>10.0.109</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -80,11 +80,6 @@
     <RootComponents>
       <RootComponent type="29" id="{5a1718fd-f861-ee11-8df0-0022481b529e}" behavior="0" />
     </RootComponents>
-    <MissingDependencies>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
-        <Dependent type="29" displayName="LBH Exit Interview Flow" id="{5a1718fd-f861-ee11-8df0-0022481b529e}" />
-      </MissingDependency>
-    </MissingDependencies>
+    <MissingDependencies />
   </SolutionManifest>
 </ImportExportXml>
