@@ -12,6 +12,13 @@
   <CustomControls />
   <EntityDataProviders />
   <connectionreferences>
+    <connectionreference connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e">
+      <connectionreferencedisplayname>Microsoft Dataverse LBHLoqateBankValidation_US25514-afe0e</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
     <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_5b162">
       <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHBackEndFTEOnly-5b162</connectionreferencedisplayname>
       <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>

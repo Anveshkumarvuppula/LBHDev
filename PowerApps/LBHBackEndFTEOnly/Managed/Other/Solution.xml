@@ -6,7 +6,7 @@
       <LocalizedName description="LBH BackEndFTEOnly" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.108</Version>
+    <Version>10.0.109</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -479,10 +479,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_afe0e" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e" />
-        <Dependent type="29" displayName="PwCLBHFTEBackendCalculationV2" id="{5fc0fb10-5d5c-ee11-8def-0022481b529e}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
