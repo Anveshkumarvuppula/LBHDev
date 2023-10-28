@@ -15,6 +15,11 @@
   ],
   "ConnectionReferences": [
     {
+      "LogicalName": "crbb7_Mail",
+      "ConnectionId": "3e9249b7273c4663a81aa380afb81abb",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+    },
+    {
       "LogicalName": "crbb7_sharedmicrosoftforms_c69c9",
       "ConnectionId": "8c3263eea2254ae48556d7682e2dae1b",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
@@ -26,7 +31,7 @@
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_ef66f",
-      "ConnectionId": "8c3263eea2254ae48556d7682e2dae1b,
+      "ConnectionId": "8c3263eea2254ae48556d7682e2dae1b",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     }
   ]
