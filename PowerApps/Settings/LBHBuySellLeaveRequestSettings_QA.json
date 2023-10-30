@@ -2,15 +2,15 @@
   "EnvironmentVariables": [
     {
       "SchemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar",
-      "Value": "LBH QA Buy Annual Leave Confirmation"
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUNlJXRDJINzRLOEpSMkFHRDk5SEIyS1IyRC4u"
     },
     {
       "SchemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar",
-      "Value": "LBH QA Buy/Sell Annual Leave Manager Confirmation"
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUM1M3WVhQVkVJOUFWOFA3MFlRNUxOUzUxRi4u"
     },
     {
       "SchemaName": "crbb7_MSFormsSellLeaveRequestConfVar",
-      "Value": "LBH QA Selling Annual Leave Confirmation"
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUZBUjdLVTJROU1QSVg2RjFYMEc4VzBTVi4u"
     }
   ],
   "ConnectionReferences": [
