@@ -43,8 +43,22 @@
           "inputs": {
             "schema": {
               "type": "object",
-              "properties": {},
-              "required": []
+              "properties": {
+                "Setvariable_Value": {
+                  "type": "string",
+                  "description": "Enter variable value",
+                  "x-ms-powerflows-param-ispartial": false
+                },
+                "Compose_Inputs": {
+                  "type": "any",
+                  "description": "Inputs",
+                  "x-ms-powerflows-param-ispartial": false
+                }
+              },
+              "required": [
+                "Setvariable_Value",
+                "Compose_Inputs"
+              ]
             }
           }
         }

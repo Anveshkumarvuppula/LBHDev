@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23094.194" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.23102.212" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>LBHMSSPositionApp</UniqueName>
     <LocalizedNames>
       <LocalizedName description="LBH MSSPositionApp" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.107</Version>
+    <Version>10.0.117</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -93,6 +93,7 @@
       <RootComponent type="29" id="{c7468e05-e35c-ee11-8def-0022481b5ee5}" behavior="0" />
       <RootComponent type="29" id="{fa0e2ff0-0f5d-ee11-8def-0022481b529e}" behavior="0" />
       <RootComponent type="300" schemaName="crbb7_pwcmssposition202306201006_e2510" behavior="0" />
+      <RootComponent type="9" schemaName="mserp_noyes" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
@@ -538,6 +539,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="9" schemaName="mserp_noyes" displayName="NoYes (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="9" schemaName="mserp_noyes" displayName="NoYes (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_afe0e" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e" />

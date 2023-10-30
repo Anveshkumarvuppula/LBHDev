@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "080aee34-fdb3-4616-985e-2aa1f1694719",
+    "Name": "LBHSendContractExtensionEmail",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "fa0e2ff0-0f5d-ee11-8def-0022481b529e"
+  }
+]
