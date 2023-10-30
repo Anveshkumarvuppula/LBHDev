@@ -1,0 +1,60 @@
+{
+  "QualifiedValues": [
+    {
+      "Kind": "default.cds_mserp_hcmcompfixedemplentity_forms",
+      "Namespace": "Employee fixed compensation (mserp) (Forms)",
+      "Values": {
+        "Information": "d964290d-78cc-5f3d-6937-bacb223a4b9e"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmjobpositiondualwriteentity_forms",
+      "Namespace": "Job Positions Dual Write (mserp) (Forms)",
+      "Values": {
+        "Information": "406c01d5-3b94-a79a-b085-e49c39660fc7"
+      }
+    },
+    {
+      "Kind": "default.cds_crbb7_department_forms",
+      "Namespace": "Department(T)S (Forms)",
+      "Values": {
+        "Information": "f8238725-53a5-45dd-a4e9-b2e082d62368"
+      }
+    },
+    {
+      "Kind": "default.cds_crbb7_positiontype_forms",
+      "Namespace": "Position Type(T)S (Forms)",
+      "Values": {
+        "Information": "6e470c89-2abe-4c68-9ec9-2cbf1e6dc0a6"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmjobentity_forms",
+      "Namespace": "Jobs (mserp) (Forms)",
+      "Values": {
+        "Information": "eb8cfeea-d8a3-8d25-1696-b7e529824caa"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmjobfunctionentity_forms",
+      "Namespace": "Compensation job function (mserp) (Forms)",
+      "Values": {
+        "Information": "ae9bb778-b5ac-7c52-42eb-f29256f286bc"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmcompensationregionentity_forms",
+      "Namespace": "Compensation regions (mserp) (Forms)",
+      "Values": {
+        "Information": "8adad8f5-73b2-3287-63d1-b4b273309510"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmworkerentity_forms",
+      "Namespace": "Worker (mserp) (Forms)",
+      "Values": {
+        "Information": "aaf90c41-dcfe-15e8-5749-af9571b0a27b"
+      }
+    }
+  ]
+}

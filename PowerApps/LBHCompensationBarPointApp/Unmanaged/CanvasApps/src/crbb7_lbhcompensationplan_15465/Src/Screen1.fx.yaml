@@ -1,0 +1,197 @@
+Screen1 As screen:
+
+    CompensationStructureGrid As dataTable.datatable:
+        BorderStyle: =BorderStyle.Solid
+        DisplayMode: =DisplayMode.Edit
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =417
+        Items: |-
+            =SortByColumns(Filter(
+                'Compensation Structures',
+                Level.Name = First(varDataSetBuffer).'Compensation Level'.Name,
+                Grid.Name = First(varDataSetBuffer).Plan.Name
+            ),"cdm_amount", SortOrder.Ascending)
+        Width: =1262
+        X: =40
+        Y: =109
+        ZIndex: =1
+
+        "'Compensation Structure Number_Column2' As dataTableColumn.textualColumn":
+            AutoWidth: =false
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Compensation Structure Number"
+            FieldName: ="cdm_compensationstructurenumber"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =1
+            Text: =ThisItem.'Compensation Structure Number'
+            Visible: =false
+            Width: =243
+            X: =555
+            Y: =0
+            ZIndex: =10
+
+        "'Reference Point_Column2' As dataTableColumn.complexTypeColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Reference point"
+            FieldName: ="cdm_ReferencePointId"
+            FieldVariantName: ="complexTypeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =3
+            Text: =ThisItem.'Reference Point'.Name
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =12
+
+        Grid_Column2 As dataTableColumn.complexTypeColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Plan"
+            FieldName: ="cdm_CompensationGridId"
+            FieldVariantName: ="complexTypeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =4
+            Text: =ThisItem.Grid.Name
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =13
+
+        Amount_Column2 As dataTableColumn.currencyColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Amount"
+            FieldName: ="cdm_amount"
+            FieldVariantName: ="currencyColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =5
+            Text: |-
+                =Text(ThisItem.Amount,"$###.##")
+            Width: =100
+            X: =65
+            Y: =0
+            ZIndex: =14
+
+        Level_Column1 As dataTableColumn.complexTypeColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Level"
+            FieldName: ="cdm_CompensationLevelId"
+            FieldVariantName: ="complexTypeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =6
+            Text: =ThisItem.Level.Name
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =15
+
+        "'Compensation Structure_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Compensation Structure"
+            FieldName: ="cdm_compensationstructureid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =7
+            Text: =ThisItem.'Compensation Structure Number'
+            Visible: =false
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =16
+
+    "'Update bar point' As button":
+        Height: =48
+        OnSelect: |-
+            =Patch('Worker Fixed Compensations',  First(Filter( 'Worker Fixed Compensations', 'Worker Fixed Compensation Number' = First(varDataSetBuffer).'Worker Fixed Compensation Number')) , { 'Bar point level': BarPointTxt.Text, 'Bar point amount': Value(BarPointAmountNumber.Text)});Set(_popup,true)
+        Text: ="Update bar point"
+        Width: =494
+        X: =766
+        Y: =596
+        ZIndex: =2
+
+    BarPointTxt As text:
+        Default: =CompensationStructureGrid.Selected.'Reference Point'.Name
+        Visible: =false
+        X: =40
+        Y: =644
+        ZIndex: =3
+
+    CurrentBarPointInsLevel As label:
+        FontWeight: =FontWeight.Bold
+        Height: =31
+        Text: |-
+            ="Current Bar Point :"
+        Width: =203
+        X: =40
+        Y: =40
+        ZIndex: =4
+
+    SelectInsLevel As label:
+        FontWeight: =FontWeight.Bold
+        Height: =28
+        Text: ="Select new bar point from table and click on Update bar point"
+        Width: =587
+        X: =40
+        Y: =81
+        ZIndex: =5
+
+    PopUpRectangle As rectangle:
+        BorderThickness: =3
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =277
+        Visible: =_popup
+        Width: =532
+        X: =440
+        Y: =169
+        ZIndex: =6
+
+    Close As button:
+        OnSelect: =Set(_popup,false)
+        Text: ="Close"
+        Visible: =_popup
+        X: =782
+        Y: =701
+        ZIndex: =7
+
+    "'Current bar point level' As label":
+        FontWeight: =FontWeight.Bold
+        Height: =31
+        Text: =Concatenate(First(varDataSetBuffer).'Bar point level', "  ", Text(First(varDataSetBuffer).'Bar point amount (cdm_pwcbarpointamount_custom)'))
+        Width: =351
+        X: =225
+        Y: =40
+        ZIndex: =8
+
+    PopupLevel As label:
+        FontWeight: =FontWeight.Bold
+        Height: =38
+        Text: ="Update bar point"
+        Visible: =_popup
+        Width: =204
+        X: =606
+        Y: =189
+        ZIndex: =9
+
+    PopUpLevel2 As label:
+        FontWeight: =FontWeight.Bold
+        Height: =165
+        Text: ="You have selected the option of selecting the Bar point. Kindly close this page and refresh compensation plan."
+        Visible: =_popup
+        Width: =429
+        X: =489
+        Y: =210
+        ZIndex: =10
+
+    BarPointAmountNumber As text:
+        Default: =CompensationStructureGrid.Selected.Amount
+        Format: =TextFormat.Number
+        Visible: =false
+        X: =766
+        Y: =701
+        ZIndex: =11
+
