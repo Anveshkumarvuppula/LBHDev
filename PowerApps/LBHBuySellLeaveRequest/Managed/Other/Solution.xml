@@ -6,7 +6,7 @@
       <LocalizedName description="LBHBuySellLeaveRequest" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.108</Version>
+    <Version>10.0.109</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -82,19 +82,6 @@
       <RootComponent type="29" id="{c609a973-fb61-ee11-8df0-0022481b5ee5}" behavior="0" />
       <RootComponent type="29" id="{e81d731f-fb61-ee11-8df0-0022481b529e}" behavior="0" />
     </RootComponents>
-    <MissingDependencies>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
-        <Dependent type="29" displayName="LBH Buy Leave Request Confirmation" id="{22809185-fa61-ee11-8df0-0022481b5ee5}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
-        <Dependent type="29" displayName="LBH Sell Leave Request Confirmation" id="{c609a973-fb61-ee11-8df0-0022481b5ee5}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_Mail" solution="Active" id.connectionreferencelogicalname="crbb7_Mail" />
-        <Dependent type="29" displayName="LBH Manager Confirmation" id="{e81d731f-fb61-ee11-8df0-0022481b529e}" />
-      </MissingDependency>
-    </MissingDependencies>
+    <MissingDependencies />
   </SolutionManifest>
 </ImportExportXml>
