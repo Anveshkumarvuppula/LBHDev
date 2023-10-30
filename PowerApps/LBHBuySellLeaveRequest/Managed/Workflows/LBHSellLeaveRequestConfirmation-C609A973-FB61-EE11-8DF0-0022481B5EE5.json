@@ -33,7 +33,7 @@
           "type": "SecureObject"
         },
         "MSFormsSellLeaveRequestConfVar (crbb7_MSFormsSellLeaveRequestConfVar)": {
-          "defaultValue": "LBH Selling Annual Leave Confirmation",
+          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUZBUjdLVTJROU1QSVg2RjFYMEc4VzBTVi4u",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSFormsSellLeaveRequestConfVar"
@@ -74,7 +74,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUN1pNNkUySTBGS0tJVFlOWjhCS0pYQ0szMC4u",
+              "form_id": "@parameters('MSFormsSellLeaveRequestConfVar (crbb7_MSFormsSellLeaveRequestConfVar)')",
               "response_id": "@triggerOutputs()?['body/resourceData/responseId']"
             },
             "authentication": "@parameters('$authentication')"
