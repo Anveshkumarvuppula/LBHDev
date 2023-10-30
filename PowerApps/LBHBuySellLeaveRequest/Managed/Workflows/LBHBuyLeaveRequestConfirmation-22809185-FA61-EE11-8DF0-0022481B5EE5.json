@@ -74,7 +74,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
             },
             "parameters": {
-              "form_id": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUOVFSU0tRV0o5MjU2UjBSVTEwSDdHQUxKOC4u",
+              "form_id": "@parameters('MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)')",
               "response_id": "@triggerOutputs()?['body/resourceData/responseId']"
             },
             "authentication": "@parameters('$authentication')"
