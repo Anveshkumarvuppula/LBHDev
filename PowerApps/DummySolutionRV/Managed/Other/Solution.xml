@@ -6,7 +6,7 @@
       <LocalizedName description="Dummy Solution RV" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.111</Version>
+    <Version>10.0.112</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>DummyPublisherRV</UniqueName>
