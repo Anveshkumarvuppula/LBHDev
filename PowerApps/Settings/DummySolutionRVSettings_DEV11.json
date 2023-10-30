@@ -1,0 +1,25 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "rv_RVDummyFOEntity",
+      "Value": "HcmWorkerEntity"
+    },
+    {
+      "SchemaName": "rv_RVDummyFOURL",
+      "Value": "https://lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com"
+    },
+    {
+      "SchemaName": "rv_RVDummyVarForm",
+      "Value": "LBH DEV Buy Annual Leave Confirmation"
+    },
+    {
+      "SchemaName": "rv_RVEnvVariableDummy",
+      "Value": "mserp_hcmworkerentity"
+    },
+    {
+      "SchemaName": "rv_RVEnvvariableDummy2",
+      "Value": "Info by RV2"
+    }
+  ],
+  "ConnectionReferences": []
+}
