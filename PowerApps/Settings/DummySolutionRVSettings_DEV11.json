@@ -2,11 +2,11 @@
   "EnvironmentVariables": [
     {
       "SchemaName": "rv_RVDummyFOEntity",
-      "Value": "HcmWorkerEntity"
+      "Value": "hcmWorkerEntity"
     },
     {
       "SchemaName": "rv_RVDummyFOURL",
-      "Value": "https://lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com"
+      "Value": "https://lbh-fo-dev-11aa033a365aa24e8adevaos.axcloud.dynamics.com"
     },
     {
       "SchemaName": "rv_RVDummyVarForm",
@@ -14,12 +14,18 @@
     },
     {
       "SchemaName": "rv_RVEnvVariableDummy",
-      "Value": "mserp_hcmworkerentity"
+      "Value": "test1"
     },
     {
       "SchemaName": "rv_RVEnvvariableDummy2",
-      "Value": "Info by RV2"
+      "Value": "test2"
     }
   ],
-  "ConnectionReferences": []
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_afe0e",
+      "ConnectionId": "0f803d6225664b659498e9588b7a1fcc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    }
+  ]
 }
