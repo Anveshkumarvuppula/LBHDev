@@ -6,7 +6,7 @@
       <LocalizedName description="Dummy Solution RV" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.114</Version>
+    <Version>10.0.115</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>DummyPublisherRV</UniqueName>
@@ -85,14 +85,6 @@
         <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
-        <Dependent type="29" displayName="RVFlow" id="{be974303-0677-ee11-8179-0022481b5836}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedmicrosoftforms_8688c" solution="Active" id.connectionreferencelogicalname="crd52_sharedmicrosoftforms_8688c" />
-        <Dependent type="29" displayName="RVFlow" id="{be974303-0677-ee11-8179-0022481b5836}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crd52_sharedsendmail_1d8ed" solution="Active" id.connectionreferencelogicalname="crd52_sharedsendmail_1d8ed" />
         <Dependent type="29" displayName="RVFlow" id="{be974303-0677-ee11-8179-0022481b5836}" />
       </MissingDependency>
     </MissingDependencies>
