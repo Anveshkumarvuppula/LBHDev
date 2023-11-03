@@ -32,18 +32,18 @@
           "defaultValue": {},
           "type": "SecureObject"
         },
-        "LBHRoutingNumber (crbb7_LBHRoutingNumber)": {
-          "defaultValue": "829100007",
-          "type": "String",
-          "metadata": {
-            "schemaName": "crbb7_LBHRoutingNumber"
-          }
-        },
         "LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)": {
           "defaultValue": "test.payroll@harrow.gov.uk",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_LBHTestPayrolEmail"
+          }
+        },
+        "LBHRoutingNumber (crbb7_LBHRoutingNumber)": {
+          "defaultValue": "200000007",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_LBHRoutingNumber"
           }
         }
       },
@@ -592,7 +592,7 @@
           },
           "expression": {
             "equals": [
-              "@outputs('Get_Worker_bank_account')?['body/mserp_routingnumber']",
+              "@outputs('Get_Worker_bank_account')?['body/mserp_routingnumbertype']",
               "@parameters('LBHRoutingNumber (crbb7_LBHRoutingNumber)')"
             ]
           },
