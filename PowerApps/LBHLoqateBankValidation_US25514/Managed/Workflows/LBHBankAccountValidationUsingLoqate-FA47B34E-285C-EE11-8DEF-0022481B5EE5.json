@@ -31,6 +31,20 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "LBHRoutingNumber (crbb7_LBHRoutingNumber)": {
+          "defaultValue": "829100007",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_LBHRoutingNumber"
+          }
+        },
+        "LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)": {
+          "defaultValue": "test.payroll@harrow.gov.uk",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_LBHTestPayrolEmail"
+          }
         }
       },
       "triggers": {
@@ -57,7 +71,11 @@
       },
       "actions": {
         "Get_a_row_by_ID": {
-          "runAfter": {},
+          "runAfter": {
+            "Get_Worker_bank_account": [
+              "Succeeded"
+            ]
+          },
           "metadata": {
             "operationMetadataId": "8e481c86-0f54-433f-b755-dc8c0512e566"
           },
@@ -70,7 +88,7 @@
             },
             "parameters": {
               "entityName": "mserp_hcmworkerentities",
-              "recordId": "@triggerOutputs()?['body/_mserp_fk_worker_id_value']"
+              "recordId": "@outputs('Get_Worker_bank_account')?['body/_mserp_fk_worker_id_value']"
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -437,7 +455,7 @@
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                           },
                           "parameters": {
-                            "request/to": "test.payroll@harrow.gov.uk;",
+                            "request/to": "@{parameters('LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)')};",
                             "request/subject": "Bank account not validated",
                             "request/text": "<p><span style=\"font-family: georgia\">Hi ,<br>\n<br>\nThe Bank account number </span><span style=\"font-family: georgia\">@{variables('BankAccountNum')}</span><span style=\"font-family: georgia\"> and sort code </span><span style=\"font-family: georgia\">@{variables('BankSortCode')}</span><span style=\"font-family: georgia\"> for Employee </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}</span><span style=\"font-family: georgia\">(Id - </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}</span><span style=\"font-family: georgia\">) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</span></p>"
                           },
@@ -499,7 +517,7 @@
                         "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                       },
                       "parameters": {
-                        "request/to": "test.payroll@harrow.gov.uk;",
+                        "request/to": "@{parameters('LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)')};",
                         "request/subject": "Bank account not validated",
                         "request/text": "<p>Hi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee @{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}(Id - @{outputs('Get_a_row_by_ID')?['body/mserp_hcmworkerentityid']}) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
                       },
@@ -574,8 +592,8 @@
           },
           "expression": {
             "equals": [
-              "@triggerOutputs()?['body/mserp_routingnumbertype']",
-              829100007
+              "@outputs('Get_Worker_bank_account')?['body/mserp_routingnumber']",
+              "@parameters('LBHRoutingNumber (crbb7_LBHRoutingNumber)')"
             ]
           },
           "metadata": {
@@ -653,6 +671,25 @@
             "operationMetadataId": "6a78ea5f-50cb-4192-88f7-6240646aa3cb"
           },
           "type": "If"
+        },
+        "Get_Worker_bank_account": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "65016539-f35d-4197-91e7-bb7bbcd9ed58"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmworkerbankaccountentities",
+              "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
         }
       }
     },
