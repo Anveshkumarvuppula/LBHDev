@@ -3,6 +3,12 @@
   <Name LocalizedName="Employee fixed compensation (mserp)" OriginalName="Employee fixed compensation (mserp)">mserp_hcmcompfixedemplentity</Name>
   <EntityInfo>
     <entity Name="mserp_hcmcompfixedemplentity">
+      <LocalizedNames>
+        <LocalizedName description="Employee fixed compensation (mserp)" languagecode="1033" />
+      </LocalizedNames>
+      <LocalizedCollectionNames>
+        <LocalizedCollectionName description="Employee fixed compensation (mserp)" languagecode="1033" />
+      </LocalizedCollectionNames>
       <attributes>
         <attribute PhysicalName="mserp_hcmcompfixedemplentityId">
           <Type>primarykey</Type>

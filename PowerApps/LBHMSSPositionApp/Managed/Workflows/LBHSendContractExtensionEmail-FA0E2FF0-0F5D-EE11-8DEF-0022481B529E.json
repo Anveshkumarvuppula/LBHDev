@@ -52,8 +52,34 @@
           "inputs": {
             "schema": {
               "type": "object",
-              "properties": {},
-              "required": []
+              "properties": {
+                "Setvariable_Value": {
+                  "type": "string",
+                  "description": "Enter variable value",
+                  "x-ms-powerflows-param-ispartial": false
+                },
+                "ManagerSet_Value": {
+                  "type": "string",
+                  "description": "Enter variable value",
+                  "x-ms-powerflows-param-ispartial": false
+                },
+                "Contract_Value": {
+                  "type": "string",
+                  "description": "Enter initial value",
+                  "x-ms-powerflows-param-ispartial": false
+                },
+                "SetContract_Value": {
+                  "type": "string",
+                  "description": "Enter variable value",
+                  "x-ms-powerflows-param-ispartial": false
+                }
+              },
+              "required": [
+                "Setvariable_Value",
+                "ManagerSet_Value",
+                "Contract_Value",
+                "SetContract_Value"
+              ]
             }
           }
         }
@@ -86,7 +112,7 @@
           "type": "SetVariable",
           "inputs": {
             "name": "PositionNumber",
-            "value": "@{triggerBody()['Setvariable_Value']}"
+            "value": "@triggerBody()['Setvariable_Value']"
           }
         },
         "Manager": {
@@ -116,7 +142,7 @@
           "type": "SetVariable",
           "inputs": {
             "name": "ManagerName",
-            "value": "@triggerBody()['ManagerSet_Value']"
+            "value": "@{triggerBody()['ManagerSet_Value']}"
           }
         },
         "Employee": {
@@ -164,7 +190,7 @@
               {
                 "name": "Contract End Date",
                 "type": "string",
-                "value": "@triggerBody()['SetContract_Value']"
+                "value": "@{triggerBody()['Contract_Value']}"
               }
             ]
           }

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23094.194" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.23102.212" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>LBHCompensationBarPointApp</UniqueName>
     <LocalizedNames>
       <LocalizedName description="LBH Compensation Bar Point App" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.107</Version>
+    <Version>10.0.121</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -124,28 +124,16 @@
         <Dependent type="10" schemaName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" displayName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmcompensationstructureentity" displayName="Compensation structure (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmcompensationstructureentity:RibbonDiffXml" displayName="mserp_hcmcompensationstructureentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="10" schemaName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" displayName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="29" displayName="LBHUpdateCompensationId" id="{ff4bfcb3-115d-ee11-8def-0022481b529e}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="300" schemaName="crbb7_lbhcompensationplan_15465" displayName="LBHCompensationPlan" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmjobentity" displayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -182,6 +170,18 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" displayName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="181" schemaName="FinanceAndOperationsVirtualEntity" displayName="FinanceAndOperationsVirtualEntity" solution="MicrosoftOperationsVESupport (2.8.9.169)" id="{2ac667f5-31d6-e911-a95e-000d3a110bbd}">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="183" schemaName="Finance and Operations" displayName="Finance and Operations" solution="MicrosoftOperationsERPCatalog (2.8.9.169)" id="{47c40dcb-35d6-e911-a95e-000d3a110bbd}">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="2" schemaName="cdm_companycode" displayName="Company Code" parentSchemaName="cdm_company" parentDisplayName="Company" solution="Dynamics365Company (2.2.2.132)">

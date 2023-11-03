@@ -1,0 +1,28 @@
+Fail As screen:
+
+    Label5 As label:
+        Height: =79
+        Size: =21
+        Text: |-
+            ="Sorry, this was not successful. Please try 
+              again or contact HR for assistance."
+        Width: =583
+        X: =36
+        Y: =580
+        ZIndex: =1
+
+    Icon4 As icon.Home:
+        Icon: =Icon.Home
+        OnSelect: =Navigate('Home Screen')
+        X: =270
+        Y: =906
+        ZIndex: =2
+
+    Icon6 As icon.CancelBadge:
+        Height: =136
+        Icon: =Icon.CancelBadge
+        Width: =130
+        X: =240
+        Y: =397
+        ZIndex: =3
+

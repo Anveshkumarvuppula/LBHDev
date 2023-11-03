@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "ad267ee4-6aa3-42eb-8af9-dc06eda23d58",
+    "Name": "ExpirePrevPositionDetailsRecord",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "a2204eeb-295d-ee11-8def-0022481b529e"
+  }
+]
