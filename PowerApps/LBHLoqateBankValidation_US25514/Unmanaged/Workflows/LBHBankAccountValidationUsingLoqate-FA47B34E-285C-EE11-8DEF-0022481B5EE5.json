@@ -38,13 +38,6 @@
           "metadata": {
             "schemaName": "crbb7_LBHTestPayrolEmail"
           }
-        },
-        "LBHRoutingNumber (crbb7_LBHRoutingNumber)": {
-          "defaultValue": "200000007",
-          "type": "String",
-          "metadata": {
-            "schemaName": "crbb7_LBHRoutingNumber"
-          }
         }
       },
       "triggers": {
@@ -593,7 +586,7 @@
           "expression": {
             "equals": [
               "@outputs('Get_Worker_bank_account')?['body/mserp_routingnumbertype']",
-              "@parameters('LBHRoutingNumber (crbb7_LBHRoutingNumber)')"
+              200000007
             ]
           },
           "metadata": {
