@@ -34,8 +34,22 @@
           "inputs": {
             "schema": {
               "type": "object",
-              "properties": {},
-              "required": []
+              "properties": {
+                "Listrows_Filterrows": {
+                  "type": "string",
+                  "description": "Enter an OData style filter expression to limit which rows are listed. This parameter is used as part of \"911428D4-2E9D-4960-BEAA-ED4C1C5BB6F4\"",
+                  "x-ms-powerflows-param-ispartial": true
+                },
+                "Initializevariable_Value": {
+                  "type": "string",
+                  "description": "Enter initial value",
+                  "x-ms-powerflows-param-ispartial": false
+                }
+              },
+              "required": [
+                "Listrows_Filterrows",
+                "Initializevariable_Value"
+              ]
             }
           }
         }

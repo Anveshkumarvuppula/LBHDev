@@ -22,10 +22,12 @@ ConfirmSave As screen:
         ZIndex: =4
 
     Icon3 As icon.Check:
+        AccessibleLabel: ="ok"
         Color: =RGBA(255, 255, 255, 1)
         Height: =73
         Icon: =Icon.Check
         OnSelect: =Navigate('Home Screen');ResetForm('Change working hours form');ResetForm('Contract extension form')
+        TabIndex: =0
         Width: =100
         X: =256
         Y: =333

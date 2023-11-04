@@ -12,8 +12,10 @@ Fail As screen:
         ZIndex: =1
 
     Icon4 As icon.Home:
+        AccessibleLabel: ="cancel"
         Icon: =Icon.Home
         OnSelect: =Navigate('Home Screen')
+        TabIndex: =0
         X: =270
         Y: =906
         ZIndex: =2

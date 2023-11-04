@@ -1,27 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>crbb7_lbhcompensationplan_15465</Name>
-  <AppVersion>2023-10-31T14:24:09Z</AppVersion>
+  <AppVersion>2023-11-04T15:59:51Z</AppVersion>
   <Status>Ready</Status>
-  <CreatedByClientVersion>3.23093.15.0</CreatedByClientVersion>
-  <MinClientVersion>3.23093.15.0</MinClientVersion>
-  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.23093.15","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","sienaVersion":"20230926T142645Z-3.23092.13.0"}</Tags>
+  <CreatedByClientVersion>3.23102.20.0</CreatedByClientVersion>
+  <MinClientVersion>3.23102.20.0</MinClientVersion>
+  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.23102.20","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","sienaVersion":"20231104T123134Z-3.23102.20.0"}</Tags>
   <IsCdsUpgraded>0</IsCdsUpgraded>
   <GalleryItemId xsi:nil="true"></GalleryItemId>
   <BackgroundColor>RGBA(0,176,240,1)</BackgroundColor>
   <DisplayName>LBHCompensationPlan</DisplayName>
-  <Description></Description>
-  <CommitMessage></CommitMessage>
+  <Description xsi:nil="true"></Description>
+  <CommitMessage xsi:nil="true"></CommitMessage>
   <Publisher></Publisher>
   <AuthorizationReferences>[]</AuthorizationReferences>
   <ConnectionReferences>{}</ConnectionReferences>
-  <DatabaseReferences>{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified"}},"dataSources":{"Employee fixed compensation (mserp)":{"entitySetName":"mserp_hcmcompfixedemplentities","logicalName":"mserp_hcmcompfixedemplentity"},"Job Positions Dual Write (mserp)":{"entitySetName":"mserp_hcmjobpositiondualwriteentities","logicalName":"mserp_hcmjobpositiondualwriteentity"},"Department(T)S":{"entitySetName":"crbb7_departments","logicalName":"crbb7_department"},"Position Type(T)S":{"entitySetName":"crbb7_positiontypes","logicalName":"crbb7_positiontype"},"Jobs (mserp)":{"entitySetName":"mserp_hcmjobentities","logicalName":"mserp_hcmjobentity"},"Compensation job function (mserp)":{"entitySetName":"mserp_hcmjobfunctionentities","logicalName":"mserp_hcmjobfunctionentity"},"Compensation regions (mserp)":{"entitySetName":"mserp_hcmcompensationregionentities","logicalName":"mserp_hcmcompensationregionentity"},"Worker (mserp)":{"entitySetName":"mserp_hcmworkerentities","logicalName":"mserp_hcmworkerentity"}}}}</DatabaseReferences>
+  <DatabaseReferences>{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified"}},"dataSources":{"Employee fixed compensation (mserp)":{"entitySetName":"mserp_hcmcompfixedemplentities","logicalName":"mserp_hcmcompfixedemplentity"},"Compensation structure (mserp)":{"entitySetName":"mserp_hcmcompensationstructureentities","logicalName":"mserp_hcmcompensationstructureentity"}}}}</DatabaseReferences>
+  <AppComponents>[]</AppComponents>
+  <AppComponentDependencies>[]</AppComponentDependencies>
   <CanConsumeAppPass>1</CanConsumeAppPass>
   <CanvasAppType>0</CanvasAppType>
   <BypassConsent>0</BypassConsent>
+  <AdminControlBypassConsent>0</AdminControlBypassConsent>
   <EmbeddedApp xsi:nil="true"></EmbeddedApp>
   <IntroducedVersion>1.0</IntroducedVersion>
-  <CdsDependencies>{"cdsdependencies":[{"componenttype":1,"logicalname":"mserp_hcmcompfixedemplentity"},{"componenttype":1,"logicalname":"mserp_hcmjobpositiondualwriteentity"},{"componenttype":1,"logicalname":"crbb7_department"},{"componenttype":1,"logicalname":"crbb7_positiontype"},{"componenttype":1,"logicalname":"mserp_hcmjobentity"},{"componenttype":1,"logicalname":"mserp_hcmjobfunctionentity"},{"componenttype":1,"logicalname":"mserp_hcmcompensationregionentity"},{"componenttype":1,"logicalname":"mserp_hcmworkerentity"}]}</CdsDependencies>
+  <CdsDependencies>{"cdsdependencies":[{"logicalname":"mserp_hcmcompfixedemplentity","componenttype":1},{"logicalname":"mserp_hcmcompensationstructureentity","componenttype":1}]}</CdsDependencies>
   <IsCustomizable>1</IsCustomizable>
   <BackgroundImageUri>/CanvasApps/crbb7_lbhcompensationplan_15465_BackgroundImageUri</BackgroundImageUri>
   <DocumentUri>/CanvasApps/crbb7_lbhcompensationplan_15465_DocumentUri.msapp</DocumentUri>
