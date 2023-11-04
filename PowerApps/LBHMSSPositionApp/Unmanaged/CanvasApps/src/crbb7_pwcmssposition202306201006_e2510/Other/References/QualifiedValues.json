@@ -8,13 +8,6 @@
       }
     },
     {
-      "Kind": "default.cds_mserp_hcmjobpositiondualwriteentity_forms",
-      "Namespace": "Job Positions Dual Write (mserp) (Forms)",
-      "Values": {
-        "Information": "406c01d5-3b94-a79a-b085-e49c39660fc7"
-      }
-    },
-    {
       "Kind": "default.cds_mserp_hcmjobentity_forms",
       "Namespace": "Jobs (mserp) (Forms)",
       "Values": {
@@ -22,17 +15,24 @@
       }
     },
     {
-      "Kind": "default.cds_mserp_hcmpositionentity_forms",
-      "Namespace": "Positions (mserp) (Forms)",
-      "Values": {
-        "Information": "91c93329-ea2a-fccc-6fd7-cd567b243b36"
-      }
-    },
-    {
       "Kind": "default.cds_mserp_hcmpositionv2entity_forms",
       "Namespace": "Positions V2 (mserp) (Forms)",
       "Values": {
         "Information": "cc6093b0-7b05-97b3-455a-f561bf8bdec4"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmjobpositiondualwriteentity_forms",
+      "Namespace": "Job Positions Dual Write (mserp) (Forms)",
+      "Values": {
+        "Information": "406c01d5-3b94-a79a-b085-e49c39660fc7"
+      }
+    },
+    {
+      "Kind": "default.cds_mserp_hcmpositionentity_forms",
+      "Namespace": "Positions (mserp) (Forms)",
+      "Values": {
+        "Information": "91c93329-ea2a-fccc-6fd7-cd567b243b36"
       }
     }
   ]

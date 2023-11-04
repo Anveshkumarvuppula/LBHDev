@@ -557,41 +557,13 @@
         HeadingFill: =
         HeadingSize: =21
         Height: =421
-        Items: =Filter('Job Positions Dual Write (mserp)',Position=Param("EntityId"))
+        Items: =Filter('Position details (mserp)',Position=Param("EntityId"))
         Size: =21
         Visible: =false
         Width: =640
         X: =0
         Y: =116
         ZIndex: =5
-
-        Position_Column2 As dataTableColumn.textualColumn:
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: =""
-            FieldName: ="mserp_positionid"
-            FieldVariantName: ="textualColumn"
-            Height: =384
-            LayoutHeight: =Parent.Height
-            Order: =1
-            Text: =ThisItem.Position
-            Width: =100
-            X: =211
-            Y: =37
-            ZIndex: =6
-
-        Description_Column2 As dataTableColumn.textualColumn:
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Description"
-            FieldName: ="mserp_description"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            LayoutHeight: =Parent.Height
-            Order: =3
-            Text: =ThisItem.Description
-            Width: =100
-            X: =0
-            Y: =0
-            ZIndex: =8
 
         "'Full-time equivalent_Column1' As dataTableColumn.numberColumn":
             DisplayMode: =DisplayMode.Edit
@@ -600,26 +572,40 @@
             FieldVariantName: ="numberColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
-            Order: =4
+            Order: =1
             Text: =ThisItem.'Full-time equivalent'
             Width: =100
             X: =0
             Y: =0
-            ZIndex: =9
+            ZIndex: =5
 
-        "'Job Positions Dual Write (mserp)_Column1' As dataTableColumn.textualColumn":
+        Description_Column2 As dataTableColumn.textualColumn:
             DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Job Positions Dual Write (mserp)"
-            FieldName: ="mserp_hcmjobpositiondualwriteentityid"
+            FieldDisplayName: ="Description"
+            FieldName: ="mserp_description"
             FieldVariantName: ="textualColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
-            Order: =5
-            Text: =ThisItem.'Job Positions Dual Write (mserp)'
+            Order: =2
+            Text: =ThisItem.Description
             Width: =100
             X: =0
             Y: =0
-            ZIndex: =10
+            ZIndex: =6
+
+        Position_Column2 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Position"
+            FieldName: ="mserp_positionid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =3
+            Text: =ThisItem.Position
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =7
 
     Label2 As label:
         Height: =106

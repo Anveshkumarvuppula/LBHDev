@@ -189,7 +189,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Compensation region_Column2",
-      "ParentIndex": 20,
+      "ParentIndex": 21,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -14690,7 +14690,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Department number_Column1_1",
-      "ParentIndex": 2,
+      "ParentIndex": 3,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -14783,7 +14783,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Description_Column1_1",
-      "ParentIndex": 3,
+      "ParentIndex": 4,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -15612,7 +15612,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Employment factor_Column1",
-      "ParentIndex": 11,
+      "ParentIndex": 12,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -23009,7 +23009,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Family_Column2",
-      "ParentIndex": 19,
+      "ParentIndex": 20,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -23371,7 +23371,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Full-time equivalent_Column2",
-      "ParentIndex": 10,
+      "ParentIndex": 11,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -25593,7 +25593,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Job_Column1_1",
-      "ParentIndex": 1,
+      "ParentIndex": 2,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -28103,7 +28103,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Position hours per week_Column1",
-      "ParentIndex": 9,
+      "ParentIndex": 10,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -28343,7 +28343,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Position type_Column1_1",
-      "ParentIndex": 5,
+      "ParentIndex": 6,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -28596,7 +28596,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Position_Column1_1",
-      "ParentIndex": 21,
+      "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -28942,7 +28942,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Probation completed_Column2",
-      "ParentIndex": 18,
+      "ParentIndex": 19,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -29182,7 +29182,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Probation duration_Column2",
-      "ParentIndex": 17,
+      "ParentIndex": 18,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -29422,7 +29422,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Probation period_Column2",
-      "ParentIndex": 16,
+      "ParentIndex": 17,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -29662,7 +29662,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "PwCPositionWeeksPerYear_Custom_Column1",
-      "ParentIndex": 8,
+      "ParentIndex": 9,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -29902,7 +29902,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Redundancy date_Column2",
-      "ParentIndex": 15,
+      "ParentIndex": 16,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -38057,7 +38057,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Teaching staff_Column1",
-      "ParentIndex": 14,
+      "ParentIndex": 15,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -38310,7 +38310,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Temporary contract end date_Column2",
-      "ParentIndex": 13,
+      "ParentIndex": 14,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -38550,7 +38550,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Temporary hours end date _Column2",
-      "ParentIndex": 12,
+      "ParentIndex": 13,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -38790,7 +38790,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Term time employee_Column1",
-      "ParentIndex": 7,
+      "ParentIndex": 8,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -39184,7 +39184,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Title_Column1_1",
-      "ParentIndex": 4,
+      "ParentIndex": 5,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -39437,7 +39437,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Weekend working_Column1",
-      "ParentIndex": 6,
+      "ParentIndex": 7,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {

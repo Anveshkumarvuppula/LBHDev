@@ -121,14 +121,6 @@
         "OptionSetReferenceColumnName": "mserp_pwcprobcompleted_custom",
         "OptionSetReferenceEntityName": "Position details (mserp)"
       },
-      "OptionSetReferenceItem10": {
-        "OptionSetReferenceColumnName": "mserp_issalarygenerated",
-        "OptionSetReferenceEntityName": "Positions V2 (mserp)"
-      },
-      "OptionSetReferenceItem11": {
-        "OptionSetReferenceColumnName": "mserp_lbhconfirmfte",
-        "OptionSetReferenceEntityName": "Positions V2 (mserp)"
-      },
       "OptionSetReferenceItem2": {
         "OptionSetReferenceColumnName": "mserp_pwctermtime_custom",
         "OptionSetReferenceEntityName": "Position details (mserp)"
@@ -147,18 +139,14 @@
       },
       "OptionSetReferenceItem6": {
         "OptionSetReferenceColumnName": "mserp_areearningsgeneratedfromschedule",
-        "OptionSetReferenceEntityName": "Positions (mserp)"
+        "OptionSetReferenceEntityName": "Positions V2 (mserp)"
       },
       "OptionSetReferenceItem7": {
-        "OptionSetReferenceColumnName": "mserp_isprimaryposition",
-        "OptionSetReferenceEntityName": "Positions (mserp)"
+        "OptionSetReferenceColumnName": "mserp_issalarygenerated",
+        "OptionSetReferenceEntityName": "Positions V2 (mserp)"
       },
       "OptionSetReferenceItem8": {
-        "OptionSetReferenceColumnName": "mserp_issalarygenerated",
-        "OptionSetReferenceEntityName": "Positions (mserp)"
-      },
-      "OptionSetReferenceItem9": {
-        "OptionSetReferenceColumnName": "mserp_areearningsgeneratedfromschedule",
+        "OptionSetReferenceColumnName": "mserp_lbhconfirmfte",
         "OptionSetReferenceEntityName": "Positions V2 (mserp)"
       }
     },
