@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "0a1365dd-14e9-46a4-9f92-54e038e00aba",
+    "Name": "LBHMSSFTECalculationParent",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "38a9e561-235d-ee11-8def-0022481b5ee5"
+  }
+]

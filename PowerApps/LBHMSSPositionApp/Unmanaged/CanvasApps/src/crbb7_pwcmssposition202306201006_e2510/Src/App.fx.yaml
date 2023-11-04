@@ -1,5 +1,9 @@
 App As appinfo:
     BackEnabled: =false
+    OnStart: |-
+        =If(!IsBlank(Param("EntityId")), Set(FinOpsInput, Param("EntityId")), Set(FinOpsInput, "EMPTY"));
+        //If(!IsBlank(Param("cmp")), Set(FinOpsInput, Param("cmp")), Set(FinOpsLegalEntity, ""));
+        Notify("EntityId parameter: " & FinOpsInput);
     Theme: =PowerAppsTheme
 
     Host As hostControl.DefaultHostControlVariant:

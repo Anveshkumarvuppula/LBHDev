@@ -5,7 +5,7 @@
         Height: =133
         OnSelect: =Navigate('New working hours page')
         Size: =24
-        Text: ="Working hours chnage"
+        Text: ="Working hours change"
         Width: =269
         X: =352
         Y: =942
@@ -24,7 +24,8 @@
 
     "'Current Position Details View' As formViewer":
         DataSource: ='Position details (mserp)'
-        Height: =725
+        Height: =774
+        Item: =First(SortByColumns(Filter('Position details (mserp)', Position = Param("EntityId")),"mserp_validfrom",SortOrder.Descending))
         Width: =640
         Y: =168
         ZIndex: =4
@@ -40,7 +41,7 @@
             Required: =true
             Width: =640
             X: =0
-            Y: =1
+            Y: =0
             ZIndex: =1
 
             DataCardKey8 As label:
@@ -78,7 +79,7 @@
             Required: =false
             Width: =640
             X: =0
-            Y: =2
+            Y: =1
             ZIndex: =1
 
             DataCardKey9 As label:
@@ -116,7 +117,7 @@
             Required: =false
             Width: =640
             X: =0
-            Y: =3
+            Y: =2
             ZIndex: =1
 
             DataCardKey10 As label:
@@ -143,18 +144,94 @@
                 Y: =DataCardKey10.Y + DataCardKey10.Height + 5
                 ZIndex: =2
 
-        "'Position hours per week_DataCard2' As typedDataCard.textualViewCard":
+        "'Compensation region_DataCard1' As typedDataCard.textualViewCard":
             BorderStyle: =BorderStyle.Solid
-            DataField: ="crbb7_positionhoursperweek"
-            Default: =ThisItem.'Position hours per week'
+            DataField: ="mserp_compensationregionid"
+            Default: =ThisItem.'Compensation region'
             DisplayMode: =DisplayMode.View
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"crbb7_positionhoursperweek")
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_compensationregionid")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Width: =640
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey2 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                ZIndex: =2
+
+        "'Temporary contract end date_DataCard2' As typedDataCard.textualViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwccontractenddate_custom"
+            Default: =ThisItem.'Temporary contract end date'
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwccontractenddate_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =40
             Required: =false
             Width: =640
             X: =0
             Y: =4
+            ZIndex: =1
+
+            DataCardKey52 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue41 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey52.Y + DataCardKey52.Height + 5
+                ZIndex: =2
+
+        "'Position hours per week_DataCard2' As typedDataCard.textualViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_positionhoursperweek_custom"
+            Default: =ThisItem.'Position hours per week'
+            DisplayMode: =DisplayMode.View
+            DisplayName: ="Position hours per week"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Width: =640
+            X: =0
+            Y: =5
             ZIndex: =1
 
             DataCardKey11 As label:
@@ -181,19 +258,57 @@
                 Y: =DataCardKey11.Y + DataCardKey11.Height + 5
                 ZIndex: =2
 
+        "'Temporary hours end date _DataCard1' As typedDataCard.textualViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwctemporaryhoursenddate_custom"
+            Default: =ThisItem.'Temporary hours end date '
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwctemporaryhoursenddate_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Width: =640
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey3 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue2 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey3.Y + DataCardKey3.Height + 5
+                ZIndex: =2
+
         "'Term Time Employee_DataCard2' As typedDataCard.comboBoxOptionSetSingleViewCard":
             BorderStyle: =BorderStyle.Solid
-            DataField: ="crbb7_termtimeemployee"
-            Default: =ThisItem.'Term Time Employee'
+            DataField: ="mserp_pwctermtime_custom"
+            Default: =ThisItem.'Term time employee'
             DisplayMode: =DisplayMode.View
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"crbb7_termtimeemployee")
+            DisplayName: ="Term time employee"
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =50
+            Height: =54
             Required: =false
             Update: =DataCardValue11.Selected
             Width: =640
             X: =0
-            Y: =5
+            Y: =7
             ZIndex: =1
 
             DataCardKey12 As label:
@@ -208,13 +323,14 @@
                 ZIndex: =1
 
             DataCardValue11 As combobox:
+                AccessibleLabel: ="Term time employee"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
                 DisplayMode: =Parent.DisplayMode
                 Height: =70
                 IsSearchable: =false
-                Items: =Choices('Yes or No')
+                Items: =Choices('NoYes (mserp)')
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 SearchFields: =["Value"]
                 SearchItems: =[]
@@ -252,21 +368,21 @@
                 Y: =DataCardKey12.Y
                 ZIndex: =4
 
-        "'Primary Field_DataCard2' As typedDataCard.textualViewCard":
+        PwCPositionWeeksPerYear_Custom_DataCard2 As typedDataCard.textualViewCard:
             BorderStyle: =BorderStyle.Solid
-            DataField: ="mserp_primaryfield"
-            Default: =ThisItem.'Primary Field'
+            DataField: ="mserp_pwcpositionweeksperyear_custom"
+            Default: =ThisItem.PwCPositionWeeksPerYear_Custom
             DisplayMode: =DisplayMode.View
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_primaryfield")
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcpositionweeksperyear_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =40
             Required: =false
             Width: =640
             X: =0
-            Y: =0
-            ZIndex: =5
+            Y: =8
+            ZIndex: =1
 
-            DataCardKey7 As label:
+            DataCardKey53 As label:
                 AutoHeight: =true
                 Height: =48
                 Size: =21
@@ -277,7 +393,7 @@
                 Y: =10
                 ZIndex: =1
 
-            DataCardValue6 As label:
+            DataCardValue42 As label:
                 AutoHeight: =true
                 DisplayMode: =Parent.DisplayMode
                 PaddingLeft: =0
@@ -287,8 +403,152 @@
                 Text: =Parent.Default
                 Width: =Parent.Width - 60
                 X: =30
-                Y: =DataCardKey7.Y + DataCardKey7.Height + 5
+                Y: =DataCardKey53.Y + DataCardKey53.Height + 5
                 ZIndex: =2
+
+        "'Irregular patterns_DataCard1' As typedDataCard.comboBoxOptionSetSingleViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcirregularpattern_custom"
+            Default: =ThisItem.'Irregular patterns'
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcirregularpattern_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue3.Selected
+            Width: =640
+            X: =0
+            Y: =9
+            ZIndex: =1
+
+            DataCardKey4 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3 As combobox:
+                AccessibleLabel: ="Irregualr patterns"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey4.Y + DataCardKey4.Height + 5
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue3.Y + DataCardValue3.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey4.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey4.Y
+                ZIndex: =4
+
+        "'Weekend working_DataCard1' As typedDataCard.comboBoxOptionSetSingleViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcweekendworking_custom"
+            Default: =ThisItem.'Weekend working'
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcweekendworking_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue4.Selected
+            Width: =640
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+            DataCardKey5 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4 As combobox:
+                AccessibleLabel: ="Weekend working"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                ZIndex: =2
+
+            ErrorMessage3 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4.Y + DataCardValue4.Height
+                ZIndex: =3
+
+            StarVisible3 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5.Y
+                ZIndex: =4
 
     DataTable2 As dataTable.datatable:
         BorderStyle: =BorderStyle.None
@@ -297,8 +557,9 @@
         HeadingFill: =
         HeadingSize: =21
         Height: =421
-        Items: =Filter('Job Positions Dual Write (mserp)',mserp_positionid=Param("EntityId"))
+        Items: =Filter('Job Positions Dual Write (mserp)',Position=Param("EntityId"))
         Size: =21
+        Visible: =false
         Width: =640
         X: =0
         Y: =116
@@ -312,10 +573,10 @@
             Height: =384
             LayoutHeight: =Parent.Height
             Order: =1
-            Text: =ThisItem.'Position (mserp_positionid)'
+            Text: =ThisItem.Position
             Width: =100
-            X: =2
-            Y: =0
+            X: =211
+            Y: =37
             ZIndex: =6
 
         Description_Column2 As dataTableColumn.textualColumn:
@@ -346,10 +607,24 @@
             Y: =0
             ZIndex: =9
 
+        "'Job Positions Dual Write (mserp)_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Job Positions Dual Write (mserp)"
+            FieldName: ="mserp_hcmjobpositiondualwriteentityid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =5
+            Text: =ThisItem.'Job Positions Dual Write (mserp)'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =10
+
     Label2 As label:
         Height: =106
         Size: =21
-        Text: ="Text"
+        Text: ="MSS Position Details"
         Width: =621
         Y: =10
         ZIndex: =6

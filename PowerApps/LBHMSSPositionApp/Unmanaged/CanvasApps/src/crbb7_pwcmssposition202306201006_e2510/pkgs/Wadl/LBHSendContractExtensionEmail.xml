@@ -2,7 +2,16 @@
   <doc title="LBH Send Contract Extension Email" />
   <grammars>
     <jsonTypes targetNamespace="https://uk-001.azure-apim.net/apim/logicflows" xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
-      <object name="ManualTriggerInput" />
+      <string name="ManualTriggerInput_Setvariable_Value_def" />
+      <string name="ManualTriggerInput_ManagerSet_Value_def" />
+      <string name="ManualTriggerInput_Contract_Value_def" />
+      <string name="ManualTriggerInput_SetContract_Value_def" />
+      <object name="ManualTriggerInput">
+        <property name="Setvariable_Value" type="string" />
+        <property name="ManagerSet_Value" type="string" />
+        <property name="Contract_Value" type="string" />
+        <property name="SetContract_Value" type="string" />
+      </object>
     </jsonTypes>
   </grammars>
   <resources siena:authenticationProviderHref="#PowerAppAuth" base="https://uk-001.azure-apim.net/apim/logicflows">
@@ -14,7 +23,12 @@
           <param style="query" name="api-version" type="xs:string" required="true" fixed="2015-02-01-preview">
             <doc title="The api version" />
           </param>
-          <representation mediaType="application/json" />
+          <representation mediaType="application/json">
+            <param style="plain" name="Setvariable_Value" path="/Setvariable_Value" type="xs:string" required="true" />
+            <param style="plain" name="ManagerSet_Value" path="/ManagerSet_Value" type="xs:string" required="true" />
+            <param style="plain" name="Contract_Value" path="/Contract_Value" type="xs:string" required="true" />
+            <param style="plain" name="SetContract_Value" path="/SetContract_Value" type="xs:string" required="true" />
+          </representation>
         </request>
       </method>
     </resource>
