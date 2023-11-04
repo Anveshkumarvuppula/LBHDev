@@ -1,4 +1,6 @@
-Screen1 As screen:
+CompensationPlanScreen As screen:
+    OnVisible: |-
+        =UpdateContext({varDataSetBuffer:Filter('Employee fixed compensation (mserp)',mserp_pwccompensationid_custom = Param("EntityId"))});Set(_popup,false);
 
     CompensationStructureGrid As dataTable.datatable:
         BorderStyle: =BorderStyle.Solid
@@ -6,108 +8,118 @@ Screen1 As screen:
         Fill: =RGBA(0, 0, 0, 0)
         Height: =417
         Items: |-
-            =SortByColumns(Filter(
-                'Compensation Structures',
-                Level.Name = First(varDataSetBuffer).'Compensation Level'.Name,
-                Grid.Name = First(varDataSetBuffer).Plan.Name
-            ),"cdm_amount", SortOrder.Ascending)
+            =SortByColumns(Filter('Compensation structure (mserp)',
+                Level = First(varDataSetBuffer).Level,
+                Grid = First(varDataSetBuffer).Plan
+            ),"mserp_amount", SortOrder.Ascending)
         Width: =1262
         X: =40
-        Y: =109
+        Y: =125
         ZIndex: =1
 
-        "'Compensation Structure Number_Column2' As dataTableColumn.textualColumn":
-            AutoWidth: =false
+        "'Compensation structure (mserp)_Column1' As dataTableColumn.textualColumn":
             DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Compensation Structure Number"
-            FieldName: ="cdm_compensationstructurenumber"
+            FieldDisplayName: ="Compensation structure (mserp)"
+            FieldName: ="mserp_hcmcompensationstructureentityid"
             FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            LayoutHeight: =Parent.Height
-            Order: =1
-            Text: =ThisItem.'Compensation Structure Number'
-            Visible: =false
-            Width: =243
-            X: =555
-            Y: =0
-            ZIndex: =10
-
-        "'Reference Point_Column2' As dataTableColumn.complexTypeColumn":
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Reference point"
-            FieldName: ="cdm_ReferencePointId"
-            FieldVariantName: ="complexTypeColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
             Order: =3
-            Text: =ThisItem.'Reference Point'.Name
+            Text: =ThisItem.'Compensation structure (mserp)'
             Width: =100
             X: =0
             Y: =0
-            ZIndex: =12
+            ZIndex: =17
 
-        Grid_Column2 As dataTableColumn.complexTypeColumn:
+        "'Reference point_Column1' As dataTableColumn.textualColumn":
             DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Plan"
-            FieldName: ="cdm_CompensationGridId"
-            FieldVariantName: ="complexTypeColumn"
-            Height: =Parent.Height
-            LayoutHeight: =Parent.Height
-            Order: =4
-            Text: =ThisItem.Grid.Name
-            Width: =100
-            X: =0
-            Y: =0
-            ZIndex: =13
-
-        Amount_Column2 As dataTableColumn.currencyColumn:
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Amount"
-            FieldName: ="cdm_amount"
-            FieldVariantName: ="currencyColumn"
-            Height: =Parent.Height
-            LayoutHeight: =Parent.Height
-            Order: =5
-            Text: |-
-                =Text(ThisItem.Amount,"$###.##")
-            Width: =100
-            X: =65
-            Y: =0
-            ZIndex: =14
-
-        Level_Column1 As dataTableColumn.complexTypeColumn:
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Level"
-            FieldName: ="cdm_CompensationLevelId"
-            FieldVariantName: ="complexTypeColumn"
-            Height: =Parent.Height
-            LayoutHeight: =Parent.Height
-            Order: =6
-            Text: =ThisItem.Level.Name
-            Width: =100
-            X: =0
-            Y: =0
-            ZIndex: =15
-
-        "'Compensation Structure_Column1' As dataTableColumn.textualColumn":
-            DisplayMode: =DisplayMode.Edit
-            FieldDisplayName: ="Compensation Structure"
-            FieldName: ="cdm_compensationstructureid"
+            FieldDisplayName: ="Reference point"
+            FieldName: ="mserp_referencepoint"
             FieldVariantName: ="textualColumn"
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
-            Order: =7
-            Text: =ThisItem.'Compensation Structure Number'
-            Visible: =false
+            Order: =12
+            Text: =ThisItem.'Reference point'
             Width: =100
             X: =0
             Y: =0
-            ZIndex: =16
+            ZIndex: =18
+
+        Amount_Column1 As dataTableColumn.numberColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Amount"
+            FieldName: ="mserp_amount"
+            FieldVariantName: ="numberColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =10
+            Text: |-
+                =Text(ThisItem.Amount, "$###.##")
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =19
+
+        Level_Column2 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Level"
+            FieldName: ="mserp_levelid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =9
+            Text: =ThisItem.Level
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =20
+
+        Grid_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Grid"
+            FieldName: ="mserp_grid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =11
+            Text: =ThisItem.Grid
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =21
+
+        "'Reference setup_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Reference setup"
+            FieldName: ="mserp_referencesetup"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =13
+            Text: =ThisItem.'Reference setup'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =22
+
+        "'Primary Field_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Compensation structure number"
+            FieldName: ="mserp_primaryfield"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =14
+            Text: =ThisItem.'Primary Field'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =23
 
     "'Update bar point' As button":
         Height: =48
         OnSelect: |-
-            =Patch('Worker Fixed Compensations',  First(Filter( 'Worker Fixed Compensations', 'Worker Fixed Compensation Number' = First(varDataSetBuffer).'Worker Fixed Compensation Number')) , { 'Bar point level': BarPointTxt.Text, 'Bar point amount': Value(BarPointAmountNumber.Text)});Set(_popup,true)
+            =Patch('Employee fixed compensation (mserp)',  First(Filter('Employee fixed compensation (mserp)','Compensation id' = First(varDataSetBuffer).'Compensation id')) , { 'Bar point': BarPointTxt.Text, 'Bar point amount': Value(BarPointAmountNumber.Text)});Set(_popup,true)
         Text: ="Update bar point"
         Width: =494
         X: =766
@@ -115,7 +127,8 @@ Screen1 As screen:
         ZIndex: =2
 
     BarPointTxt As text:
-        Default: =CompensationStructureGrid.Selected.'Reference Point'.Name
+        AccessibleLabel: ="Bar point"
+        Default: =CompensationStructureGrid.Selected.'Reference point'
         Visible: =false
         X: =40
         Y: =644
@@ -161,7 +174,7 @@ Screen1 As screen:
     "'Current bar point level' As label":
         FontWeight: =FontWeight.Bold
         Height: =31
-        Text: =Concatenate(First(varDataSetBuffer).'Bar point level', "  ", Text(First(varDataSetBuffer).'Bar point amount (cdm_pwcbarpointamount_custom)'))
+        Text: =Concatenate(First(varDataSetBuffer).'Bar point', "  ",Text(First(varDataSetBuffer).'Bar point amount'))
         Width: =351
         X: =225
         Y: =40
@@ -188,6 +201,7 @@ Screen1 As screen:
         ZIndex: =10
 
     BarPointAmountNumber As text:
+        AccessibleLabel: ="Bar point amount number"
         Default: =CompensationStructureGrid.Selected.Amount
         Format: =TextFormat.Number
         Visible: =false

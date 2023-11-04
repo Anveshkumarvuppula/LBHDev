@@ -8,6 +8,13 @@
       }
     },
     {
+      "Kind": "default.cds_mserp_hcmcompensationstructureentity_forms",
+      "Namespace": "Compensation structure (mserp) (Forms)",
+      "Values": {
+        "Information": "050f3545-2856-25fb-f734-d0a21d36d026"
+      }
+    },
+    {
       "Kind": "default.cds_mserp_hcmjobpositiondualwriteentity_forms",
       "Namespace": "Job Positions Dual Write (mserp) (Forms)",
       "Values": {
@@ -38,16 +45,12 @@
     {
       "Kind": "default.cds_mserp_hcmjobfunctionentity_forms",
       "Namespace": "Compensation job function (mserp) (Forms)",
-      "Values": {
-        "Information": "ae9bb778-b5ac-7c52-42eb-f29256f286bc"
-      }
+      "Values": {}
     },
     {
       "Kind": "default.cds_mserp_hcmcompensationregionentity_forms",
       "Namespace": "Compensation regions (mserp) (Forms)",
-      "Values": {
-        "Information": "8adad8f5-73b2-3287-63d1-b4b273309510"
-      }
+      "Values": {}
     },
     {
       "Kind": "default.cds_mserp_hcmworkerentity_forms",

@@ -84,7 +84,7 @@
             "parameters": {
               "entityName": "mserp_hcmcompfixedemplentities",
               "recordId": "@outputs('Get_a_record')?['body/mserp_hcmcompfixedemplentityid']",
-              "item/mserp_primaryfield": "@outputs('Get_a_record')?['body/mserp_hcmcompfixedemplentityid']"
+              "item/mserp_pwccompensationid_custom": "@outputs('Get_a_record')?['body/mserp_pwccompensationid_custom']"
             },
             "authentication": "@parameters('$authentication')"
           }
