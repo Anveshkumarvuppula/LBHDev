@@ -2,6 +2,7 @@
 <EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <EntityRelationship Name="business_unit_crbb7_lbhannualleavedays" />
   <EntityRelationship Name="business_unit_crbb7_localgovernmentleavedays" />
+  <EntityRelationship Name="crbb7_mserp_hcmjobpositiondualwriteentity_TestJ" />
   <EntityRelationship Name="lk_crbb7_lbhannualleavedays_createdby" />
   <EntityRelationship Name="lk_crbb7_lbhannualleavedays_modifiedby" />
   <EntityRelationship Name="lk_crbb7_localgovernmentleavedays_createdby" />

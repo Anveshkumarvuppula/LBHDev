@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Workflow WorkflowId="{5fc0fb10-5d5c-ee11-8def-0022481b529e}" Name="PwCLBHFTEBackendCalculationV2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <JsonFileName>/Workflows/PwCLBHFTEBackendCalculationV2-5FC0FB10-5D5C-EE11-8DEF-0022481B529E.json</JsonFileName>
+<Workflow WorkflowId="{dba37a65-147b-ee11-8179-0022481b5dbb}" Name="PwCLBHFTEBackendCalculationV2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <JsonFileName>/Workflows/PwCLBHFTEBackendCalculationV2-DBA37A65-147B-EE11-8179-0022481B5DBB.json</JsonFileName>
   <Type>1</Type>
   <Subprocess>0</Subprocess>
   <Category>5</Category>
@@ -15,8 +15,9 @@
   <StatusCode>2</StatusCode>
   <RunAs>1</RunAs>
   <IsTransacted>1</IsTransacted>
-  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <IntroducedVersion>10.0.121</IntroducedVersion>
   <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
   <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
   <PrimaryEntity>none</PrimaryEntity>
   <LocalizedNames>
