@@ -4,7 +4,7 @@
       "shared_commondataserviceforapps": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_f0055"
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_66d48"
         },
         "api": {
           "name": "shared_commondataserviceforapps"
@@ -13,7 +13,7 @@
       "shared_dynamicsax": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_446fd"
+          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_fcb03"
         },
         "api": {
           "name": "shared_dynamicsax"
@@ -48,7 +48,8 @@
             "parameters": {
               "subscriptionRequest/message": 4,
               "subscriptionRequest/entityname": "mserp_hcmpositionv2entity",
-              "subscriptionRequest/scope": 4
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/runas": 3
             },
             "authentication": "@parameters('$authentication')"
           }
@@ -433,6 +434,7 @@
             "parameters": {
               "entityName": "mserp_hcmpositiondetailentities",
               "$filter": "mserp_positionid eq '@{outputs('Get_Position')?['body/mserp_positionid']}'",
+              "$orderby": "mserp_validto desc",
               "$top": 1
             },
             "authentication": "@parameters('$authentication')"
@@ -473,7 +475,7 @@
               "kind": "ConvertTimeZone",
               "inputs": {
                 "baseTime": "@outputs('Get_Position_Details')?['body/mserp_validfrom']",
-                "formatString": "(UTC) Coordinated Universal Time",
+                "formatString": "dd/MM/yyyy",
                 "sourceTimeZone": "GMT Standard Time",
                 "destinationTimeZone": "UTC"
               }
@@ -494,7 +496,7 @@
                     },
                     "parameters": {
                       "entityName": "mserp_hcmpositionworkerassignmentv2entities",
-                      "$filter": "mserp_FK_job_id eq'@{outputs('Get_Position')?['body/mserp_hcmpositionv2entityid']}'"
+                      "$filter": "_mserp_fk_position_id_value eq '@{outputs('Get_Position')?['body/mserp_hcmpositionv2entityid']}'"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
@@ -554,8 +556,7 @@
                         },
                         "parameters": {
                           "entityName": "mserp_hcmemploymententities",
-                          "$select": "mserp_hcmemploymententityId",
-                          "$filter": "mserp_FK_EmployedWorker_id eq'@{outputs('Get_Worker')?['body/mserp_hcmworkerentityid']}'"
+                          "$filter": "_mserp_fk_employedworker_id_value eq '@{outputs('Get_Worker')?['body/mserp_hcmworkerentityid']}'"
                         },
                         "authentication": "@parameters('$authentication')"
                       }
@@ -656,7 +657,7 @@
                             "operationMetadataId": "002ec511-fd1c-410d-8e76-77a75b8092a2"
                           },
                           "type": "Compose",
-                          "inputs": "@formatDateTime(body('Convert_time_zone'),'MM')"
+                          "inputs": "@substring(body('Convert_time_zone'),3,2)"
                         },
                         "Set_variable_7,_Month_Number": {
                           "runAfter": {
@@ -710,7 +711,7 @@
                               "type": "SetVariable",
                               "inputs": {
                                 "name": "LastYear",
-                                "value": "@{subtractFromTime(outputs('Get_Position_Details')?['body/mshr_validfrom'], 1, 'Year', 'yyyy')}"
+                                "value": "@{subtractFromTime(outputs('Get_Position_Details')?['body/mserp_validfrom'], 1, 'Year', 'yyyy')}"
                               }
                             },
                             "Get_1st_April_Last_Year": {
@@ -853,8 +854,8 @@
                                         },
                                         "parameters": {
                                           "entityName": "crbb7_lbhannualleavedayses",
-                                          "$filter": "cr504_years eq @{variables('YearsLBHService NOW')}",
-                                          "$orderby": "cr504_annualleave desc",
+                                          "$filter": "crbb7_years eq @{variables('YearsLBHService NOW')}",
+                                          "$orderby": "crbb7_annualleave desc",
                                           "$top": 1
                                         },
                                         "authentication": "@parameters('$authentication')"
@@ -945,8 +946,8 @@
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
-                                            "$filter": "cr504_years eq @{variables('YearsServiceApril')}",
-                                            "$orderby": "cr504_annualleave desc",
+                                            "$filter": "crbb7_years eq @{variables('YearsServiceApril')}",
+                                            "$orderby": "crbb7_annualleave desc",
                                             "$top": 1
                                           },
                                           "authentication": "@parameters('$authentication')"
@@ -1393,7 +1394,7 @@
                     "operationMetadataId": "a669da92-e369-4502-b2ad-36386b8df896"
                   },
                   "type": "Compose",
-                  "inputs": "@mul(outputs('Get_Position_Details')?['body/mshr_pwcpositionhoursperweek_custom'], outputs('Get_Position_Details')?['body/mserp_pwcpositionweeksperyear_custom'])"
+                  "inputs": "@mul(outputs('Get_Position_Details')?['body/mserp_pwcpositionhoursperweek_custom'], outputs('Get_Position_Details')?['body/mserp_pwcpositionweeksperyear_custom'])"
                 },
                 "FTE_Calculation": {
                   "runAfter": {
@@ -1439,34 +1440,37 @@
                     "format": "#.##"
                   }
                 },
-                "Update_a_row": {
+                "Update_a_record_2": {
                   "runAfter": {
                     "Format_number_3": [
                       "Succeeded"
                     ]
                   },
                   "metadata": {
-                    "operationMetadataId": "e0305d2e-8301-4112-83fd-f4caee3058ae"
+                    "operationMetadataId": "0636a695-1670-486a-8bf3-7e9ef945b63e"
                   },
                   "type": "OpenApiConnection",
                   "inputs": {
                     "host": {
-                      "connectionName": "shared_commondataserviceforapps",
-                      "operationId": "UpdateRecord",
-                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      "connectionName": "shared_dynamicsax",
+                      "operationId": "PatchItem",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                     },
                     "parameters": {
-                      "entityName": "mserp_hcmpositiondetailentities",
-                      "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
-                      "item/mserp_pwcemploymentfactor_custom": "@body('Format_number')",
-                      "item/mserp_fulltimeequivalent": "@body('Format_number_3')"
+                      "dataset": "lbh-fo-uat-10.sandbox.operations.dynamics.com",
+                      "table": "PositionDetails",
+                      "id": "@{outputs('Get_Position')?['body/mserp_positionid']},@{outputs('Get_Position_Details')?['body/mserp_validfrom']},@{outputs('Get_Position_Details')?['body/mserp_validto']}",
+                      "item/PositionId": "@outputs('Get_Position')?['body/mserp_positionid']",
+                      "item/JobId": "@outputs('Get_Position_Details')?['body/mserp_jobid']",
+                      "item/FullTimeEquivalent": "@body('Format_number_3')",
+                      "item/PwCEmploymentFactor_Custom": "@body('Format_number')"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
                 }
               },
               "runAfter": {
-                "Convert_time_zone": [
+                "Compose_6": [
                   "Succeeded"
                 ]
               },
@@ -1524,26 +1528,30 @@
                       "format": "#.##"
                     }
                   },
-                  "Update_a_row_2": {
+                  "Update_a_record_4": {
                     "runAfter": {
                       "Format_number_2": [
                         "Succeeded"
                       ]
                     },
                     "metadata": {
-                      "operationMetadataId": "39a68779-41b6-4f6d-8b3f-cd6feba9dad3"
+                      "operationMetadataId": "0636a695-1670-486a-8bf3-7e9ef945b63e"
                     },
                     "type": "OpenApiConnection",
                     "inputs": {
                       "host": {
-                        "connectionName": "shared_commondataserviceforapps",
-                        "operationId": "UpdateRecord",
-                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                        "connectionName": "shared_dynamicsax",
+                        "operationId": "PatchItem",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                       },
                       "parameters": {
-                        "entityName": "mserp_hcmpositiondetailentities",
-                        "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
-                        "item/mserp_fulltimeequivalent": "@body('Format_number_2')"
+                        "dataset": "lbh-fo-uat-10.sandbox.operations.dynamics.com",
+                        "table": "PositionDetails",
+                        "id": "@{outputs('Get_Position')?['body/mserp_positionid']},@{outputs('Get_Position_Details')?['body/mserp_validfrom']},@{outputs('Get_Position_Details')?['body/mserp_validto']}",
+                        "item/PositionId": "@outputs('Get_Position')?['body/mserp_positionid']",
+                        "item/JobId": "@outputs('Get_Position_Details')?['body/mserp_jobid']",
+                        "item/FullTimeEquivalent": "@body('Format_number_2')",
+                        "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
                       },
                       "authentication": "@parameters('$authentication')"
                     }
@@ -1560,6 +1568,18 @@
                 "operationMetadataId": "1edb2fb4-5801-4ac8-8cd1-28ca3bbadcde"
               },
               "type": "If"
+            },
+            "Compose_6": {
+              "runAfter": {
+                "Convert_time_zone": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "c6a2d32e-d7d0-41f5-8f4a-1f5c8bf0dacc"
+              },
+              "type": "Compose",
+              "inputs": "@body('Convert_time_zone')"
             }
           },
           "runAfter": {
