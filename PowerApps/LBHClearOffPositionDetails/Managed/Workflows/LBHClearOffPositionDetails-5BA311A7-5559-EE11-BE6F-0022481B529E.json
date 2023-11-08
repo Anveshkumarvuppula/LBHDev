@@ -9,6 +9,15 @@
         "api": {
           "name": "shared_commondataserviceforapps"
         }
+      },
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_RVMSDataVerseLoqateBankValidation"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
       }
     },
     "definition": {
@@ -62,32 +71,9 @@
             ]
           }
         },
-        "Get_a_row_by_ID_-_Job_Position_Entity": {
-          "runAfter": {
-            "Initialize_variable_-_AssignmentEndDate": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "1b2d00ff-2fcd-49b9-b0df-2e1f8565f2e6"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_commondataserviceforapps",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-            },
-            "parameters": {
-              "entityName": "mserp_hcmjobpositiondualwriteentities",
-              "recordId": "@triggerOutputs()?['body/mserp_positionid']"
-            },
-            "authentication": "@parameters('$authentication')"
-          }
-        },
         "List_rows_-_Position_Details": {
           "runAfter": {
-            "Get_a_row_by_ID_-_Job_Position_Entity": [
+            "Initialize_variable_-_PositionID": [
               "Succeeded"
             ]
           },
@@ -103,112 +89,105 @@
             },
             "parameters": {
               "entityName": "mserp_hcmpositiondetailentities",
-              "$filter": "mserp_positionid eq '@{outputs('Get_a_row_by_ID_-_Job_Position_Entity')?['body/mserp_positionid']}'"
+              "$filter": "mserp_positionid eq '@{variables('PositionID')}' and mserp_validfrom le '@{triggerOutputs()?['body/mserp_validto']}'",
+              "$orderby": "mserp_validfrom desc",
+              "$top": 1
             },
             "authentication": "@parameters('$authentication')"
           }
         },
-        "Filter_array": {
+        "Apply_to_each": {
+          "foreach": "@outputs('List_rows_-_Position_Details')?['body/value']",
+          "actions": {
+            "Update_a_row": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "3eae5577-d94a-4f6e-a336-2408992b18dc"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "UpdateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
+                  "item/mserp_validto": "@variables('AssignmentEndDate')",
+                  "item/mserp_pwcprobperiod_custom": "@null",
+                  "item/mserp_pwcredundancydate_custom": "@null"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Add_a_new_row_2": {
+              "runAfter": {
+                "Update_a_row": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "fcd494f1-27e8-4dfc-b0b6-5ca6052565b3"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "CreateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
+                  "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
+                  "item/mserp_availableforassignment": "@outputs('Update_a_row')?['body/mserp_availableforassignment']",
+                  "item/mserp_compensationregionid": "@null",
+                  "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
+                  "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
+                  "item/mserp_validfrom": "@addSeconds(variables('AssignmentEndDate'), 1)",
+                  "item/mserp_validto": "@addSeconds(variables('AssignmentEndDate'), 1)",
+                  "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
+                  "item/mserp_pwcprobcompleted_custom": 200000000,
+                  "item/mserp_pwcprobperiod_custom": "@null",
+                  "item/mserp_lbhpositionreasonchange": 200000015,
+                  "item/mserp_pwcredundancydate_custom": "@null",
+                  "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']",
+                  "item/mserp_pwcweekendworking_custom": 200000000
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
           "runAfter": {
             "List_rows_-_Position_Details": [
               "Succeeded"
             ]
           },
           "metadata": {
-            "operationMetadataId": "a1be21e4-c280-4366-bdb6-d4d75f6562a1"
+            "operationMetadataId": "2a87535a-62d6-4ea5-8ba7-2c34fc865ed3"
           },
-          "type": "Query",
-          "inputs": {
-            "from": "@outputs('List_rows_-_Position_Details')?['body/value']",
-            "where": "@lessOrEquals(item()?['mserp_validfrom'], variables('AssignmentEndDate'))"
-          }
+          "type": "Foreach"
         },
-        "Apply_to_each": {
-          "foreach": "@body('Filter_array')",
-          "actions": {
-            "Apply_to_each_2": {
-              "foreach": "@outputs('List_rows_-_Position_Details')?['body/value']",
-              "actions": {
-                "Update_a_row": {
-                  "runAfter": {},
-                  "metadata": {
-                    "operationMetadataId": "3eae5577-d94a-4f6e-a336-2408992b18dc"
-                  },
-                  "type": "OpenApiConnection",
-                  "inputs": {
-                    "host": {
-                      "connectionName": "shared_commondataserviceforapps",
-                      "operationId": "UpdateRecord",
-                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-                    },
-                    "parameters": {
-                      "entityName": "mserp_hcmpositiondetailentities",
-                      "recordId": "@items('Apply_to_each_2')?['mserp_hcmpositiondetailentityid']",
-                      "item/mserp_jobid": "@items('Apply_to_each_2')?['mserp_jobid']",
-                      "item/mserp_positionid": "@items('Apply_to_each_2')?['mserp_positionid']",
-                      "item/mserp_validto": "@variables('AssignmentEndDate')",
-                      "item/mserp_pwcprobperiod_custom": "@{null}\n",
-                      "item/mserp_pwcredundancydate_custom": "@null"
-                    },
-                    "authentication": "@parameters('$authentication')"
-                  }
-                },
-                "Add_a_new_row": {
-                  "runAfter": {
-                    "Update_a_row": [
-                      "Succeeded"
-                    ]
-                  },
-                  "metadata": {
-                    "operationMetadataId": "fcd494f1-27e8-4dfc-b0b6-5ca6052565b3"
-                  },
-                  "type": "OpenApiConnection",
-                  "inputs": {
-                    "host": {
-                      "connectionName": "shared_commondataserviceforapps",
-                      "operationId": "CreateRecord",
-                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-                    },
-                    "parameters": {
-                      "entityName": "mserp_hcmpositiondetailentities",
-                      "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
-                      "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
-                      "item/mserp_availableforassignment": "@outputs('Update_a_row')?['body/mserp_availableforassignment']",
-                      "item/mserp_compensationregionid": "@null",
-                      "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
-                      "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
-                      "item/mserp_validfrom": "@addSeconds(variables('AssignmentEndDate'),1)",
-                      "item/mserp_jobfamilyid": "@outputs('Update_a_row')?['body/mserp_jobfamilyid']",
-                      "item/mserp_fulltimeequivalent": "@outputs('Update_a_row')?['body/mserp_fulltimeequivalent']",
-                      "item/mserp_pwcirregularpattern_custom": 200000000,
-                      "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
-                      "item/mserp_pwcprobcompleted_custom": 200000000,
-                      "item/mserp_pwcprobperiod_custom": "@{null}\n\n",
-                      "item/mserp_lbhpositionreasonchange": 200000015,
-                      "item/mserp_pwcredundancydate_custom": "@null",
-                      "item/mserp_pwccontractenddate_custom": "@null",
-                      "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']"
-                    },
-                    "authentication": "@parameters('$authentication')"
-                  }
-                }
-              },
-              "runAfter": {},
-              "metadata": {
-                "operationMetadataId": "de43baa0-653f-409c-ac69-a9cc1d1dcd80"
-              },
-              "type": "Foreach"
-            }
-          },
+        "Initialize_variable_-_PositionID": {
           "runAfter": {
-            "Filter_array": [
+            "Initialize_variable_-_AssignmentEndDate": [
               "Succeeded"
             ]
           },
           "metadata": {
-            "operationMetadataId": "f82a51f2-1e9d-4883-9cc3-3fae8d712f2a"
+            "operationMetadataId": "d3726dba-e96d-46c6-a17c-d85fe1562635"
           },
-          "type": "Foreach"
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PositionID",
+                "type": "string",
+                "value": "@triggerOutputs()?['body/mserp_positionid']"
+              }
+            ]
+          }
         }
       }
     },
