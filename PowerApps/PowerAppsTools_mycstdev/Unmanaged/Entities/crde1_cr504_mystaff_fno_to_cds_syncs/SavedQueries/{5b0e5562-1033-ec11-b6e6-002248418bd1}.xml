@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{5b0e5562-1033-ec11-b6e6-002248418bd1}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="crde1_cr504_mystaff_fno_to_cds_syncid" select="1" preview="1" icon="1">
+        <row name="result" id="crde1_cr504_mystaff_fno_to_cds_syncsid">
+          <cell name="crde1_cr504_mystaff_fno_to_cds_syncid" width="150" />
+        </row>
+        <controlDescriptions>
+          <controlDescription>
+            <customControl id="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+              <parameters />
+            </customControl>
+            <customControl name="mycstdev_Harrow.MyStaff" formFactor="0">
+              <parameters>
+                <data-set name="gridDataSet">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                </data-set>
+              </parameters>
+            </customControl>
+            <customControl name="mycstdev_Harrow.MyStaff" formFactor="1">
+              <parameters>
+                <data-set name="gridDataSet">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                </data-set>
+              </parameters>
+            </customControl>
+            <customControl name="mycstdev_Harrow.MyStaff" formFactor="2">
+              <parameters>
+                <data-set name="gridDataSet">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                </data-set>
+              </parameters>
+            </customControl>
+          </controlDescription>
+        </controlDescriptions>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="crde1_cr504_mystaff_fno_to_cds_syncs">
+          <attribute name="crde1_cr504_mystaff_fno_to_cds_syncid" />
+          <order attribute="crde1_cr504_mystaff_fno_to_cds_syncid" descending="false" />
+          <attribute name="crde1_cr504_mystaff_fno_to_cds_syncsid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="MyStaffs" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

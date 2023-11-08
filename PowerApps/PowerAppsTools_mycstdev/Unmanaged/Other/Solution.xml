@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.23102.212" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>PowerAppsTools_mycstdev</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="PowerAppsTools_mycstdev" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>10.0.148</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>PowerAppsToolsPublisher_mycstdev</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="PowerAppsToolsPublisher_mycstdev" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="PowerAppsToolsPublisher_mycstdev" languagecode="1033" />
+      </Descriptions>
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
+      <CustomizationPrefix>mycstdev</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>15659</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="crde1_cr504_my4cast_fno_to_cds_syncs" behavior="0" />
+      <RootComponent type="1" schemaName="crde1_cr504_mystaff_fno_to_cds_syncs" behavior="0" />
+      <RootComponent type="20" id="{ace36cf4-1033-ec11-b6e6-002248418bd1}" behavior="0" />
+      <RootComponent type="20" id="{c9c8db1b-1133-ec11-b6e6-002248418bd1}" behavior="0" />
+      <RootComponent type="20" id="{eda90b42-1133-ec11-b6e6-002248418bd1}" behavior="0" />
+      <RootComponent type="62" schemaName="crde1_My4CastApp" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_GroupGrid.My4CastProjectsGrpGrid" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Harrow.My4castCC" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Harrow.My4castCCG" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Harrow.My4castPro" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Harrow.My4castProG" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Harrow.MyStaff" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Pwc.MyProjectGrid" behavior="0" />
+      <RootComponent type="66" schemaName="mycstdev_Pwc.MyStaffComponent" behavior="0" />
+      <RootComponent type="80" schemaName="crde1_My4CastApp" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)" />
+        <Dependent type="80" schemaName="crde1_My4CastApp" displayName="My4CastApp" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>
