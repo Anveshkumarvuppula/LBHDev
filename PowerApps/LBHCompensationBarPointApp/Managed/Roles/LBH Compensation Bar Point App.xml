@@ -2,7 +2,13 @@
 <Role id="{a452670c-7a5c-ee11-8def-0022481b5ee5}" name="LBH Compensation Bar Point App" isinherited="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <IsCustomizable>1</IsCustomizable>
   <RolePrivileges>
+    <RolePrivilege name="prvAppendcdm_company" level="Global" />
+    <RolePrivilege name="prvAppendTocdm_company" level="Global" />
+    <RolePrivilege name="prvAssigncdm_company" level="Global" />
+    <RolePrivilege name="prvCreatecdm_company" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
+    <RolePrivilege name="prvDeletecdm_company" level="Global" />
+    <RolePrivilege name="prvReadcdm_company" level="Global" />
     <RolePrivilege name="prvReadPluginAssembly" level="Global" />
     <RolePrivilege name="prvReadPluginType" level="Global" />
     <RolePrivilege name="prvReadSdkMessage" level="Global" />
@@ -10,6 +16,8 @@
     <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
+    <RolePrivilege name="prvSharecdm_company" level="Global" />
+    <RolePrivilege name="prvWritecdm_company" level="Global" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
   </RolePrivileges>
 </Role>
