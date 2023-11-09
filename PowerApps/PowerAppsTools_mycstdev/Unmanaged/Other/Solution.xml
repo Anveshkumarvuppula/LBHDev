@@ -6,7 +6,7 @@
       <LocalizedName description="PowerAppsTools_mycstdev" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.158</Version>
+    <Version>10.0.160</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>PowerAppsToolsPublisher_mycstdev</UniqueName>
