@@ -1,0 +1,38 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar",
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUNlJXRDJINzRLOEpSMkFHRDk5SEIyS1IyRC4u"
+    },
+    {
+      "SchemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar",
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUQUpFTE5ZQU01Q1o3NlZDQjhWM1IzTkQ0RC4u"
+    },
+    {
+      "SchemaName": "crbb7_MSFormsSellLeaveRequestConfVar",
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUQk42TDdROVQ4WUc2TllFRzRUT09BUzRGMy4u"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_Mail",
+      "ConnectionId": "2175780a62f240cd9b0b280a79e6d5fa",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_c69c9",
+      "ConnectionId": "17df25f375954630ae00acf479da83f9",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_edfa2",
+      "ConnectionId": "17df25f375954630ae00acf479da83f9",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_ef66f",
+      "ConnectionId": "17df25f375954630ae00acf479da83f9",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    }
+  ]
+}
