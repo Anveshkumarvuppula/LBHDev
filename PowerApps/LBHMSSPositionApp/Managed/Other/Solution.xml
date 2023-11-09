@@ -6,7 +6,7 @@
       <LocalizedName description="LBH MSSPositionApp" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.141</Version>
+    <Version>10.0.160</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -171,24 +171,6 @@
         <Dependent type="1" schemaName="mserp_hcmjobentity" displayName="Jobs (mserp)" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="29" displayName=" LBH MSS FTE Calculation Parent" id="{38a9e561-235d-ee11-8def-0022481b5ee5}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="29" displayName=" LBH MSS FTE Calc with Emails" id="{c7468e05-e35c-ee11-8def-0022481b5ee5}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="29" displayName="LBH Send Contract Extension Email" id="{fa0e2ff0-0f5d-ee11-8def-0022481b529e}" />
-      </MissingDependency>
-      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
@@ -259,6 +241,24 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_FK_HcmPositionDetailEntity_Position" displayName="mserp_FK_HcmPositionDetailEntity_Position" parentSchemaName="mserp_hcmpositionv2entity" parentDisplayName="Positions V2 (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName=" LBH MSS FTE Calculation Parent" id="{38a9e561-235d-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName=" LBH MSS FTE Calc with Emails" id="{c7468e05-e35c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
+        </Required>
+        <Dependent type="29" displayName="LBH Send Contract Extension Email" id="{fa0e2ff0-0f5d-ee11-8def-0022481b529e}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -423,8 +423,24 @@
         <Dependent type="9" schemaName="mserp_noyes" displayName="NoYes (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="connectionreference" displayName="crbb7_CommonDataService" solution="Active" id.connectionreferencelogicalname="crbb7_CommonDataService" />
+        <Dependent type="29" displayName="ExpirePrevPositionDetailsRecord" id="{a2204eeb-295d-ee11-8def-0022481b529e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="connectionreference" displayName="crbb7_CommonDataService" solution="Active" id.connectionreferencelogicalname="crbb7_CommonDataService" />
+        <Dependent type="29" displayName=" LBH MSS FTE Calc with Emails" id="{c7468e05-e35c-ee11-8def-0022481b5ee5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="connectionreference" displayName="crbb7_RVMSDataVerseLoqateBankValidation" solution="Active" id.connectionreferencelogicalname="crbb7_RVMSDataVerseLoqateBankValidation" />
+        <Dependent type="29" displayName="ExpirePrevPositionDetailsRecord" id="{a2204eeb-295d-ee11-8def-0022481b529e}" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_afe0e" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e" />
         <Dependent type="29" displayName="LBH Send Contract Extension Email" id="{fa0e2ff0-0f5d-ee11-8def-0022481b529e}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_f0055" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_f0055" />
+        <Dependent type="29" displayName=" LBH MSS FTE Calc with Emails" id="{c7468e05-e35c-ee11-8def-0022481b5ee5}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="connectionreference" displayName="crbb7_sharedsendmail_49c4a" solution="Active" id.connectionreferencelogicalname="crbb7_sharedsendmail_49c4a" />

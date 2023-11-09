@@ -187,7 +187,7 @@
             DataField: ="mserp_pwccontractenddate_custom"
             Default: =ThisItem.'Temporary contract end date'
             DisplayMode: =DisplayMode.View
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwccontractenddate_custom")
+            DisplayName: ="Contract end date"
             Fill: =RGBA(0, 0, 0, 0)
             Height: =40
             Required: =false
@@ -222,7 +222,7 @@
 
         "'Position hours per week_DataCard2' As typedDataCard.textualViewCard":
             BorderStyle: =BorderStyle.Solid
-            DataField: ="mserp_positionhoursperweek_custom"
+            DataField: ="mserp_pwcpositionhoursperweek_custom"
             Default: =ThisItem.'Position hours per week'
             DisplayMode: =DisplayMode.View
             DisplayName: ="Position hours per week"
@@ -373,7 +373,7 @@
             DataField: ="mserp_pwcpositionweeksperyear_custom"
             Default: =ThisItem.PwCPositionWeeksPerYear_Custom
             DisplayMode: =DisplayMode.View
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcpositionweeksperyear_custom")
+            DisplayName: ="Position weeks per year"
             Fill: =RGBA(0, 0, 0, 0)
             Height: =40
             Required: =false
@@ -550,6 +550,45 @@
                 Y: =DataCardKey5.Y
                 ZIndex: =4
 
+        "'Position hours per week_DataCard4' As typedDataCard.textualViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcpositionhoursperweek_custom"
+            Default: =ThisItem.'Position hours per week'
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcpositionhoursperweek_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =11
+            ZIndex: =1
+
+            DataCardKey55 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue44 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey55.Y + DataCardKey55.Height + 5
+                ZIndex: =2
+
     DataTable2 As dataTable.datatable:
         BorderStyle: =BorderStyle.None
         DisplayMode: =DisplayMode.Edit
@@ -562,7 +601,7 @@
         Visible: =false
         Width: =640
         X: =0
-        Y: =116
+        Y: =184
         ZIndex: =5
 
         "'Full-time equivalent_Column1' As dataTableColumn.numberColumn":

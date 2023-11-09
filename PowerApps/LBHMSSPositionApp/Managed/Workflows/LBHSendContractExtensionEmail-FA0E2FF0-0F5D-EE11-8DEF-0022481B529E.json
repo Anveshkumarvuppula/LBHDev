@@ -247,8 +247,8 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
             "parameters": {
-              "entityName": "mserp_hcmjobpositiondualwriteentities",
-              "$filter": "mserp_hcmjobpositiondualwriteentityId eq '@{triggerBody()['Setvariable_Value']}'",
+              "entityName": "mserp_hcmpositionv2entities",
+              "$filter": "mserp_positionid eq '@{triggerBody()['Setvariable_Value']}'",
               "$top": 1
             },
             "authentication": {
