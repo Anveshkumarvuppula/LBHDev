@@ -10,37 +10,9 @@
   <OrganizationSettings />
   <optionsets />
   <CustomControls />
+  <AppModuleSiteMaps />
+  <AppModules />
   <EntityDataProviders />
-  <connectionreferences>
-    <connectionreference connectionreferencelogicalname="crbb7_Mail">
-      <connectionreferencedisplayname>Mail</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sendmail</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
-    <connectionreference connectionreferencelogicalname="crbb7_RVMSDataVerseLoqateBankValidation">
-      <connectionreferencedisplayname>RVMSDataVerseLoqateBankValidation</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
-    <connectionreference connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e">
-      <connectionreferencedisplayname>Microsoft Dataverse LBHLoqateBankValidation_US25514-afe0e</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
-    <connectionreference connectionreferencelogicalname="crbb7_sharedsendmail_49c4a">
-      <connectionreferencedisplayname>Mail LBHLoqateBankValidation_US25514-49c4a</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sendmail</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
-  </connectionreferences>
   <Languages>
     <Language>1033</Language>
   </Languages>

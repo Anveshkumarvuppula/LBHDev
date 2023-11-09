@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{f068e0a9-73e3-468c-b4ac-98efb5d5d064}</formid>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{ee89da87-15d2-4f59-91fd-49d541deed29}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{b8a2458f-e93e-4c9b-be65-80235a5bbb70}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{1952ddfe-b0c8-45fc-921c-717cb50cd3cd}">
+                        <labels>
+                          <label description="My4cast_fno_to_cds_syncid" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_my4cast_fno_to_cds_syncid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="crde1_cr504_my4cast_fno_to_cds_syncid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{98a6e81d-9fec-45fb-b8da-2fa39daee256}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ec455a63-aa5e-4612-babf-18fed23863c3}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Actuals YTD" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_actualsytd" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_actualsytd" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{70d7ff1b-c048-42d3-a5b6-1a205178c3da}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Commitment" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_commitment" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_commitment" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{73552ce7-003e-4565-adff-1805dd2719b6}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Cost centre" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_costcentre" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_costcentre" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{0ab837c5-3766-4039-a8b4-acf5a7f9739c}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Created On" languagecode="1033" />
+                        </labels>
+                        <control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3e10a741-09c1-419c-b42e-e6b24bc6b2ea}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Modified On" languagecode="1033" />
+                        </labels>
+                        <control id="modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{db0b697d-136f-474a-9543-f0f3e7a7def3}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Project" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_project" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_project" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{98cd425c-a68f-4814-ab6f-b49daafb1310}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Comment" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_comment" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_comment" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1673dd1e-a417-49b0-ae6d-964fc413d80e}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Cost centre name" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_costcentrename" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_costcentrename" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{16c17f5f-a66c-4cc1-9a88-9d72caf6e11b}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Cost centre owner" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_costcentreowner" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_costcentreowner" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{aa4feb4d-718b-4cbb-8436-f22d82327305}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Created By" languagecode="1033" />
+                        </labels>
+                        <control id="createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{84c660e9-b16a-45f2-af35-a9039091b429}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Created By (Delegate)" languagecode="1033" />
+                        </labels>
+                        <control id="createdonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdonbehalfby" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d56daf9b-41c1-4b02-ad1c-f53c952cff8e}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Dimrefrecid" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_dimrefrecid" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_dimrefrecid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8d718de5-7556-4109-80b5-b14715175f27}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Revised budget" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_revisedbudget" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_revisedbudget" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e24af951-7d1b-4a22-a22a-c2c09ddb2aa4}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="createdon" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="crde1_createdon" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3b4a6457-cc81-46bc-be9c-56e90d0511f2}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Forecastoutturn" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_forecastoutturn" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_forecastoutturn" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8cfdc053-5b4d-4cf2-8618-930554de8240}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Previous month forecast" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_previousmonthforecast" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_previousmonthforecast" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{07228a21-3641-4eb4-b6a0-b0a3791c77ca}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Full year forecast" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_fullyearforecast" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_fullyearforecast" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a2f566ce-5f07-401c-92de-f95c4d3446a8}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Last years outturn" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_lastyearsoutturn" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_lastyearsoutturn" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ec6ece28-ad2b-4cdf-8f2c-d3853b678274}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="importsequencenumber" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_importsequencenumber" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="crde1_importsequencenumber" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{39cc4fc6-3d98-421a-a37a-f15614a5d296}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Main account description" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_mainaccountdescription" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_mainaccountdescription" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c879102e-a9d0-4c4c-880b-9a0bdfd470dd}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Manager review" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_managerreview" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="crde1_managerreview" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{50a453f3-8556-4346-8ee6-fa31414e3894}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Managerforecastreviewed" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_managerforecastreviewed" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_managerforecastreviewed" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7879964f-9320-41c0-bd99-cecc0de3a8e7}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Model" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_model" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_model" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c735ab6f-af98-441d-a8d4-63592e81798e}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Modified By" languagecode="1033" />
+                        </labels>
+                        <control id="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{6baa4843-e898-4048-aa82-858bce42b6bf}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Modified By (Delegate)" languagecode="1033" />
+                        </labels>
+                        <control id="modifiedonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedonbehalfby" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5516d79e-be9e-406a-ac02-a4368befe81c}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="modifiedon" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="crde1_modifiedon" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{92726dc6-5ee3-4e8a-8d87-4f8a94e4929b}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_1" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_1" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_1" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d59a4b4d-e5bd-447e-abb2-3e3d665e70af}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_10" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_10" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_10" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{071f3b99-6afa-4e31-b0a2-5bfc06087ef2}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_11" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_11" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_11" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5bd73452-4692-4409-8a2c-74d950f5b2da}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_12" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_12" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_12" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d28f3ce7-16fa-4f95-b401-a9e272dd1b44}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_2" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_2" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_2" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{61e1d347-2f9b-4648-ae54-f266076d4dc8}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_3" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_3" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_3" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{14fa9477-bfd2-438b-a6c5-7f90eb3ff478}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_4" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_4" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_4" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{734efb47-6c6a-47ba-8b11-980417713323}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_5" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_5" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_5" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b145c9fc-d245-42d5-bac3-870bae966483}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_6" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_6" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_6" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{fea0d214-ac75-4cb8-b2ae-8f6fff411cea}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_7" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_7" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_7" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3d64eda8-126f-41c2-a6a3-f3cc5262b7ef}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_8" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_8" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_8" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c2cd894f-4fa1-490b-9b9b-ab9ba1497fb8}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="org_level_9" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_org_level_9" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_org_level_9" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{031a205c-4bb9-4684-af2a-1a70e2f8f66e}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="overriddencreatedon" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_overriddencreatedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="crde1_overriddencreatedon" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{147748fc-bbf5-4c40-b290-1ec82727fdfd}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Owning Business Unit" languagecode="1033" />
+                        </labels>
+                        <control id="owningbusinessunit" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="owningbusinessunit" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1cf2806e-138f-4ee6-8236-ba1159b20b17}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Position description" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_positiondescription" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_positiondescription" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{598b9711-4ad7-4425-abf2-2b2c3e94544e}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Project name" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_projectname" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_projectname" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{82c86995-ada9-438e-91fa-7edd7985f455}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Project owner name" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_projectownername" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_projectownername" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{22c0b26b-c6e7-40c2-8051-07b295266c8e}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Slippage" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_slippage" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_slippage" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{49fed774-5ec4-4872-b3c3-72a090adad2f}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Slippage variance" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_slippagevariance" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_slippagevariance" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{bb95f6ae-46d6-44e0-80dc-bf7543ca7489}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="statecode" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_statecode" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="crde1_statecode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c8dbbff3-cc24-4aca-b089-4580c91f53ee}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Status" languagecode="1033" />
+                        </labels>
+                        <control id="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2d4634e6-2cd5-4142-986c-073fa529ab4c}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Status Reason" languagecode="1033" />
+                        </labels>
+                        <control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e13820a4-63dc-447b-8696-26b826028b9a}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="statuscode" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_statuscode" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="crde1_statuscode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d54530c3-0494-412c-bd4f-3f4b1853d0e0}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="timezoneruleversionnumber" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_timezoneruleversionnumber" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="crde1_timezoneruleversionnumber" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{09aa20aa-4d8b-4cb6-ad06-91e39b0e1341}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="utcconversiontimezonecode" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_utcconversiontimezonecode" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="crde1_utcconversiontimezonecode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d5bafa50-9ca2-45e7-950d-e8478f7a88c1}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Variance" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_variance" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_variance" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a7c26ec4-7329-4c0e-94e8-e8fb03c57634}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Variance_comment" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_variance_comment" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_variance_comment" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{47ed58e4-7fdf-475e-824c-e077560d7f89}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="versionnumber" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_versionnumber" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="crde1_versionnumber" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{920f23c3-7d19-43d9-b989-11677ebb9ab3}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Main account" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_cr504_mainaccount" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_cr504_mainaccount" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{f657bfc3-3056-4888-a2b1-bef057e88600}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Business unit" languagecode="1033" />
+                        </labels>
+                        <control id="crde1_businessunit" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="crde1_businessunit" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{4919b4e6-263b-4795-aeb3-0d489046e743}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{a9253419-187b-4a6b-a095-3e3929711766}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{9433991a-d523-49f7-a4fe-e06afa69e10a}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1dee7c65-79ef-4f51-a7c8-d251ae04f02d}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{dafbc3b1-cfc5-4a03-a92f-d916e8714a1d}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{02eb12d8-7325-43e4-ac00-a0b58bdf51d4}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1b8be923-3b2e-4eb8-ac33-adeae89f6fc5}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{00594832-f62d-44ba-8ebf-b4e9ff536ee3}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

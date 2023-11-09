@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <EntityRelationship Name="mserp_FK_HcmWorkerBankAccountEntity_Worker" />
-  <EntityRelationship Name="mserp_hcmParametersEntity_dataAreaId_rel" />
+  <EntityRelationship Name="business_unit_crde1_cr504_my4cast_fno_to_cds_syncs" />
+  <EntityRelationship Name="business_unit_crde1_cr504_mystaff_fno_to_cds_syncs" />
+  <EntityRelationship Name="lk_crde1_cr504_my4cast_fno_to_cds_syncs_createdby" />
+  <EntityRelationship Name="lk_crde1_cr504_my4cast_fno_to_cds_syncs_modifiedby" />
+  <EntityRelationship Name="lk_crde1_cr504_mystaff_fno_to_cds_syncs_createdby" />
+  <EntityRelationship Name="lk_crde1_cr504_mystaff_fno_to_cds_syncs_modifiedby" />
+  <EntityRelationship Name="owner_crde1_cr504_my4cast_fno_to_cds_syncs" />
+  <EntityRelationship Name="owner_crde1_cr504_mystaff_fno_to_cds_syncs" />
+  <EntityRelationship Name="team_crde1_cr504_my4cast_fno_to_cds_syncs" />
+  <EntityRelationship Name="team_crde1_cr504_mystaff_fno_to_cds_syncs" />
+  <EntityRelationship Name="user_crde1_cr504_my4cast_fno_to_cds_syncs" />
+  <EntityRelationship Name="user_crde1_cr504_mystaff_fno_to_cds_syncs" />
 </EntityRelationships>

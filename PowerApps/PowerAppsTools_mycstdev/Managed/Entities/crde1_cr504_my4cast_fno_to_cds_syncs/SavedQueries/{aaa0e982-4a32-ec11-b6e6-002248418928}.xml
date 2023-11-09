@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{aaa0e982-4a32-ec11-b6e6-002248418928}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="crde1_cr504_my4cast_fno_to_cds_syncid" select="1" preview="1" icon="1">
+        <row name="result" id="crde1_cr504_my4cast_fno_to_cds_syncsid">
+          <cell name="crde1_cr504_my4cast_fno_to_cds_syncid" width="150" />
+          <cell name="crde1_cr504_actualsytd" width="116" />
+          <cell name="crde1_cr504_commitment" width="114" />
+          <cell name="crde1_cr504_costcentre" width="104" />
+          <cell name="createdon" width="105" />
+          <cell name="modifiedon" width="112" />
+          <cell name="crde1_cr504_project" width="100" />
+          <cell name="crde1_comment" width="100" />
+          <cell name="crde1_cr504_costcentrename" width="138" />
+          <cell name="crde1_cr504_costcentreowner" width="142" />
+          <cell name="createdby" width="104" />
+          <cell name="createdonbehalfby" width="166" />
+          <cell name="crde1_cr504_dimrefrecid" width="109" />
+          <cell name="crde1_cr504_revisedbudget" width="127" />
+          <cell name="crde1_createdon" width="100" />
+          <cell name="crde1_forecastoutturn" width="128" />
+          <cell name="crde1_previousmonthforecast" width="177" />
+          <cell name="crde1_fullyearforecast" width="138" />
+          <cell name="crde1_cr504_lastyearsoutturn" width="142" />
+          <cell name="importsequencenumber" width="185" />
+          <cell name="crde1_importsequencenumber" width="172" />
+          <cell name="crde1_cr504_mainaccountdescription" width="183" />
+          <cell name="crde1_managerreview" width="132" />
+          <cell name="crde1_managerforecastreviewed" width="186" />
+          <cell name="crde1_cr504_model" width="100" />
+          <cell name="modifiedby" width="112" />
+          <cell name="modifiedonbehalfby" width="175" />
+          <cell name="crde1_modifiedon" width="105" />
+          <cell name="crde1_cr504_my4cast_fno_to_cds_syncsid" width="196" />
+          <cell name="crde1_org_level_1" width="107" />
+          <cell name="crde1_org_level_10" width="114" />
+          <cell name="crde1_org_level_11" width="114" />
+          <cell name="crde1_org_level_12" width="114" />
+          <cell name="crde1_org_level_2" width="107" />
+          <cell name="crde1_org_level_3" width="107" />
+          <cell name="crde1_org_level_4" width="107" />
+          <cell name="crde1_org_level_5" width="107" />
+          <cell name="crde1_org_level_6" width="107" />
+          <cell name="crde1_org_level_7" width="107" />
+          <cell name="crde1_org_level_8" width="107" />
+          <cell name="crde1_org_level_9" width="107" />
+          <cell name="crde1_overriddencreatedon" width="156" />
+          <cell name="ownerid" width="100" />
+          <cell name="owningbusinessunit" width="167" />
+          <cell name="owningteam" width="120" />
+          <cell name="owninguser" width="116" />
+          <cell name="crde1_cr504_positiondescription" width="152" />
+          <cell name="crde1_cr504_projectname" width="114" />
+          <cell name="crde1_cr504_projectownername" width="152" />
+          <cell name="overriddencreatedon" width="149" />
+          <cell name="crde1_slippage" width="100" />
+          <cell name="crde1_slippagevariance" width="140" />
+          <cell name="crde1_statecode" width="100" />
+          <cell name="statecode" width="100" />
+          <cell name="statuscode" width="119" />
+          <cell name="crde1_statuscode" width="100" />
+          <cell name="timezoneruleversionnumber" width="227" />
+          <cell name="crde1_timezoneruleversionnumber" width="198" />
+          <cell name="utcconversiontimezonecode" width="234" />
+          <cell name="crde1_utcconversiontimezonecode" width="197" />
+          <cell name="crde1_variance" width="100" />
+          <cell name="crde1_variance_comment" width="149" />
+          <cell name="versionnumber" width="133" />
+          <cell name="crde1_versionnumber" width="124" />
+          <cell name="crde1_cr504_mainaccount" width="117" />
+          <cell name="crde1_businessunit" width="116" />
+        </row>
+        <controlDescriptions>
+          <controlDescription>
+            <customControl id="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+              <parameters />
+            </customControl>
+            <customControl name="mycstdev_Harrow.My4castProG" formFactor="0">
+              <parameters>
+                <data-set name="gridDataSet">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                </data-set>
+              </parameters>
+            </customControl>
+            <customControl name="mycstdev_Harrow.My4castProG" formFactor="1">
+              <parameters>
+                <data-set name="gridDataSet">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                </data-set>
+              </parameters>
+            </customControl>
+            <customControl name="mycstdev_Harrow.My4castProG" formFactor="2">
+              <parameters>
+                <data-set name="gridDataSet">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                </data-set>
+              </parameters>
+            </customControl>
+          </controlDescription>
+        </controlDescriptions>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="crde1_cr504_my4cast_fno_to_cds_syncs">
+          <attribute name="crde1_cr504_my4cast_fno_to_cds_syncid" />
+          <order attribute="crde1_cr504_my4cast_fno_to_cds_syncid" descending="false" />
+          <attribute name="crde1_cr504_my4cast_fno_to_cds_syncsid" />
+          <attribute name="crde1_cr504_actualsytd" />
+          <attribute name="crde1_cr504_commitment" />
+          <attribute name="crde1_cr504_costcentre" />
+          <attribute name="createdon" />
+          <attribute name="modifiedon" />
+          <attribute name="crde1_cr504_project" />
+          <attribute name="crde1_comment" />
+          <attribute name="crde1_cr504_costcentrename" />
+          <attribute name="crde1_cr504_costcentreowner" />
+          <attribute name="createdby" />
+          <attribute name="createdonbehalfby" />
+          <attribute name="crde1_cr504_dimrefrecid" />
+          <attribute name="crde1_cr504_revisedbudget" />
+          <attribute name="crde1_createdon" />
+          <attribute name="crde1_forecastoutturn" />
+          <attribute name="crde1_previousmonthforecast" />
+          <attribute name="crde1_fullyearforecast" />
+          <attribute name="crde1_cr504_lastyearsoutturn" />
+          <attribute name="importsequencenumber" />
+          <attribute name="crde1_importsequencenumber" />
+          <attribute name="crde1_cr504_mainaccountdescription" />
+          <attribute name="crde1_managerreview" />
+          <attribute name="crde1_managerforecastreviewed" />
+          <attribute name="crde1_cr504_model" />
+          <attribute name="modifiedby" />
+          <attribute name="modifiedonbehalfby" />
+          <attribute name="crde1_modifiedon" />
+          <attribute name="crde1_org_level_1" />
+          <attribute name="crde1_org_level_10" />
+          <attribute name="crde1_org_level_11" />
+          <attribute name="crde1_org_level_12" />
+          <attribute name="crde1_org_level_2" />
+          <attribute name="crde1_org_level_3" />
+          <attribute name="crde1_org_level_4" />
+          <attribute name="crde1_org_level_5" />
+          <attribute name="crde1_org_level_6" />
+          <attribute name="crde1_org_level_7" />
+          <attribute name="crde1_org_level_8" />
+          <attribute name="crde1_org_level_9" />
+          <attribute name="crde1_overriddencreatedon" />
+          <attribute name="ownerid" />
+          <attribute name="owningbusinessunit" />
+          <attribute name="owningteam" />
+          <attribute name="owninguser" />
+          <attribute name="crde1_cr504_positiondescription" />
+          <attribute name="crde1_cr504_projectname" />
+          <attribute name="crde1_cr504_projectownername" />
+          <attribute name="overriddencreatedon" />
+          <attribute name="crde1_slippage" />
+          <attribute name="crde1_slippagevariance" />
+          <attribute name="crde1_statecode" />
+          <attribute name="statecode" />
+          <attribute name="statuscode" />
+          <attribute name="crde1_statuscode" />
+          <attribute name="timezoneruleversionnumber" />
+          <attribute name="crde1_timezoneruleversionnumber" />
+          <attribute name="utcconversiontimezonecode" />
+          <attribute name="crde1_utcconversiontimezonecode" />
+          <attribute name="crde1_variance" />
+          <attribute name="crde1_variance_comment" />
+          <attribute name="versionnumber" />
+          <attribute name="crde1_versionnumber" />
+          <attribute name="crde1_cr504_mainaccount" />
+          <attribute name="crde1_businessunit" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Grouped_My4Cast_Projects" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
