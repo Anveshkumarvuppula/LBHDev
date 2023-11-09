@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_MSFormsBuyLeaveRequestConfirmationVar">
+  <defaultvalue>U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUNlJXRDJINzRLOEpSMkFHRDk5SEIyS1IyRC4u</defaultvalue>
+  <displayname default="MSFormsBuyLeaveRequestConfirmationVar">
+    <label description="MSFormsBuyLeaveRequestConfirmationVar" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.96</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

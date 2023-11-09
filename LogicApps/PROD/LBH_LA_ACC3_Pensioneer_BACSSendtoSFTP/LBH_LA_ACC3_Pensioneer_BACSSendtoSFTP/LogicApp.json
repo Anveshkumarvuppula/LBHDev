@@ -1,0 +1,220 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_ACC3_Pensioneer_BACSSendtoSFTP_Prod_name": {
+            "defaultValue": "PwC_LA_ACC3_Pensioneer_BACSSendtoSFTP_Prod",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_sftpwithssh_2_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/sftpwithssh-2",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_ACC3_Pensioneer_BACSSendtoSFTP_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Hour",
+                                "interval": 1,
+                                "startTime": "2021-11-03T10:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Hour",
+                                "interval": 1,
+                                "startTime": "2021-11-03T10:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "For_each": {
+                            "foreach": "@body('List_files_2')?['value']",
+                            "actions": {
+                                "Create_file_2": {
+                                    "runAfter": {
+                                        "Create_file_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_using_path')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/prd-file01/ACC3(Pension)/SentToSFTP",
+                                            "name": "@items('For_each')?['Name']",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Create_file_3": {
+                                    "runAfter": {
+                                        "Get_file_content_using_path": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@body('Get_file_content_using_path')",
+                                        "headers": {
+                                            "ReadFileMetadataFromServer": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['sftpwithssh']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/Inbound/Pensioners",
+                                            "name": "@items('For_each')?['Name']",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "Delete_file": {
+                                    "runAfter": {
+                                        "Create_file_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "headers": {
+                                            "SkipDeleteIfFileNotFoundOnServer": false
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "delete",
+                                        "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/prd-file01/ACC3(Pension)/Unprocessed/',body('Create_file_2')?['Name']))}"
+                                    }
+                                },
+                                "Get_file_content_using_path": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/GetFileContentByPath",
+                                        "queries": {
+                                            "inferContentType": true,
+                                            "path": "@items('For_each')?['Path']",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "List_files_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "runtimeConfiguration": {
+                                "concurrency": {
+                                    "repetitions": 20
+                                }
+                            }
+                        },
+                        "List_files_2": {
+                            "runAfter": {},
+                            "metadata": {
+                                "JTJmcHJkLWZpbGUwMSUyZkFDQzMoQVApJTJmVW5wcm9jZXNzZWQ=": "/prd-file01/ACC3(AP)/Unprocessed"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent('/prd-file01/ACC3(Pension)/Unprocessed'))}",
+                                "queries": {
+                                    "nextPageMarker": "",
+                                    "useFlatListing": false
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "sftpwithssh": {
+                                "connectionId": "[parameters('connections_sftpwithssh_2_externalid')]",
+                                "connectionName": "sftpwithssh-2",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/sftpwithssh"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

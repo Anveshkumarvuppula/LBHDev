@@ -1,0 +1,361 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_FIN_HRFO_EmployeeFixedComp_Prod_name": {
+            "defaultValue": "PwC_LA_FIN_HRFO_EmployeeFixedComp_Prod",
+            "type": "String"
+        },
+        "connections_dynamicsax_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/dynamicsax",
+            "type": "String"
+        },
+        "connections_webcontents_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/webcontents",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_FIN_HRFO_EmployeeFixedComp_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "execute": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "EmpFixedCompImpStatus_-_Initialize_variable": {
+                            "runAfter": {
+                                "EmployeeFixedCompensationPackageUrl_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmpFixedCompImpStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "EmpFixedCompensationexportstatus_-_Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmpFixedCompensationexportstatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "EmployeeFixedCompensationPackageUrl_-_Initialize_variable": {
+                            "runAfter": {
+                                "EmpFixedCompensationexportstatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmployeeFixedCompensationPackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Employee_Fixed_Compensation": {
+                            "actions": {
+                                "Check_Employee_Fixed_Compensation_Import_Status": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Employee_Fixed_Compensation_Import_Status": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_Employee_Fixed_Compensation')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_2": {
+                                            "runAfter": {
+                                                "Get_Employee_Fixed_Compensation_Import_Status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EmpFixedCompImpStatus",
+                                                "value": "@body('Get_Employee_Fixed_Compensation_Import_Status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Employee_Fixed_Compensation": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EmpFixedCompImpStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Employee_Fixed_Compensation_Status": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 1,
+                                                    "unit": "Minute"
+                                                }
+                                            }
+                                        },
+                                        "Get_Employee_Fixed_Compensation_Export_Status": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Employee_Fixed_Compensation')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_Employee_Fixed_Compensation_Export_Status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EmpFixedCompensationexportstatus",
+                                                "value": "@{body('Get_Employee_Fixed_Compensation_Export_Status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Employee_Fixed_Compensation": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EmpFixedCompensationexportstatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "EmployeeFixedCompensationPackageUrl-Set_Variable": {
+                                    "runAfter": {
+                                        "Get_Employee_Fixed_Compensation_Package_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "EmployeeFixedCompensationPackageUrl",
+                                        "value": "@{body('Get_Employee_Fixed_Compensation_Package_url')['Value']}"
+                                    }
+                                },
+                                "Export_Employee_Fixed_Compensation": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCEmployeeFixedCompExp\",','\n','    \"packageName\":\"employeefixedcomp.zip\",','\n','    \"executionId\":\"',variables('empfixedcompexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Employee_Fixed_Compensation_Package_url": {
+                                    "runAfter": {
+                                        "Check_Employee_Fixed_Compensation_Status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Employee_Fixed_Compensation')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Employee_Fixed_Compensation": {
+                                    "runAfter": {
+                                        "EmployeeFixedCompensationPackageUrl-Set_Variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCEmployeeFixedCompImp",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('EmployeeFixedCompensationPackageUrl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Employee_fixed_compensation_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Employee_fixed_compensation_execution_id": {
+                            "runAfter": {
+                                "EmpFixedCompImpStatus_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "empfixedcompexecutionid",
+                                        "type": "string",
+                                        "value": "employeefixedcomp@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Execute_Employee_Certificate": {
+                            "runAfter": {
+                                "Employee_Fixed_Compensation": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "execute": "Yes"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-27.uksouth.logic.azure.com:443/workflows/544e315a97fa40aea894157b50796d9d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KNTA5burRMgbiZ3Zuu9eIF4TpPjaHOjslje2aV8spyI"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_externalid')]",
+                                "connectionName": "dynamicsax",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents_1": {
+                                "connectionId": "[parameters('connections_webcontents_externalid')]",
+                                "connectionName": "webcontents",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

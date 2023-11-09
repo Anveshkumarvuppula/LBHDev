@@ -1,0 +1,1978 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_FIN_HRFO_CertScreenAddMasters_Prod_name": {
+            "defaultValue": "PwC_LA_FIN_HRFO_CertScreenAddMasters_Prod",
+            "type": "String"
+        },
+        "connections_dynamicsax_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/dynamicsax",
+            "type": "String"
+        },
+        "connections_webcontents_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/webcontents",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_FIN_HRFO_CertScreenAddMasters_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Week",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "5",
+                                        "6",
+                                        "7",
+                                        "8",
+                                        "9",
+                                        "10",
+                                        "11",
+                                        "12",
+                                        "13",
+                                        "14",
+                                        "15",
+                                        "16",
+                                        "17",
+                                        "18",
+                                        "19",
+                                        "20",
+                                        "21",
+                                        "22",
+                                        "23"
+                                    ],
+                                    "minutes": [
+                                        0,
+                                        30
+                                    ],
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ]
+                                },
+                                "startTime": "2022-06-15T05:45:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Week",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "5",
+                                        "6",
+                                        "7",
+                                        "8",
+                                        "9",
+                                        "10",
+                                        "11",
+                                        "12",
+                                        "13",
+                                        "14",
+                                        "15",
+                                        "16",
+                                        "17",
+                                        "18",
+                                        "19",
+                                        "20",
+                                        "21",
+                                        "22",
+                                        "23"
+                                    ],
+                                    "minutes": [
+                                        0,
+                                        30
+                                    ],
+                                    "weekDays": [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday"
+                                    ]
+                                },
+                                "startTime": "2022-06-15T05:45:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Certificate_types": {
+                            "actions": {
+                                "Check_certificate_import_status": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Execute_action_2": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Execute_action_3')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_3": {
+                                            "runAfter": {
+                                                "Execute_action_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "CheckCertificateTypeImportStatus",
+                                                "value": "@body('Execute_action_2')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Execute_action_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('CheckCertificateTypeImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_certificate_type_export_status": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Certificate_type_export_status": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_certificate_type')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_Certificate_type_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "Certificatetypeexportstatus",
+                                                "value": "@{body('Get_Certificate_type_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_certificate_type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('Certificatetypeexportstatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Execute_action_3": {
+                                    "runAfter": {
+                                        "Set_variable_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCCertificateTypeImp",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('CertificateTypePackageUrl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Export_certificate_type": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCCertificateTypeExp\",','\n','    \"packageName\":\"certificatetype.zip\",','\n','    \"executionId\":\"',variables('certificatetypesexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_certificate_type_package_url": {
+                                    "runAfter": {
+                                        "Check_certificate_type_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_certificate_type')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Set_variable_2": {
+                                    "runAfter": {
+                                        "Get_certificate_type_package_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "CertificateTypePackageUrl",
+                                        "value": "@{body('Get_certificate_type_package_url')['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Ethnic_origin_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Certificate_types_execution_id": {
+                            "runAfter": {
+                                "Initialize_variable_21": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "certificatetypesexecutionid",
+                                        "type": "string",
+                                        "value": "certificatetypes@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Ethnic_Origin": {
+                            "actions": {
+                                "Check_Ethnic_origin_export_status": {
+                                    "actions": {
+                                        "Delay_9": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Ethnic_origin_export_status": {
+                                            "runAfter": {
+                                                "Delay_9": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Ethnic_origin')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_14": {
+                                            "runAfter": {
+                                                "Get_Ethnic_origin_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EthnicOriginExportStatus",
+                                                "value": "@{body('Get_Ethnic_origin_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Ethnic_origin": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EthnicOriginExportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Ethnic_origin_import_status": {
+                                    "actions": {
+                                        "Delay_10": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Ethnic_origin_import_status": {
+                                            "runAfter": {
+                                                "Delay_10": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_Ethnic_origin')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_16": {
+                                            "runAfter": {
+                                                "Get_Ethnic_origin_import_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EthnicOriginImportStatus",
+                                                "value": "@body('Get_Ethnic_origin_import_status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Ethnic_origin": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EthnicOriginImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_Ethnic_origin": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCEthnicOriginExp\",','\n','    \"packageName\":\"ethnicorigin.zip\",','\n','    \"executionId\":\"',variables('ethnicoriginexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Ethnic_origin_exported_url": {
+                                    "runAfter": {
+                                        "Check_Ethnic_origin_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Ethnic_origin')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Ethnic_origin": {
+                                    "runAfter": {
+                                        "Set_variable_15": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCEthnicOriginImp",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('EthnicOriginPackageUrl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Set_variable_15": {
+                                    "runAfter": {
+                                        "Get_Ethnic_origin_exported_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "EthnicOriginPackageUrl",
+                                        "value": "@{body('Get_Ethnic_origin_exported_url')['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Issuing_agency": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Ethnic_origin_execution_id": {
+                            "runAfter": {
+                                "Reason_code_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ethnicoriginexecutionid",
+                                        "type": "string",
+                                        "value": "ethnicorigin@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Execute_Job_masters": {
+                            "runAfter": {
+                                "Reason_Codes": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "execute": "Yes"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-11.uksouth.logic.azure.com:443/workflows/a466dff297314c889caa762acd72d30b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GBwVfr4OPIZBz61plbI8nLgJ8BJkVycOtaEj_R9Zclw"
+                            }
+                        },
+                        "IdentificationTypes": {
+                            "actions": {
+                                "Check_Identification_Type_import_status": {
+                                    "actions": {
+                                        "Delay_6": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Identification_type_import_status": {
+                                            "runAfter": {
+                                                "Delay_6": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_Identification_type')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('IdentificationTypetoken')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-prod.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_10": {
+                                            "runAfter": {
+                                                "Get_Identification_type_import_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "IdentificationTypeImportStatus",
+                                                "value": "@{body('Get_Identification_type_import_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Identification_type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('IdentificationTypeImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Identification_type_export_status": {
+                                    "actions": {
+                                        "Delay_5": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Identification_type_export_status": {
+                                            "runAfter": {
+                                                "Delay_5": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Identification_types_export')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_8": {
+                                            "runAfter": {
+                                                "Get_Identification_type_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "Identificationtypeexportstatus",
+                                                "value": "@{body('Get_Identification_type_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Identification_types_export": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('Identificationtypeexportstatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Get_Identification_type_export_url": {
+                                    "runAfter": {
+                                        "Check_Identification_type_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Identification_types_export')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_authentication_token_Identification_type": {
+                                    "runAfter": {
+                                        "Set_variable_9": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=3e724262-bfc2-4407-95f9-17028e172cbe&client_secret=KkR8Q~Jp1Y2BfP60rkieGNszqp2zlU1y5CvNracw&grant_type=client_credentials&resource=https://lbh-fo-prod.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "IdentificationTypetoken_-_Set_variable": {
+                                    "runAfter": {
+                                        "Parse_JSON_auth_token_Identification_type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IdentificationTypeToken",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_auth_token_Identification_type')['access_token'])}"
+                                    }
+                                },
+                                "Identification_types_export": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCIdentificationTypesExp\",','\n','    \"packageName\":\"identificationtypes.zip\",','\n','    \"executionId\":\"',variables('identificationtypesexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Identification_type": {
+                                    "runAfter": {
+                                        "IdentificationTypetoken_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCIdentificationTypeImp",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('Identificationtypepackageurl')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('IdentificationTypeToken')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-prod.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "Parse_JSON_auth_token_Identification_type": {
+                                    "runAfter": {
+                                        "Get_authentication_token_Identification_type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_authentication_token_Identification_type')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Set_variable_9": {
+                                    "runAfter": {
+                                        "Get_Identification_type_export_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "Identificationtypepackageurl",
+                                        "value": "@{body('Get_Identification_type_export_url')['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Screening_Types": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Identification_types_execution_id": {
+                            "runAfter": {
+                                "Screening_types_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "identificationtypesexecutionid",
+                                        "type": "string",
+                                        "value": "identificationtypes@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Certificatetypeexportstatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_": {
+                            "runAfter": {
+                                "Initialize_variable_5": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ScreeningTypeexportstatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_10": {
+                            "runAfter": {
+                                "Initialize_variable_9": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Identificationtypepackageurl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_11": {
+                            "runAfter": {
+                                "Initialize_variable_10": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IdentificationTypeToken",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_12": {
+                            "runAfter": {
+                                "Initialize_variable_11": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IdentificationTypeImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_13": {
+                            "runAfter": {
+                                "Initialize_variable_12": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IssuingAgencyExportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_14": {
+                            "runAfter": {
+                                "Initialize_variable_13": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IssuingAgencyPackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_15": {
+                            "runAfter": {
+                                "Initialize_variable_14": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IssuingAgencyImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_16": {
+                            "runAfter": {
+                                "Initialize_variable_15": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EthnicOriginExportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_17": {
+                            "runAfter": {
+                                "Initialize_variable_16": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EthnicOriginPackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_18": {
+                            "runAfter": {
+                                "Initialize_variable_17": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EthnicOriginImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_19": {
+                            "runAfter": {
+                                "Initialize_variable_18": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ReasonCodeExportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CertificateTypePackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_20": {
+                            "runAfter": {
+                                "Initialize_variable_19": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ReasonCodePackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_21": {
+                            "runAfter": {
+                                "Initialize_variable_20": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ReasonCodeImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_3": {
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CheckCertificateTypeImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_4": {
+                            "runAfter": {
+                                "Initialize_variable_3": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobCertificatetypeexp",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_5": {
+                            "runAfter": {
+                                "Initialize_variable_4": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Jobcertificatepackageurl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_6": {
+                            "runAfter": {
+                                "Initialize_variable_": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TokenScreeningType",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_7": {
+                            "runAfter": {
+                                "Initialize_variable_6": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrlScreeningType",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_8": {
+                            "runAfter": {
+                                "Initialize_variable_7": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportExecutionStatusScreeningType",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_9": {
+                            "runAfter": {
+                                "Initialize_variable_8": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Identificationtypeexportstatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Issuing_agency": {
+                            "actions": {
+                                "Check_Issuing_Agency_export_status": {
+                                    "actions": {
+                                        "Delay_7": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Issuing_agency_export_status": {
+                                            "runAfter": {
+                                                "Delay_7": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Issuing_agency')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_11": {
+                                            "runAfter": {
+                                                "Get_Issuing_agency_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "IssuingAgencyExportStatus",
+                                                "value": "@{body('Get_Issuing_agency_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Issuing_agency": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('IssuingAgencyExportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Issuing_Agency_import_status": {
+                                    "actions": {
+                                        "Delay_8": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Issuing_Agency_Import_status": {
+                                            "runAfter": {
+                                                "Delay_8": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_Issuing_Agencies')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_13": {
+                                            "runAfter": {
+                                                "Get_Issuing_Agency_Import_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "IssuingAgencyImportStatus",
+                                                "value": "@body('Get_Issuing_Agency_Import_status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Issuing_Agencies": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('IssuingAgencyImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_Issuing_agency": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCIssuingAgencyExp\",','\n','    \"packageName\":\"issuingagency.zip\",','\n','    \"executionId\":\"',variables('issuingagencyexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Issuing_agency_package_url": {
+                                    "runAfter": {
+                                        "Check_Issuing_Agency_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Issuing_agency')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Issuing_Agencies": {
+                                    "runAfter": {
+                                        "Set_variable_12": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCIssuingAgencyImp",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('IssuingAgencyPackageUrl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Set_variable_12": {
+                                    "runAfter": {
+                                        "Get_Issuing_agency_package_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IssuingAgencyPackageUrl",
+                                        "value": "@{body('Get_Issuing_agency_package_url')['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "IdentificationTypes": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Issuing_agency_execution_id": {
+                            "runAfter": {
+                                "Identification_types_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "issuingagencyexecutionid",
+                                        "type": "string",
+                                        "value": "issuingagency@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Reason_Codes": {
+                            "actions": {
+                                "Check_Reason_Code_export_status": {
+                                    "actions": {
+                                        "Delay_11": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Reason_code_export_status": {
+                                            "runAfter": {
+                                                "Delay_11": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Reason_codes')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_17": {
+                                            "runAfter": {
+                                                "Get_Reason_code_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ReasonCodeExportStatus",
+                                                "value": "@{body('Get_Reason_code_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Reason_codes": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ReasonCodeExportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Reason_Code_import_status": {
+                                    "actions": {
+                                        "Delay_12": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Reason_Codes_import_status": {
+                                            "runAfter": {
+                                                "Delay_12": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_Reason_codes')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_19": {
+                                            "runAfter": {
+                                                "Get_Reason_Codes_import_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ReasonCodeImportStatus",
+                                                "value": "@body('Get_Reason_Codes_import_status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Reason_codes": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ReasonCodeImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_Reason_codes": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCReasonCodes\",','\n','    \"packageName\":\"reasoncodes.zip\",','\n','    \"executionId\":\"',variables('reasoncodesexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Reason_code_export_url": {
+                                    "runAfter": {
+                                        "Check_Reason_Code_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Reason_codes')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Reason_codes": {
+                                    "runAfter": {
+                                        "Set_variable_18": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCReasonCodes",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('ReasonCodePackageUrl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Set_variable_18": {
+                                    "runAfter": {
+                                        "Get_Reason_code_export_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "ReasonCodePackageUrl",
+                                        "value": "@{body('Get_Reason_code_export_url')['Value']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Ethnic_Origin": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Reason_code_execution_id": {
+                            "runAfter": {
+                                "Issuing_agency_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "reasoncodesexecutionid",
+                                        "type": "string",
+                                        "value": "reasoncode@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Screening_Types": {
+                            "actions": {
+                                "Check_Screening_Type_Export_Status": {
+                                    "actions": {
+                                        "Delay_3": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Invoke_an_HTTP_request": {
+                                            "runAfter": {
+                                                "Delay_3": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Screening_type_export')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_4": {
+                                            "runAfter": {
+                                                "Invoke_an_HTTP_request": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ScreeningTypeexportstatus",
+                                                "value": "@{body('Invoke_an_HTTP_request')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Screening_type_export": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ScreeningTypeexportstatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Get_access_token": {
+                                    "runAfter": {
+                                        "Set_variable_6": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=3e724262-bfc2-4407-95f9-17028e172cbe&client_secret=KkR8Q~Jp1Y2BfP60rkieGNszqp2zlU1y5CvNracw&grant_type=client_credentials&resource=https://lbh-fo-prod.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Get_package_export_url_screening_type_-_Invoke_an_HTTP_request": {
+                                    "runAfter": {
+                                        "Check_Screening_Type_Export_Status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Screening_type_export')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_screening_type_-_HTTP": {
+                                    "runAfter": {
+                                        "Set_variable_5": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "Job Screening",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('PackageUrlScreeningType')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('TokenScreeningType')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-prod.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "Parse_auth_token": {
+                                    "runAfter": {
+                                        "Get_access_token": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_access_token')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Screening_type_export": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"Job Screening\",','\n','    \"packageName\":\"jobscreening.zip\",','\n','    \"executionId\":\"',variables('screeningtypesexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Set_variable_5": {
+                                    "runAfter": {
+                                        "Parse_auth_token": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TokenScreeningType",
+                                        "value": "@{concat('Bearer ',body('Parse_auth_token')['access_token'])}"
+                                    }
+                                },
+                                "Set_variable_6": {
+                                    "runAfter": {
+                                        "Get_package_export_url_screening_type_-_Invoke_an_HTTP_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "PackageUrlScreeningType",
+                                        "value": "@{body('Get_package_export_url_screening_type_-_Invoke_an_HTTP_request')['Value']}"
+                                    }
+                                },
+                                "Until": {
+                                    "actions": {
+                                        "Delay_4": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_screening_type_import_summary": {
+                                            "runAfter": {
+                                                "Delay_4": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_screening_type_-_HTTP')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('TokenScreeningType')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-prod.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_7": {
+                                            "runAfter": {
+                                                "Get_screening_type_import_summary": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ImportExecutionStatusScreeningType",
+                                                "value": "@{body('Get_screening_type_import_summary')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_screening_type_-_HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ImportExecutionStatusScreeningType'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Certificate_types": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Screening_types_execution_id": {
+                            "runAfter": {
+                                "Certificate_types_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "screeningtypesexecutionid",
+                                        "type": "string",
+                                        "value": "screeningtypes@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_externalid')]",
+                                "connectionName": "dynamicsax",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "dynamicsax_1": {
+                                "connectionId": "[parameters('connections_dynamicsax_externalid')]",
+                                "connectionName": "dynamicsax",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents_1": {
+                                "connectionId": "[parameters('connections_webcontents_externalid')]",
+                                "connectionName": "webcontents",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

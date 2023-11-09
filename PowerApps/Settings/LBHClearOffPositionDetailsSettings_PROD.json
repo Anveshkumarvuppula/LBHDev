@@ -1,0 +1,10 @@
+{
+  "EnvironmentVariables": [],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "new_sharedcommondataserviceforapps_5ed54",
+      "ConnectionId": "cc2b1830738544ffa507d91dc9350406",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_MSFormsSellLeaveRequestConfVar">
+  <defaultvalue>U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUZBUjdLVTJROU1QSVg2RjFYMEc4VzBTVi4u</defaultvalue>
+  <displayname default="MSFormsSellLeaveRequestConfVar">
+    <label description="MSFormsSellLeaveRequestConfVar" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.96</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

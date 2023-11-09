@@ -1,0 +1,308 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_ClearAFSFolder_Prod_name": {
+            "defaultValue": "PwC_LA_ClearAFSFolder_Prod",
+            "type": "String"
+        },
+        "connections_azurefile_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azurefile",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_ClearAFSFolder_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Hour",
+                                "interval": 1,
+                                "startTime": "2021-10-01T18:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Hour",
+                                "interval": 1,
+                                "startTime": "2021-10-01T18:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "For_each_(AFSFolders)": {
+                            "foreach": "@body('Parse_JSON_(from_AFSFolders)')",
+                            "actions": {
+                                "For_each": {
+                                    "foreach": "@body('Parse_JSON')",
+                                    "actions": {
+                                        "Delete_file": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(items('For_each')['Path']))}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Parse_JSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach"
+                                },
+                                "List_files": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent(items('For_each_(AFSFolders)')['Name']))}",
+                                        "queries": {
+                                            "nextPageMarker": "",
+                                            "useFlatListing": false
+                                        }
+                                    }
+                                },
+                                "Parse_JSON": {
+                                    "runAfter": {
+                                        "List_files": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('List_files')?['value']",
+                                        "schema": {
+                                            "items": {
+                                                "properties": {
+                                                    "DisplayName": {
+                                                        "type": "string"
+                                                    },
+                                                    "ETag": {
+                                                        "type": "string"
+                                                    },
+                                                    "FileLocator": {
+                                                        "type": "string"
+                                                    },
+                                                    "Id": {
+                                                        "type": "string"
+                                                    },
+                                                    "IsFolder": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "LastModified": {},
+                                                    "LastModifiedBy": {},
+                                                    "MediaType": {
+                                                        "type": "string"
+                                                    },
+                                                    "Name": {
+                                                        "type": "string"
+                                                    },
+                                                    "Path": {
+                                                        "type": "string"
+                                                    },
+                                                    "Size": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "Id",
+                                                    "Name",
+                                                    "DisplayName",
+                                                    "Path",
+                                                    "LastModified",
+                                                    "Size",
+                                                    "MediaType",
+                                                    "IsFolder",
+                                                    "ETag",
+                                                    "FileLocator",
+                                                    "LastModifiedBy"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Parse_JSON_(from_AFSFolders)": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "runtimeConfiguration": {
+                                "concurrency": {
+                                    "repetitions": 1
+                                }
+                            }
+                        },
+                        "Initialize_variable_(AFSFolders)": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "AFSFolders",
+                                        "type": "array",
+                                        "value": [
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/AccountingDistribution/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/Employee/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/EmployeeAddress/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/EmployeeFixedCompensation/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/FinancialDimension/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/JobCompensationLevel/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/JobPosition/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/OperatingUnit/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/OrganizationHierarchy/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/PersonDetails/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/PersonIdentification/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/PersonScreeningType/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/PositionDetails/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/PositionWorkerAssignment/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/WorkerContactAddress/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/WorkerPartyContact/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/WorkerPartyMapping/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/WorkerPersonalContact/Processed"
+                                            },
+                                            {
+                                                "Name": "prd-file01/D365HRFOIntegration/WorkerTitle/Processed"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_(Folder)": {
+                            "runAfter": {
+                                "Initialize_variable_(AFSFolders)": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Folder",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Parse_JSON_(from_AFSFolders)": {
+                            "runAfter": {
+                                "Initialize_variable_(Folder)": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@variables('AFSFolders')",
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "Name": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "Name"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile": {
+                                "connectionId": "[parameters('connections_azurefile_externalid')]",
+                                "connectionName": "azurefile",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

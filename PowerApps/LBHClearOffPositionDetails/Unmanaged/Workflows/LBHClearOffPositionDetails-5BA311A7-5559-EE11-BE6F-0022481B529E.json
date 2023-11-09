@@ -1,0 +1,197 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_5ed54"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_RVMSDataVerseLoqateBankValidation"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_a_row_is_added,_modified_or_deleted": {
+          "metadata": {
+            "operationMetadataId": "7613a745-fce5-409e-b0aa-e7b70db32e17"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 4,
+              "subscriptionRequest/entityname": "mserp_hcmpositionworkerassignmentv2entity",
+              "subscriptionRequest/scope": 4
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Initialize_variable_-_AssignmentEndDate": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "9815e08f-c24a-40e5-a5c2-433465d53583"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "AssignmentEndDate",
+                "type": "string",
+                "value": "@triggerOutputs()?['body/mserp_validto']"
+              }
+            ]
+          }
+        },
+        "List_rows_-_Position_Details": {
+          "runAfter": {
+            "Initialize_variable_-_PositionID": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "264ba331-7492-463c-a3d5-f81ab18096c9"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmpositiondetailentities",
+              "$filter": "mserp_positionid eq '@{variables('PositionID')}' and mserp_validfrom le '@{triggerOutputs()?['body/mserp_validto']}'",
+              "$orderby": "mserp_validfrom desc",
+              "$top": 1
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('List_rows_-_Position_Details')?['body/value']",
+          "actions": {
+            "Update_a_row": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "3eae5577-d94a-4f6e-a336-2408992b18dc"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "UpdateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
+                  "item/mserp_validto": "@variables('AssignmentEndDate')",
+                  "item/mserp_pwcprobperiod_custom": "@null",
+                  "item/mserp_pwcredundancydate_custom": "@null"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Add_a_new_row_2": {
+              "runAfter": {
+                "Update_a_row": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "fcd494f1-27e8-4dfc-b0b6-5ca6052565b3"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "CreateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
+                  "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
+                  "item/mserp_availableforassignment": "@outputs('Update_a_row')?['body/mserp_availableforassignment']",
+                  "item/mserp_compensationregionid": "@null",
+                  "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
+                  "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
+                  "item/mserp_validfrom": "@addSeconds(variables('AssignmentEndDate'), 1)",
+                  "item/mserp_validto": "@addSeconds(variables('AssignmentEndDate'), 1)",
+                  "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
+                  "item/mserp_pwcprobcompleted_custom": 200000000,
+                  "item/mserp_pwcprobperiod_custom": "@null",
+                  "item/mserp_lbhpositionreasonchange": 200000015,
+                  "item/mserp_pwcredundancydate_custom": "@null",
+                  "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']",
+                  "item/mserp_pwcweekendworking_custom": 200000000
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "List_rows_-_Position_Details": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2a87535a-62d6-4ea5-8ba7-2c34fc865ed3"
+          },
+          "type": "Foreach"
+        },
+        "Initialize_variable_-_PositionID": {
+          "runAfter": {
+            "Initialize_variable_-_AssignmentEndDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d3726dba-e96d-46c6-a17c-d85fe1562635"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PositionID",
+                "type": "string",
+                "value": "@triggerOutputs()?['body/mserp_positionid']"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

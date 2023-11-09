@@ -1,0 +1,20 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_entityEnvVariable",
+      "Value": "https://lbh-fo-uat-10.sandbox.operations.dynamics.com"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_afe0e",
+      "ConnectionId": "cc2b1830738544ffa507d91dc9350406",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_5b162",
+      "ConnectionId": "fc28c1a39ced4026b06ba87d3d4c9044",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    }
+  ]
+}

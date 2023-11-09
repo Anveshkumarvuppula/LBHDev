@@ -1,0 +1,2264 @@
+"'New working hours page' As screen":
+    OnVisible: |-
+        =UpdateContext({ButtonVisible:false})
+
+    "'New Details Table' As dataTable.datatable":
+        BorderStyle: =BorderStyle.Solid
+        Color: =RGBA(109, 49, 162, 1)
+        DisplayMode: =DisplayMode.Edit
+        Fill: =RGBA(255, 255, 255, 1)
+        HeadingFill: =RGBA(78, 15, 120, 1)
+        HeadingSize: =21
+        Height: =144
+        Items: |+
+            =First(SortByColumns(Filter('Position details (mserp)', Position = Param("EntityId")),"mserp_validfrom",SortOrder.Descending))
+            
+        Size: =21
+        Width: =640
+        X: =0
+        Y: =0
+        ZIndex: =1
+
+        Position_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Position"
+            FieldName: ="mserp_positionid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =5
+            Text: =ThisItem.Position
+            Width: =100
+            X: =320
+            Y: =0
+            ZIndex: =8
+
+        Job_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Job"
+            FieldName: ="mserp_jobid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =17
+            Text: =ThisItem.Job
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =9
+
+        "'Department number_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Department number"
+            FieldName: ="mserp_departmentnumber"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =18
+            Text: =ThisItem.'Department number'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =10
+
+        Description_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Description"
+            FieldName: ="mserp_description"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =15
+            Text: =ThisItem.Description
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =11
+
+        "'Temporary hours end date _Column1' As dataTableColumn.dateTimeColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Temporary hours end date "
+            FieldName: ="mserp_pwctemporaryhoursenddate_custom"
+            FieldVariantName: ="dateTimeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =2
+            Text: =Text(ThisItem.'Temporary hours end date ',DateTimeFormat.LongDateTime)
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =12
+
+        "'Temporary contract end date_Column1' As dataTableColumn.dateTimeColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Temporary contract end date"
+            FieldName: ="mserp_pwccontractenddate_custom"
+            FieldVariantName: ="dateTimeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =3
+            Text: =Text(ThisItem.'Temporary contract end date',DateTimeFormat.LongDateTime)
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =13
+
+        "'Position type_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Position type"
+            FieldName: ="mserp_positiontypeid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =7
+            Text: =ThisItem.'Position type'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =15
+
+        "'Redundancy date_Column1' As dataTableColumn.dateTimeColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Redundancy date"
+            FieldName: ="mserp_pwcredundancydate_custom"
+            FieldVariantName: ="dateTimeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =6
+            Text: =Text(ThisItem.'Redundancy date',DateTimeFormat.LongDateTime)
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =16
+
+        "'Probation completed_Column1' As dataTableColumn.complexOptionSetColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Probation completed"
+            FieldName: ="mserp_pwcprobcompleted_custom"
+            FieldVariantName: ="complexOptionSetColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =11
+            Text: =ThisItem.'Probation completed'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =17
+
+        "'Probation duration_Column1' As dataTableColumn.complexOptionSetColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Probation duration"
+            FieldName: ="mserp_pwcprobduration_custom"
+            FieldVariantName: ="complexOptionSetColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =10
+            Text: =ThisItem.'Probation duration'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =18
+
+        "'Probation period_Column1' As dataTableColumn.dateTimeColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Probation period"
+            FieldName: ="mserp_pwcprobperiod_custom"
+            FieldVariantName: ="dateTimeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =9
+            Text: =Text(ThisItem.'Probation period',DateTimeFormat.LongDateTime)
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =19
+
+        Title_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Title"
+            FieldName: ="mserp_titleid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =12
+            Text: =ThisItem.Title
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =20
+
+        "'Compensation region_Column1' As dataTableColumn.textualColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Compensation region"
+            FieldName: ="mserp_compensationregionid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =13
+            Text: =ThisItem.'Compensation region'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =21
+
+        Family_Column1 As dataTableColumn.textualColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Family"
+            FieldName: ="mserp_jobfamilyid"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =14
+            Text: =ThisItem.Family
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =22
+
+        Jobs_Column1 As dataTableColumn.complexTypeColumn:
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Jobs"
+            FieldName: ="mserp_FK_Job_id"
+            FieldVariantName: ="complexTypeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =16
+            Text: =ThisItem.Jobs.'Jobs (mserp)'
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =23
+
+        "'Positions V2_Column1' As dataTableColumn.complexTypeColumn":
+            DisplayMode: =DisplayMode.Edit
+            FieldDisplayName: ="Positions V2"
+            FieldName: ="mserp_FK_Position_id"
+            FieldVariantName: ="complexTypeColumn"
+            Height: =Parent.Height
+            LayoutHeight: =Parent.Height
+            Order: =19
+            Text: =ThisItem.'Positions V2'.mserp_hcmpositionv2entityid
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =24
+
+    "'Save record button_1' As button":
+        DisplayMode: =If('Flow Message'.Text="Success", DisplayMode.Edit,DisplayMode.Disabled)
+        Fill: =RGBA(78, 15, 120, 1)
+        Height: =63
+        OnSelect: =SubmitForm('Change working hours form')
+        Size: =24
+        Text: ="Save new record"
+        Width: =466
+        X: =73
+        Y: =975
+        ZIndex: =2
+
+    Arrow1 As arrow.backArrow:
+        AccessibleLabel: ="Arrow"
+        Fill: =RGBA(109, 49, 162, 1)
+        Height: =59
+        OnSelect: =Navigate('Home Screen')
+        TabIndex: =0
+        Width: =59
+        X: =290
+        Y: =1077
+        ZIndex: =3
+
+    "'Change working hours form' As form":
+        DataSource: ='Position details (mserp)'
+        DefaultMode: =FormMode.New
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =626
+        Item: ='New Details Table'.Selected
+        OnFailure: =Notify('Change working hours form'.Error);Navigate(Fail)
+        OnSuccess: =LBHMSSFTECalculationParent.Run('New Details Table'.Selected.Position,UserName);Navigate(ConfirmSave)
+        Width: =640
+        Y: =193
+        ZIndex: =4
+
+        "'Temporary hours end date _DataCard2' As typedDataCard.dateTimeEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwctemporaryhoursenddate_custom"
+            Default: =ThisItem.'Temporary hours end date '
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwctemporaryhoursenddate_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =If(Not IsBlank(DateValue4.SelectedDate), DateValue4.SelectedDate + Time(Value(HourValue4.Selected.Value), Value(MinuteValue4.Selected.Value), 0))
+            Width: =640
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            DataCardKey7 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue4 As datepicker:
+                AccessibleLabel: ="Temporary hours end date date"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Height: =70
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey7.Y + DataCardKey7.Height + 5
+                ZIndex: =2
+
+            HourValue4 As dropdown:
+                AccessibleLabel: ="Temporary hours end date hour"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue4.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue4.Width / 2 - 10
+                X: =DateValue4.X + DateValue4.Width + 10
+                Y: =DateValue4.Y
+                ZIndex: =3
+
+            Separator4 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue4.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue4.X + HourValue4.Width
+                Y: =HourValue4.Y
+                ZIndex: =4
+
+            MinuteValue4 As dropdown:
+                AccessibleLabel: ="Temporary hours en date"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue4.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue4.Width
+                X: =HourValue4.X + HourValue4.Width + Separator4.Width
+                Y: =HourValue4.Y
+                ZIndex: =5
+
+            ErrorMessage5 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue4.Y + HourValue4.Height
+                ZIndex: =6
+
+            StarVisible5 As label:
+                Align: =Align.Center
+                Height: =DataCardKey7.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey7.Y
+                ZIndex: =7
+
+        Effective_DataCard1 As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_validfrom"
+            Default: =ThisItem.Effective
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_validfrom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =If(Not IsBlank(DateValue1.SelectedDate), DateValue1.SelectedDate + Time(Value(HourValue1.Selected.Value), Value(MinuteValue1.Selected.Value), 0))
+            Width: =640
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey1 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue1 As datepicker:
+                AccessibleLabel: ="Effective"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Height: =70
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =592
+                X: =30
+                Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                ZIndex: =2
+
+            HourValue1 As dropdown:
+                AccessibleLabel: ="Effective hour"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue1.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =false
+                Width: =DateValue1.Width / 2 - 10
+                X: =DateValue1.X + DateValue1.Width + 10
+                Y: =DateValue1.Y
+                ZIndex: =3
+
+            Separator1 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue1.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Visible: =false
+                Width: =10
+                Wrap: =false
+                X: =HourValue1.X + HourValue1.Width
+                Y: =HourValue1.Y
+                ZIndex: =4
+
+            MinuteValue1 As dropdown:
+                AccessibleLabel: ="Effective minute"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue1.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =false
+                Width: =HourValue1.Width
+                X: =HourValue1.X + HourValue1.Width + Separator1.Width
+                Y: =HourValue1.Y
+                ZIndex: =5
+
+            ErrorMessage1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue1.Y + HourValue1.Height
+                ZIndex: =6
+
+            StarVisible1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1.Y
+                ZIndex: =7
+
+        "'Position type_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_positiontypeid"
+            Default: =ThisItem.'Position type'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_positiontypeid")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_positiontypeid")
+            Required: =false
+            Update: =DataCardValue25.Text
+            Width: =640
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey30 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue25 As text:
+                AccessibleLabel: ="Position type"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey30.Y + DataCardKey30.Height + 5
+                ZIndex: =2
+
+            ErrorMessage24 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue25.Y + DataCardValue25.Height
+                ZIndex: =3
+
+            StarVisible24 As label:
+                Align: =Align.Center
+                Height: =DataCardKey30.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey30.Y
+                ZIndex: =4
+
+        Title_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_titleid"
+            Default: =ThisItem.Title
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_titleid")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_titleid")
+            Required: =false
+            Update: =DataCardValue23.Text
+            Width: =640
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey28 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue23 As text:
+                AccessibleLabel: ="Title"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey28.Y + DataCardKey28.Height + 5
+                ZIndex: =2
+
+            ErrorMessage22 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue23.Y + DataCardValue23.Height
+                ZIndex: =3
+
+            StarVisible22 As label:
+                Align: =Align.Center
+                Height: =DataCardKey28.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey28.Y
+                ZIndex: =4
+
+        "'Position hours per week_DataCard3' As typedDataCard.numberEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcpositionhoursperweek_custom"
+            Default: =ThisItem.'Position hours per week'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Position weeks per year"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue13.Text)
+            Width: =640
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey15 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue13 As text:
+                AccessibleLabel: ="Position hours per week"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                Height: =70
+                HoverBorderColor: =RGBA(109, 49, 162, 1)
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey15.Y + DataCardKey15.Height + 5
+                ZIndex: =2
+
+            ErrorMessage10 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue13.Y + DataCardValue13.Height
+                ZIndex: =3
+
+            StarVisible10 As label:
+                Align: =Align.Center
+                Height: =DataCardKey15.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey15.Y
+                ZIndex: =4
+
+        Effective_DataCard3 As typedDataCard.dateTimeEditCard:
+            BorderColor: =RGBA(109, 49, 162, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_validfrom"
+            Default: =ThisItem.Effective
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_validfrom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =If(Not IsBlank(DateValue2.SelectedDate), DateValue2.SelectedDate + Time(Value(HourValue2.Selected.Value), Value(MinuteValue2.Selected.Value), 0))
+            Width: =640
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey14 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue2 As datepicker:
+                AccessibleLabel: ="Effective date"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Color: =RGBA(109, 49, 162, 1)
+                DefaultDate: =Parent.Default
+                DisabledBorderColor: =RGBA(109, 49, 162, 1)
+                DisabledColor: =RGBA(109, 49, 162, 1)
+                DisabledFill: =RGBA(109, 49, 162, 1)
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Height: =70
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey14.Y + DataCardKey14.Height + 5
+                ZIndex: =2
+
+            HourValue2 As dropdown:
+                AccessibleLabel: ="Effective hour"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(109, 49, 162, 1)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue2.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                SelectionFill: =RGBA(109, 49, 162, 1)
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue2.Width / 2 - 10
+                X: =DateValue2.X + DateValue2.Width + 10
+                Y: =DateValue2.Y
+                ZIndex: =3
+
+            Separator2 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue2.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue2.X + HourValue2.Width
+                Y: =HourValue2.Y
+                ZIndex: =4
+
+            MinuteValue2 As dropdown:
+                AccessibleLabel: ="Effective minute"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(109, 49, 162, 1)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue2.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                SelectionFill: =RGBA(109, 49, 162, 1)
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue2.Width
+                X: =HourValue2.X + HourValue2.Width + Separator2.Width
+                Y: =HourValue2.Y
+                ZIndex: =5
+
+            ErrorMessage9 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue2.Y + HourValue2.Height
+                ZIndex: =6
+
+            StarVisible9 As label:
+                Align: =Align.Center
+                Height: =DataCardKey14.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey14.Y
+                ZIndex: =7
+
+        "'Term Time Employee_DataCard3' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwctermtimee_custom"
+            Default: =ThisItem.'Term time employee'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Term time employee"
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue14.Selected.Value
+            Width: =640
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey16 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue14 As combobox:
+                AccessibleLabel: ="Term time employee"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(109, 49, 162, 1)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey16.Y + DataCardKey16.Height + 5
+                ZIndex: =2
+
+            ErrorMessage11 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue14.Y + DataCardValue14.Height
+                ZIndex: =3
+
+            StarVisible11 As label:
+                Align: =Align.Center
+                Height: =DataCardKey16.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey16.Y
+                ZIndex: =4
+
+        Description_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_description"
+            Default: =ThisItem.Description
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_description")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_description")
+            Required: =false
+            Update: =DataCardValue24.Text
+            Width: =640
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            DataCardKey29 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue24 As text:
+                AccessibleLabel: ="Description"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey29.Y + DataCardKey29.Height + 5
+                ZIndex: =2
+
+            ErrorMessage23 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue24.Y + DataCardValue24.Height
+                ZIndex: =3
+
+            StarVisible23 As label:
+                Align: =Align.Center
+                Height: =DataCardKey29.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey29.Y
+                ZIndex: =4
+
+        Expiration_DataCard1 As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_validto"
+            Default: =ThisItem.Expiration
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_validto")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =If(Not IsBlank(DateValue3.SelectedDate), DateValue3.SelectedDate + Time(Value(HourValue3.Selected.Value), Value(MinuteValue3.Selected.Value), 0))
+            Width: =640
+            X: =0
+            Y: =8
+            ZIndex: =1
+
+            DataCardKey6 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue3 As datepicker:
+                AccessibleLabel: ="Expiration"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Height: =70
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey6.Y + DataCardKey6.Height + 5
+                ZIndex: =2
+
+            HourValue3 As dropdown:
+                AccessibleLabel: ="Expiration hour"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue3.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue3.Width / 2 - 10
+                X: =DateValue3.X + DateValue3.Width + 10
+                Y: =DateValue3.Y
+                ZIndex: =3
+
+            Separator3 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue3.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue3.X + HourValue3.Width
+                Y: =HourValue3.Y
+                ZIndex: =4
+
+            MinuteValue3 As dropdown:
+                AccessibleLabel: ="Expiration minute"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue3.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue3.Width
+                X: =HourValue3.X + HourValue3.Width + Separator3.Width
+                Y: =HourValue3.Y
+                ZIndex: =5
+
+            ErrorMessage4 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue3.Y + HourValue3.Height
+                ZIndex: =6
+
+            StarVisible4 As label:
+                Align: =Align.Center
+                Height: =DataCardKey6.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6.Y
+                ZIndex: =7
+
+        "'Term time employee_DataCard1' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwctermtime_custom"
+            Default: =ThisItem.'Term time employee'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwctermtime_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue5.Selected.Value
+            Width: =640
+            X: =0
+            Y: =9
+            ZIndex: =1
+
+            DataCardKey13 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue5 As combobox:
+                AccessibleLabel: ="Term time employee data"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey13.Y + DataCardKey13.Height + 5
+                ZIndex: =2
+
+            ErrorMessage6 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue5.Y + DataCardValue5.Height
+                ZIndex: =3
+
+            StarVisible6 As label:
+                Align: =Align.Center
+                Height: =DataCardKey13.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey13.Y
+                ZIndex: =4
+
+        PwCPositionWeeksPerYear_Custom_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcpositionweeksperyear_custom"
+            Default: =ThisItem.PwCPositionWeeksPerYear_Custom
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcpositionweeksperyear_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue6.Text)
+            Width: =640
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+            DataCardKey17 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue6 As text:
+                AccessibleLabel: ="Position weeks per year"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                Height: =70
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey17.Y + DataCardKey17.Height + 5
+                ZIndex: =2
+
+            ErrorMessage8 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue6.Y + DataCardValue6.Height
+                ZIndex: =3
+
+            StarVisible8 As label:
+                Align: =Align.Center
+                Height: =DataCardKey17.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey17.Y
+                ZIndex: =4
+
+        "'Weekend working_DataCard2' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcweekendworking_custom"
+            Default: =ThisItem.'Weekend working'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcweekendworking_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue12.Selected.Value
+            Width: =640
+            X: =0
+            Y: =11
+            ZIndex: =1
+
+            DataCardKey18 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue12 As combobox:
+                AccessibleLabel: ="Weekebd working"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey18.Y + DataCardKey18.Height + 5
+                ZIndex: =2
+
+            ErrorMessage12 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue12.Y + DataCardValue12.Height
+                ZIndex: =3
+
+            StarVisible12 As label:
+                Align: =Align.Center
+                Height: =DataCardKey18.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey18.Y
+                ZIndex: =4
+
+        "'Irregular patterns_DataCard2' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcirregularpattern_custom"
+            Default: =ThisItem.'Irregular patterns'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcirregularpattern_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue15.Selected.Value
+            Width: =640
+            X: =0
+            Y: =12
+            ZIndex: =1
+
+            DataCardKey19 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue15 As combobox:
+                AccessibleLabel: ="Irregular patterns"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey19.Y + DataCardKey19.Height + 5
+                ZIndex: =2
+
+            ErrorMessage13 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue15.Y + DataCardValue15.Height
+                ZIndex: =3
+
+            StarVisible13 As label:
+                Align: =Align.Center
+                Height: =DataCardKey19.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey19.Y
+                ZIndex: =4
+
+        Position_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_positionid"
+            Default: =ThisItem.Position
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_positionid")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_positionid")
+            Required: =true
+            Update: =DataCardValue16.Text
+            Width: =640
+            X: =0
+            Y: =13
+            ZIndex: =1
+
+            DataCardKey20 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue16 As text:
+                AccessibleLabel: ="Position"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey20.Y + DataCardKey20.Height + 5
+                ZIndex: =2
+
+            ErrorMessage14 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue16.Y + DataCardValue16.Height
+                ZIndex: =3
+
+            StarVisible14 As label:
+                Align: =Align.Center
+                Height: =DataCardKey20.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey20.Y
+                ZIndex: =4
+
+        Job_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_jobid"
+            Default: =ThisItem.Job
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_jobid")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_jobid")
+            Required: =true
+            Update: =DataCardValue17.Text
+            Width: =640
+            X: =0
+            Y: =14
+            ZIndex: =1
+
+            DataCardKey21 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue17 As text:
+                AccessibleLabel: ="Job"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey21.Y + DataCardKey21.Height + 5
+                ZIndex: =2
+
+            ErrorMessage15 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue17.Y + DataCardValue17.Height
+                ZIndex: =3
+
+            StarVisible15 As label:
+                Align: =Align.Center
+                Height: =DataCardKey21.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey21.Y
+                ZIndex: =4
+
+        "'Compensation region_DataCard2' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_compensationregionid"
+            Default: =ThisItem.'Compensation region'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_compensationregionid")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_compensationregionid")
+            Required: =false
+            Update: =DataCardValue18.Text
+            Width: =640
+            X: =0
+            Y: =15
+            ZIndex: =1
+
+            DataCardKey22 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue18 As text:
+                AccessibleLabel: ="Compensation region"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey22.Y + DataCardKey22.Height + 5
+                ZIndex: =2
+
+            ErrorMessage16 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue18.Y + DataCardValue18.Height
+                ZIndex: =3
+
+            StarVisible16 As label:
+                Align: =Align.Center
+                Height: =DataCardKey22.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey22.Y
+                ZIndex: =4
+
+        "'Department number_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_departmentnumber"
+            Default: =ThisItem.'Department number'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_departmentnumber")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_departmentnumber")
+            Required: =false
+            Update: =DataCardValue19.Text
+            Width: =640
+            X: =0
+            Y: =16
+            ZIndex: =1
+
+            DataCardKey23 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue19 As text:
+                AccessibleLabel: ="Department number"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey23.Y + DataCardKey23.Height + 5
+                ZIndex: =2
+
+            ErrorMessage17 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue19.Y + DataCardValue19.Height
+                ZIndex: =3
+
+            StarVisible17 As label:
+                Align: =Align.Center
+                Height: =DataCardKey23.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey23.Y
+                ZIndex: =4
+
+        "'Reason code_DataCard1' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_lbhpositionreasonchange"
+            Default: =ThisItem.'Reason code'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_lbhpositionreasonchange")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue20.Selected.Value
+            Width: =640
+            X: =0
+            Y: =17
+            ZIndex: =1
+
+            DataCardKey24 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue20 As combobox:
+                AccessibleLabel: ="Reason code"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('Reason code (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey24.Y + DataCardKey24.Height + 5
+                ZIndex: =2
+
+            ErrorMessage18 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue20.Y + DataCardValue20.Height
+                ZIndex: =3
+
+            StarVisible18 As label:
+                Align: =Align.Center
+                Height: =DataCardKey24.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey24.Y
+                ZIndex: =4
+
+        "'Probation completed_DataCard1' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcprobcompleted_custom"
+            Default: =ThisItem.'Probation completed'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobcompleted_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue21.Selected.Value
+            Width: =640
+            X: =0
+            Y: =18
+            ZIndex: =1
+
+            DataCardKey25 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue21 As combobox:
+                AccessibleLabel: ="Position completed"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('NoYes (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey25.Y + DataCardKey25.Height + 5
+                ZIndex: =2
+
+            ErrorMessage19 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue21.Y + DataCardValue21.Height
+                ZIndex: =3
+
+            StarVisible19 As label:
+                Align: =Align.Center
+                Height: =DataCardKey25.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey25.Y
+                ZIndex: =4
+
+        "'Probation duration_DataCard1' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcprobduration_custom"
+            Default: =ThisItem.'Probation duration'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobduration_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue22.Selected.Value
+            Width: =640
+            X: =0
+            Y: =19
+            ZIndex: =1
+
+            DataCardKey26 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue22 As combobox:
+                AccessibleLabel: ="Position duration"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('Probation duration (mserp)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey26.Y + DataCardKey26.Height + 5
+                ZIndex: =2
+
+            ErrorMessage20 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue22.Y + DataCardValue22.Height
+                ZIndex: =3
+
+            StarVisible20 As label:
+                Align: =Align.Center
+                Height: =DataCardKey26.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey26.Y
+                ZIndex: =4
+
+        "'Probation period_DataCard1' As typedDataCard.dateTimeEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcprobperiod_custom"
+            Default: =ThisItem.'Probation period'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobperiod_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =If(Not IsBlank(DateValue5.SelectedDate), DateValue5.SelectedDate + Time(Value(HourValue5.Selected.Value), Value(MinuteValue5.Selected.Value), 0))
+            Width: =640
+            X: =0
+            Y: =20
+            ZIndex: =1
+
+            DataCardKey27 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue5 As datepicker:
+                AccessibleLabel: ="Position duration date"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Height: =70
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey27.Y + DataCardKey27.Height + 5
+                ZIndex: =2
+
+            HourValue5 As dropdown:
+                AccessibleLabel: ="Position duration hour"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue5.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue5.Width / 2 - 10
+                X: =DateValue5.X + DateValue5.Width + 10
+                Y: =DateValue5.Y
+                ZIndex: =3
+
+            Separator5 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue5.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue5.X + HourValue5.Width
+                Y: =HourValue5.Y
+                ZIndex: =4
+
+            MinuteValue5 As dropdown:
+                AccessibleLabel: ="Position period minute"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue5.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue5.Width
+                X: =HourValue5.X + HourValue5.Width + Separator5.Width
+                Y: =HourValue5.Y
+                ZIndex: =5
+
+            ErrorMessage21 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue5.Y + HourValue5.Height
+                ZIndex: =6
+
+            StarVisible21 As label:
+                Align: =Align.Center
+                Height: =DataCardKey27.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey27.Y
+                ZIndex: =7
+
+        "'Redundancy date_DataCard1' As typedDataCard.dateTimeEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="mserp_pwcredundancydate_custom"
+            Default: =ThisItem.'Redundancy date'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcredundancydate_custom")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =If(Not IsBlank(DateValue6.SelectedDate), DateValue6.SelectedDate + Time(Value(HourValue6.Selected.Value), Value(MinuteValue6.Selected.Value), 0))
+            Width: =640
+            X: =0
+            Y: =21
+            ZIndex: =1
+
+            DataCardKey32 As label:
+                AutoHeight: =true
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue6 As datepicker:
+                AccessibleLabel: ="Redundancy date"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Height: =70
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey32.Y + DataCardKey32.Height + 5
+                ZIndex: =2
+
+            HourValue6 As dropdown:
+                AccessibleLabel: ="Redundancy date hour"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue6.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue6.Width / 2 - 10
+                X: =DateValue6.X + DateValue6.Width + 10
+                Y: =DateValue6.Y
+                ZIndex: =3
+
+            Separator6 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue6.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue6.X + HourValue6.Width
+                Y: =HourValue6.Y
+                ZIndex: =4
+
+            MinuteValue6 As dropdown:
+                AccessibleLabel: ="Redundancy date minute"
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue6.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue6.Width
+                X: =HourValue6.X + HourValue6.Width + Separator6.Width
+                Y: =HourValue6.Y
+                ZIndex: =5
+
+            ErrorMessage26 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue6.Y + HourValue6.Height
+                ZIndex: =6
+
+            StarVisible26 As label:
+                Align: =Align.Center
+                Height: =DataCardKey32.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey32.Y
+                ZIndex: =7
+
+    "'Expire old record' As button":
+        DisplayMode: =If('Flow Message'.Text="Success",DisplayMode.Disabled,DisplayMode.Edit)
+        Fill: =RGBA(109, 49, 162, 1)
+        Height: =73
+        OnSelect: =Set(PowerAppsResult,ExpirePrevPositionDetailsRecord.Run('New Details Table'.Selected.Position,'Expire date format'))
+        Size: =24
+        Text: ="End date previous record"
+        Width: =466
+        X: =73
+        Y: =819
+        ZIndex: =5
+
+    "'Expiry Date' As label":
+        Height: =70
+        Size: =21
+        Text: =DateAdd('Change working hours form'.Updates.Effective,-1,TimeUnit.Seconds)
+        Visible: =false
+        Width: =482
+        Y: =1066
+        ZIndex: =6
+
+    "'Expire date format' As label":
+        Height: =59
+        Size: =21
+        Text: |-
+            =Text(DateValue('Expiry Date_1'.Text), "[$-en-GB]yyyy-mm-ddT23:59:59Z")
+        Visible: =false
+        Width: =252
+        X: =387
+        Y: =1077
+        ZIndex: =7
+
+    "'Flow Message' As label":
+        Align: =Align.Center
+        Height: =70
+        Size: =21
+        Text: =PowerAppsResult.result
+        Width: =352
+        X: =130
+        Y: =898
+        ZIndex: =8
+
+    UserName As label:
+        Height: =59
+        Size: =21
+        Text: =Office365Users.MyProfile().DisplayName
+        Visible: =false
+        Width: =290
+        Y: =1077
+        ZIndex: =9
+

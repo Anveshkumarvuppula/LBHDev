@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_AdvancedPayroll_To_AccessPay_PreProd_name": {
+            "value": null
+        },
+        "connections_azureblob_1_externalid": {
+            "value": null
+        },
+        "connections_sftpwithssh_2_externalid": {
+            "value": null
+        }
+    }
+}

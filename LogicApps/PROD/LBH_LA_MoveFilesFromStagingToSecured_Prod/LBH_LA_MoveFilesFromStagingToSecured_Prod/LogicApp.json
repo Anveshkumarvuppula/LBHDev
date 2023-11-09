@@ -1,0 +1,488 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_MoveFilesFromStagingToSecured_Prod_name": {
+            "defaultValue": "PwC_LA_MoveFilesFromStagingToSecured_Prod",
+            "type": "String"
+        },
+        "connections_azurefile_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azurefile",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/dynamicsax",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_MoveFilesFromStagingToSecured_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "Source": {
+                                            "type": "string"
+                                        },
+                                        "Target": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "For_each": {
+                            "foreach": "@body('List_files')?['value']",
+                            "actions": {
+                                "Condition": {
+                                    "actions": {
+                                        "Condition_2": {
+                                            "actions": {
+                                                "HTTP_-_Update_File": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "body": "@body('Get_file_content')",
+                                                        "headers": {
+                                                            "Content-Type": "application/octet-stream",
+                                                            "Content-length": "@{variables('ContentLength')}",
+                                                            "FileName": "@{concat(variables('TargetFolder'),'/',variables('SourceFileName'))}",
+                                                            "Range": "bytes=0-@{sub(variables('ContentLength'),1)}",
+                                                            "x-ms-write": "update"
+                                                        },
+                                                        "method": "PUT",
+                                                        "uri": "@{concat(variables('UpdateFileURL'),variables('SVToken'))}"
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "HTTP_-_Create_File": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "not": {
+                                                            "equals": [
+                                                                "@variables('ContentLength')",
+                                                                0
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        },
+                                        "Condition_3": {
+                                            "actions": {
+                                                "Decrement_variable_-_ContentLength": {
+                                                    "runAfter": {},
+                                                    "type": "DecrementVariable",
+                                                    "inputs": {
+                                                        "name": "ContentLength",
+                                                        "value": 3
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "Set_variable_-_ContentLength": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "contains": [
+                                                            "@variables('SourceIntermediateFolder')",
+                                                            "ACC1"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        },
+                                        "Delete_file": {
+                                            "runAfter": {
+                                                "Condition_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "headers": {
+                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(concat(variables('SourceIntermediateFolder'),'/',variables('SourceFileName'))))}"
+                                            }
+                                        },
+                                        "Get_file_content": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(concat(variables('SourceIntermediateFolder'),'/',variables('SourceFileName'))))}/content",
+                                                "queries": {
+                                                    "inferContentType": true
+                                                }
+                                            }
+                                        },
+                                        "Get_file_metadata": {
+                                            "runAfter": {
+                                                "Get_file_content": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(concat(variables('SourceIntermediateFolder'),'/',variables('SourceFileName'))))}"
+                                            }
+                                        },
+                                        "HTTP_-_Create_File": {
+                                            "runAfter": {
+                                                "Condition_3": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "headers": {
+                                                    "FileName": "@{concat(variables('TargetFolder'),'/',variables('SourceFileName'))}",
+                                                    "x-ms-content-length": "@{variables('ContentLength')}",
+                                                    "x-ms-file-attributes": "None",
+                                                    "x-ms-file-creation-time": "2020-02-28T03:58:06.6661551Z",
+                                                    "x-ms-file-last-write-time": "2020-02-28T03:58:06.6661551Z",
+                                                    "x-ms-file-permission": "Inherit",
+                                                    "x-ms-type": "file",
+                                                    "x-ms-version": "2019-02-02"
+                                                },
+                                                "method": "PUT",
+                                                "uri": "@{concat(variables('CreateBlankFileURL'),variables('SVToken'))}"
+                                            }
+                                        },
+                                        "Set_variable_-_ContentLength": {
+                                            "runAfter": {
+                                                "Get_file_metadata": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ContentLength",
+                                                "value": "@body('Get_file_metadata')?['Size']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Set_variable_-_SourceFileName": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each')?['IsFolder']",
+                                                    false
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                },
+                                "Set_variable_-_SourceFileName": {
+                                    "runAfter": {
+                                        "Set_variable_-_SourceFileNameOrig": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "SourceFileName",
+                                        "value": "@{replace(variables('SourceFileNameOrig'), ' ', '%20')}"
+                                    }
+                                },
+                                "Set_variable_-_SourceFileNameOrig": {
+                                    "runAfter": {},
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "SourceFileNameOrig",
+                                        "value": "@items('For_each')?['Name']"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "List_files": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "runtimeConfiguration": {
+                                "concurrency": {
+                                    "repetitions": 1
+                                }
+                            }
+                        },
+                        "Get_a_record": {
+                            "runAfter": {
+                                "Initialize_variable_-_ContentLength": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('PwCIntegrationSetupSASEnts'))}/items/@{encodeURIComponent(encodeURIComponent('1000,0'))}"
+                            }
+                        },
+                        "Initialize_variable_-_ContentLength": {
+                            "runAfter": {
+                                "Initialize_variable_-_SourceFileNameOrig": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ContentLength",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_CreateBlankFileURL": {
+                            "runAfter": {
+                                "Initialize_variable_-_SVToken": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "CreateBlankFileURL",
+                                        "type": "string",
+                                        "value": "@body('Get_a_record')?['AFSCreateFileURL']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_DeleteFileURL": {
+                            "runAfter": {
+                                "Initialize_variable_-_UpdateFileURL": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "DeleteFileURL",
+                                        "type": "string",
+                                        "value": "@body('Get_a_record')?['AFSDeleteFileURL']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SVToken": {
+                            "runAfter": {
+                                "Get_a_record": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SVToken",
+                                        "type": "string",
+                                        "value": "@body('Get_a_record')?['SubscriptionKeyURL']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SourceFileName": {
+                            "runAfter": {
+                                "Initialize_variable_-_TargetFolder": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SourceFileName",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SourceFileNameOrig": {
+                            "runAfter": {
+                                "Initialize_variable_-_SourceFileName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SourceFileNameOrig",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_SourceIntermediateFolder": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "SourceIntermediateFolder",
+                                        "type": "string",
+                                        "value": "@triggerBody()?['Source']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_TargetFolder": {
+                            "runAfter": {
+                                "Initialize_variable_-_SourceIntermediateFolder": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TargetFolder",
+                                        "type": "string",
+                                        "value": "@triggerBody()?['Target']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_UpdateFileURL": {
+                            "runAfter": {
+                                "Initialize_variable_-_CreateBlankFileURL": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "UpdateFileURL",
+                                        "type": "string",
+                                        "value": "@body('Get_a_record')?['AFSUpdateFileURL']"
+                                    }
+                                ]
+                            }
+                        },
+                        "List_files": {
+                            "runAfter": {
+                                "Initialize_variable_-_DeleteFileURL": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/foldersV2/@{encodeURIComponent(encodeURIComponent(variables('SourceIntermediateFolder')))}",
+                                "queries": {
+                                    "nextPageMarker": "",
+                                    "useFlatListing": false
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile": {
+                                "connectionId": "[parameters('connections_azurefile_externalid')]",
+                                "connectionName": "azurefile",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_externalid')]",
+                                "connectionName": "dynamicsax",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

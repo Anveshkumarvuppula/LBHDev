@@ -1,0 +1,112 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_microsoftforms_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedmicrosoftforms_042d1"
+        },
+        "api": {
+          "name": "shared_microsoftforms"
+        }
+      },
+      "shared_sendmail_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_Mail"
+        },
+        "api": {
+          "name": "shared_sendmail"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "MSFormsExitInterviewVar (crbb7_MSFormsExitInterviewVar)": {
+          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUOTRaSDJRMzdDQlZOVTM3TVdVSkEwOFYwVS4u",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSFormsExitInterviewVar"
+          }
+        }
+      },
+      "triggers": {
+        "When_a_new_response_is_submitted": {
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "545ae55d-5a76-46ae-a0c7-183b23ff1658"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_microsoftforms_1",
+              "operationId": "CreateFormWebhook",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+            },
+            "parameters": {
+              "form_id": "@parameters('MSFormsExitInterviewVar (crbb7_MSFormsExitInterviewVar)')"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Get_response_details": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "c090c0b2-ed80-4831-b825-697e6360582f"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_microsoftforms_1",
+              "operationId": "GetFormResponseById",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+            },
+            "parameters": {
+              "form_id": "@parameters('MSFormsExitInterviewVar (crbb7_MSFormsExitInterviewVar)')",
+              "response_id": "@triggerOutputs()?['body/resourceData/responseId']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Send_email_to_HR": {
+          "runAfter": {
+            "Get_response_details": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8229e9e3-3e07-4a86-b745-f9a865d1f201"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sendmail_1",
+              "operationId": "SendEmailV3",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+            },
+            "parameters": {
+              "request/to": "testaskhr@harrow.gov.uk",
+              "request/subject": "An exit interview has been completed by @{outputs('Get_response_details')?['body/responder']}",
+              "request/text": "<p>Please log into Microsoft forms to retreive the details.</p>"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

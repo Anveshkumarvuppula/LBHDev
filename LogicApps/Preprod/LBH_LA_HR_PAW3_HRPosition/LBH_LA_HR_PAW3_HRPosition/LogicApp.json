@@ -1,0 +1,622 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_HR_PAW3_HRPosition_PreProd_name": {
+            "defaultValue": "PwC_LA_HR_PAW3_HRPosition_PreProd",
+            "type": "String"
+        },
+        "connections_azurefile_1_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/azurefile-1",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_smtp_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/smtp",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_HR_PAW3_HRPosition_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "19"
+                                    ],
+                                    "minutes": [
+                                        50
+                                    ]
+                                },
+                                "startTime": "2022-06-06T18:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "19"
+                                    ],
+                                    "minutes": [
+                                        50
+                                    ]
+                                },
+                                "startTime": "2022-06-06T18:00:00",
+                                "timeZone": "GMT Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Condition_3": {
+                            "actions": {
+                                "Terminate": {
+                                    "runAfter": {},
+                                    "type": "Terminate",
+                                    "inputs": {
+                                        "runError": {
+                                            "code": "ERR01",
+                                            "message": "@variables('ErrorMessage')"
+                                        },
+                                        "runStatus": "Failed"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "For_each_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "not": {
+                                            "equals": [
+                                                "@variables('ErrorMessage')",
+                                                ""
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "ErrorMessage_-_Initialize_variable": {
+                            "runAfter": {
+                                "OutputFileName_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ErrorMessage",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "For_each_2": {
+                            "foreach": "@body('Lists_items_present_in_table')?['value']",
+                            "actions": {
+                                "Condition": {
+                                    "actions": {
+                                        "For_each": {
+                                            "foreach": "@body('Lists_items_present_in_table_2')?['value']",
+                                            "actions": {
+                                                "Condition_2": {
+                                                    "actions": {
+                                                        "Check_PAW3_export_status": {
+                                                            "actions": {
+                                                                "Delay_2": {
+                                                                    "runAfter": {},
+                                                                    "type": "Wait",
+                                                                    "inputs": {
+                                                                        "interval": {
+                                                                            "count": 20,
+                                                                            "unit": "Second"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "Get_PAW3_export_status": {
+                                                                    "runAfter": {
+                                                                        "Delay_2": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "ApiConnection",
+                                                                    "inputs": {
+                                                                        "body": {
+                                                                            "executionId": "@body('Export_PAW3_data')?['value']"
+                                                                        },
+                                                                        "host": {
+                                                                            "connection": {
+                                                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                                            }
+                                                                        },
+                                                                        "method": "post",
+                                                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                                                    }
+                                                                },
+                                                                "Set_variable": {
+                                                                    "runAfter": {
+                                                                        "Get_PAW3_export_status": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "SetVariable",
+                                                                    "inputs": {
+                                                                        "name": "ExecutionStat",
+                                                                        "value": "@body('Get_PAW3_export_status')?['value']"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "runAfter": {
+                                                                "Export_PAW3_data": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "expression": "@equals(variables('ExecutionStat'), 'Succeeded')",
+                                                            "limit": {
+                                                                "count": 20,
+                                                                "timeout": "PT1H"
+                                                            },
+                                                            "type": "Until"
+                                                        },
+                                                        "Create_file_2": {
+                                                            "runAfter": {
+                                                                "Set_variable_2": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "body": "@binary(body('Get_PAW3_file'))",
+                                                                "headers": {
+                                                                    "ReadFileMetadataFromServer": true
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "post",
+                                                                "path": "/datasets/default/files",
+                                                                "queries": {
+                                                                    "folderPath": "/p2uat-file01/PAW3/temp",
+                                                                    "name": "@variables('PackageName')",
+                                                                    "queryParametersSingleEncoded": true
+                                                                }
+                                                            },
+                                                            "runtimeConfiguration": {
+                                                                "contentTransfer": {
+                                                                    "transferMode": "Chunked"
+                                                                }
+                                                            }
+                                                        },
+                                                        "Delete_file_2": {
+                                                            "runAfter": {
+                                                                "File_transformation": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "headers": {
+                                                                    "SkipDeleteIfFileNotFoundOnServer": false
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "delete",
+                                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/p2uat-file01/PAW3/temp/PwC_PAW3.zip'))}"
+                                                            }
+                                                        },
+                                                        "Export_PAW3_data": {
+                                                            "runAfter": {},
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "definitionGroupId": "PwCPAW3DataExport",
+                                                                    "legalEntityId": "1000",
+                                                                    "packageName": "PwC_PAW3.zip",
+                                                                    "reExecute": false
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "post",
+                                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage'))}"
+                                                            }
+                                                        },
+                                                        "File_transformation": {
+                                                            "runAfter": {
+                                                                "Set_variable_3": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "cloudFileShare": "p2uat-file01",
+                                                                    "dir": "PAW3",
+                                                                    "fileName": "@{variables('PackageName')}",
+                                                                    "newField1": "Position Number",
+                                                                    "newField10": "Spare Field",
+                                                                    "newField2": "Description",
+                                                                    "newField3": "Cost Center",
+                                                                    "newField4": "Manager Position No.",
+                                                                    "newField5": "Disable",
+                                                                    "newField6": "Additional 1",
+                                                                    "newField7": "Additional 2",
+                                                                    "newField8": "Additional 3",
+                                                                    "newField9": "Illness Subtype",
+                                                                    "oldField1": "POSITIONNUMBER",
+                                                                    "oldField10": "SPAREFIELD",
+                                                                    "oldField2": "DESCRIPTION",
+                                                                    "oldField3": "COSTCENTER",
+                                                                    "oldField4": "MANAGERPOSITIONID",
+                                                                    "oldField5": "DISABLEN",
+                                                                    "oldField6": "ADDITIONAL1",
+                                                                    "oldField7": "ADDITIONAL2",
+                                                                    "oldField8": "ADDITIONAL3",
+                                                                    "oldField9": "ILLNESSSUBTYPE",
+                                                                    "outPutFileName": "@{variables('OutputFileName')}",
+                                                                    "outputFileFormat": "csv",
+                                                                    "sheetName": "hrposition",
+                                                                    "storageAccountPath": "DefaultEndpointsProtocol=https;AccountName=lbhnprduksd365sa02;AccountKey=o359HBPq50Q0YS2FZKGgqRalib7hhIC9p2/JqXlNL7ye2f15my2/65kLO+oBd1WBjnMS7lwTpnOXSY6fae8i3A==;EndpointSuffix=core.windows.net",
+                                                                    "subDir": "temp"
+                                                                },
+                                                                "method": "POST",
+                                                                "uri": "https://pwcfointfiletranspactoexcelcsv.azurewebsites.net/api/TransFormExcelCSV?code=XdHL/TjIjh34XZzZUnPxE7xzjsqoxip5csUi5zvR79q6a3uUkNCyVw=="
+                                                            }
+                                                        },
+                                                        "Get_PAW3_file": {
+                                                            "runAfter": {
+                                                                "Get_PAW3_package_url": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "Http",
+                                                            "inputs": {
+                                                                "method": "GET",
+                                                                "uri": "@body('Get_PAW3_package_url')?['value']"
+                                                            }
+                                                        },
+                                                        "Get_PAW3_package_url": {
+                                                            "runAfter": {
+                                                                "Check_PAW3_export_status": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "executionId": "@body('Export_PAW3_data')?['value']"
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "post",
+                                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl'))}"
+                                                            }
+                                                        },
+                                                        "Get_file_content": {
+                                                            "runAfter": {
+                                                                "Delete_file_2": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['azurefile_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "get",
+                                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('/p2uat-file01/PAW3/',variables('OutputFileName')))}/content",
+                                                                "queries": {
+                                                                    "inferContentType": true
+                                                                }
+                                                            }
+                                                        },
+                                                        "Send_Email_(V3)": {
+                                                            "runAfter": {
+                                                                "Get_file_content": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "ApiConnection",
+                                                            "inputs": {
+                                                                "body": {
+                                                                    "Attachments": [
+                                                                        {
+                                                                            "ContentData": "@{base64(body('Get_file_content'))}",
+                                                                            "FileName": "@variables('OutputFileName')"
+                                                                        }
+                                                                    ],
+                                                                    "CC": "Kanta.Halai@harrow.gov.uk",
+                                                                    "From": "D365_MailSys_FO_Dev@harrow.gov.uk",
+                                                                    "Subject": "PAW3 data (Pre Prod)",
+                                                                    "To": "D365.support@harrow.gov.uk"
+                                                                },
+                                                                "host": {
+                                                                    "connection": {
+                                                                        "name": "@parameters('$connections')['smtp_1']['connectionId']"
+                                                                    }
+                                                                },
+                                                                "method": "post",
+                                                                "path": "/SendEmailV3"
+                                                            }
+                                                        },
+                                                        "Set_variable_2": {
+                                                            "runAfter": {
+                                                                "Get_PAW3_file": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "SetVariable",
+                                                            "inputs": {
+                                                                "name": "PackageName",
+                                                                "value": "PwC_PAW3.zip"
+                                                            }
+                                                        },
+                                                        "Set_variable_3": {
+                                                            "runAfter": {
+                                                                "Create_file_2": [
+                                                                    "Succeeded"
+                                                                ]
+                                                            },
+                                                            "type": "SetVariable",
+                                                            "inputs": {
+                                                                "name": "OutputFileName",
+                                                                "value": "HR POSITION@{formatdatetime(utcnow(),'yyyyMMddhhmm')}.csv"
+                                                            }
+                                                        }
+                                                    },
+                                                    "runAfter": {},
+                                                    "else": {
+                                                        "actions": {
+                                                            "Set_variable_5": {
+                                                                "runAfter": {},
+                                                                "type": "SetVariable",
+                                                                "inputs": {
+                                                                    "name": "ErrorMessage",
+                                                                    "value": "No data present in the PAW3 staging table"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "expression": {
+                                                        "and": [
+                                                            {
+                                                                "not": {
+                                                                    "equals": [
+                                                                        "@items('For_each')?['PositionNumber']",
+                                                                        ""
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "type": "If"
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "Lists_items_present_in_table_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Foreach"
+                                        },
+                                        "Lists_items_present_in_table_2": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('HRPostitionExpToPaW3'))}/items",
+                                                "queries": {
+                                                    "$top": 1
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "else": {
+                                        "actions": {
+                                            "Set_variable_4": {
+                                                "runAfter": {},
+                                                "type": "SetVariable",
+                                                "inputs": {
+                                                    "name": "ErrorMessage",
+                                                    "value": "Batch job error in D365 F&o"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_2')?['Status']",
+                                                    "Finished"
+                                                ]
+                                            },
+                                            {
+                                                "equals": [
+                                                    "@formatDateTime(items('For_each_2')?['StartDateTime'], 'yyyy-MM-dd')",
+                                                    "@formatDateTime(utcnow(),'yyyy-MM-dd')"
+                                                ]
+                                            },
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_2')?['Caption']",
+                                                    "PAW3 staging table data population batch"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Lists_items_present_in_table": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExecutionStat",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Lists_items_present_in_table": {
+                            "runAfter": {
+                                "ErrorMessage_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/tables/@{encodeURIComponent(encodeURIComponent('CBatchJobHistories'))}/items",
+                                "queries": {
+                                    "$filter": "Caption eq 'PAW3 staging table data population batch'",
+                                    "$orderby": "EndDateTime desc",
+                                    "$top": 1
+                                }
+                            }
+                        },
+                        "Move_files_from_staging_to_secured": {
+                            "runAfter": {
+                                "Condition_3": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "Source": "/uat-file01/PAW3",
+                                    "Target": "uat-file01/PAW3"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-17.uksouth.logic.azure.com:443/workflows/52e068cad6344e9186a6a8c5ca21ca10/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=N_nWJCGmeNklnT1RNYOtv8iAk3hUHSuQ8ps1z0mp7v8"
+                            }
+                        },
+                        "OutputFileName_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageName_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "OutputFileName",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageName_-_Initialize_variable": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageName",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile_1": {
+                                "connectionId": "[parameters('connections_azurefile_1_externalid')]",
+                                "connectionName": "azurefile-1",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/azurefile"
+                            },
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "smtp_1": {
+                                "connectionId": "[parameters('connections_smtp_externalid')]",
+                                "connectionName": "smtp",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/smtp"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,1151 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_HRFO_JobMasters_PreProd_name": {
+            "defaultValue": "PwC_LA_HRFO_JobMasters_PreProd",
+            "type": "String"
+        },
+        "connections_dynamicsax_5_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/dynamicsax-5",
+            "type": "String"
+        },
+        "connections_webcontents_7_externalid": {
+            "defaultValue": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/resourceGroups/lbh-nprd-uks-apim-rg-01/providers/Microsoft.Web/connections/webcontents-7",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_HRFO_JobMasters_PreProd_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "NPRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "execute": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Execute_compensation_masters-_HTTP": {
+                            "runAfter": {
+                                "Job_Types": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "execute": "Yes"
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-21.uksouth.logic.azure.com:443/workflows/b71cf3d3b0e1493fa3e455a5f2c30717/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4CceXz8dPXoeUYwXlgSZI6NL7vAYRmP7yKez9nF7-7U"
+                            }
+                        },
+                        "ExportStatusJobFunction_-_Initialize_variable_": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExportStatusJobFunction",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ExportStatusJobTitle_-_Initialize_variable": {
+                            "runAfter": {
+                                "ExportStatusJobFunction_-_Initialize_variable_": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExportStatusJobTitle",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ExportStatusJobType_-_Initialize_variable": {
+                            "runAfter": {
+                                "ImportStatusJobFunction_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ExportStatusJobType",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ImportStatusJobFunction_-_Initialize_variable": {
+                            "runAfter": {
+                                "TokenJobFunction_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportStatusJobFunction",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ImportStatusJobTitle_-_Initialize_variable": {
+                            "runAfter": {
+                                "TokenJobTitle_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportStatusJobTitle",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "ImportStatusJobType_-_Initialize_variable": {
+                            "runAfter": {
+                                "JobTypeAccessToken_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportStatusJobType",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {
+                                "ImportStatusJobType_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TitlesExpStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "ImportStatusJobTitle_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TalentTempVariableJobTitle",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_3": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ImportPackageUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_4": {
+                            "runAfter": {
+                                "Initialize_variable_3": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobTitleImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "JobTypeAccessToken_-_Initialize_variable": {
+                            "runAfter": {
+                                "JobTypeUrl_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobTypeAccessToken",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "JobTypeUrl_-_Initialize_variable": {
+                            "runAfter": {
+                                "ExportStatusJobType_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "JobTypeUrl",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Job_Function": {
+                            "actions": {
+                                "Check_Job_Function_Import_Status": {
+                                    "actions": {
+                                        "Check_Import_Summary_Job_Function": {
+                                            "runAfter": {
+                                                "Delay_7": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_Job_Function')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('TokenJobFunction')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Delay_7": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Set_variable_5": {
+                                            "runAfter": {
+                                                "Check_Import_Summary_Job_Function": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ImportStatusJobFunction",
+                                                "value": "@{body('Check_Import_Summary_Job_Function')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Job_Function": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ImportStatusJobFunction'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_execution_status_Export_Job_Function": {
+                                    "actions": {
+                                        "Delay_6": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Export_summary_status_Job_Function": {
+                                            "runAfter": {
+                                                "Delay_6": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Job_Function')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_4": {
+                                            "runAfter": {
+                                                "Get_Export_summary_status_Job_Function": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ExportStatusJobFunction",
+                                                "value": "@{body('Get_Export_summary_status_Job_Function')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Job_Function": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ExportStatusJobFunction'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_Job_Function": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCJobFunction\",','\n','    \"packageName\":\"jobfunction.zip\",','\n','    \"executionId\":\"',variables('jobfunctionexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Package_Url_Job_Function": {
+                                    "runAfter": {
+                                        "Check_execution_status_Export_Job_Function": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Job_Function')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_access_token_Job_Function": {
+                                    "runAfter": {
+                                        "PackageUrlJobFunction_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Import_Job_Function": {
+                                    "runAfter": {
+                                        "TokenJobFunction_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCJobFunction",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('PackageUrlJobFunction')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('TokenJobFunction')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "PackageUrlJobFunction_-_Set_variable": {
+                                    "runAfter": {
+                                        "Get_Package_Url_Job_Function": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "PackageUrlJobFunction",
+                                        "value": "@{body('Get_Package_Url_Job_Function')['Value']}"
+                                    }
+                                },
+                                "Parse_JSON_3": {
+                                    "runAfter": {
+                                        "Get_access_token_Job_Function": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_access_token_Job_Function')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "TokenJobFunction_-_Set_variable": {
+                                    "runAfter": {
+                                        "Parse_JSON_3": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "TokenJobFunction",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_3')['access_token'])}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Titles": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Job_Types": {
+                            "actions": {
+                                "Check_Job_Type_Export_Summary": {
+                                    "actions": {
+                                        "Delay_8": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Export_Summary_Job_Type": {
+                                            "runAfter": {
+                                                "Delay_8": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Compensation_Job_Type')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable_6": {
+                                            "runAfter": {
+                                                "Get_Export_Summary_Job_Type": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ExportStatusJobType",
+                                                "value": "@{body('Get_Export_Summary_Job_Type')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Compensation_Job_Type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ExportStatusJobType'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_import_summary_Job_Type_-_Until": {
+                                    "actions": {
+                                        "Delay_9": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_import_summary_Job_Type": {
+                                            "runAfter": {
+                                                "Delay_9": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@{body('Import_Job_Type')['Value']}"
+                                                },
+                                                "headers": {
+                                                    "Authorization": "@variables('JobTypeAccessToken')"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                            }
+                                        },
+                                        "Set_variable_7": {
+                                            "runAfter": {
+                                                "Get_import_summary_Job_Type": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ImportStatusJobType",
+                                                "value": "@{body('Get_import_summary_Job_Type')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Job_Type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('ImportStatusJobType'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 10,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_Compensation_Job_Type": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCJobType\",','\n','    \"packageName\":\"jobtype.zip\",','\n','    \"executionId\":\"',variables('jobtypesexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Authentication_Job_Type": {
+                                    "runAfter": {
+                                        "JobTypeUrl_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": "client_id=9a0a0604-6c86-4ba3-894f-853e9f2b9252&client_secret=1ix8h.1~ojzX7pj520djkZnAD7-yG.P7b3&grant_type=client_credentials&resource=https://lbh-fo-preprod.sandbox.operations.dynamics.com",
+                                        "headers": {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://login.microsoftonline.com/d2c39953-a8db-4c3c-97f2-d2dc76fb3e2c/oauth2/token"
+                                    }
+                                },
+                                "Get_Job_Type_Package_Url": {
+                                    "runAfter": {
+                                        "Check_Job_Type_Export_Summary": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Compensation_Job_Type')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Job_Type": {
+                                    "runAfter": {
+                                        "JobTypeAccessToken_-_Set_variable": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCJobType",
+                                            "execute": true,
+                                            "executionId": "",
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('JobTypeUrl')"
+                                        },
+                                        "headers": {
+                                            "Authorization": "@variables('JobTypeAccessToken')"
+                                        },
+                                        "method": "POST",
+                                        "uri": "https://lbh-fo-preprod.sandbox.operations.dynamics.com/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage"
+                                    }
+                                },
+                                "JobTypeAccessToken_-_Set_variable": {
+                                    "runAfter": {
+                                        "Parse_JSON_4": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "JobTypeAccessToken",
+                                        "value": "@{concat('Bearer ',body('Parse_JSON_4')['access_token'])}"
+                                    }
+                                },
+                                "JobTypeUrl_-_Set_variable": {
+                                    "runAfter": {
+                                        "Get_Job_Type_Package_Url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "JobTypeUrl",
+                                        "value": "@{body('Get_Job_Type_Package_Url')['Value']}"
+                                    }
+                                },
+                                "Parse_JSON_4": {
+                                    "runAfter": {
+                                        "Get_Authentication_Job_Type": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Get_Authentication_Job_Type')",
+                                        "schema": {
+                                            "$schema": "http://json-schema.org/draft-04/schema#",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "expires_on": {
+                                                    "type": "string"
+                                                },
+                                                "ext_expires_in": {
+                                                    "type": "string"
+                                                },
+                                                "not_before": {
+                                                    "type": "string"
+                                                },
+                                                "resource": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token_type",
+                                                "expires_in",
+                                                "ext_expires_in",
+                                                "expires_on",
+                                                "not_before",
+                                                "resource",
+                                                "access_token"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Job_Function": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Job_function_execution_id": {
+                            "runAfter": {
+                                "Titles_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "jobfunctionexecutionid",
+                                        "type": "string",
+                                        "value": "jobfunction@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Job_types_execution_id": {
+                            "runAfter": {
+                                "Job_function_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "jobtypesexecutionid",
+                                        "type": "string",
+                                        "value": "jobtypes@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageUrlJobFunction_-_Initialize_variable": {
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrlJobFunction",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "PackageUrlJobTitle_-_Initialize_variable": {
+                            "runAfter": {
+                                "ExportStatusJobTitle_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "PackageUrlJobTitle",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Titles": {
+                            "actions": {
+                                "Check_Title_Export_Status": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Export_Title_execution_status": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_Titles')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_Export_Title_execution_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "TitlesExpStatus",
+                                                "value": "@{body('Get_Export_Title_execution_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_Titles": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('TitlesExpStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_Titles": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCTitlesExport\",','\n','    \"packageName\":\"jobtitles.zip\",','\n','    \"executionId\":\"',variables('titlesexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_Package_url_Title": {
+                                    "runAfter": {
+                                        "Check_Title_Export_Status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_Titles')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-4551eb1c688-prod-ukwest.hr.talent.dynamics.com/namespaces/23c8abce-78aa-48e2-9cd4-3ce6c9ca8171/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_Titles": {
+                                    "runAfter": {
+                                        "Set_variable_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCTitlesImport",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@variables('ImportPackageUrl')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                },
+                                "Set_variable_2": {
+                                    "runAfter": {
+                                        "Get_Package_url_Title": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "ImportPackageUrl",
+                                        "value": "@{body('Get_Package_url_Title')['Value']}"
+                                    }
+                                },
+                                "Until": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 30,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Title_Import_Status": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_Titles')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-preprod.sandbox.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_3": {
+                                            "runAfter": {
+                                                "Get_Title_Import_Status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "JobTitleImportStatus",
+                                                "value": "@body('Get_Title_Import_Status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_Titles": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('JobTitleImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                }
+                            },
+                            "runAfter": {
+                                "Job_types_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Titles_execution_id": {
+                            "runAfter": {
+                                "Initialize_variable_4": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "titlesexecutionid",
+                                        "type": "string",
+                                        "value": "titles@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "TokenJobFunction_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageUrlJobFunction_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TokenJobFunction",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "TokenJobTitle_-_Initialize_variable": {
+                            "runAfter": {
+                                "PackageUrlJobTitle_-_Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "TokenJobTitle",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_5_externalid')]",
+                                "connectionName": "dynamicsax-5",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents_1": {
+                                "connectionId": "[parameters('connections_webcontents_7_externalid')]",
+                                "connectionName": "webcontents-7",
+                                "id": "/subscriptions/f30d976c-5cf4-407c-bf9f-3d4e8bd4b40f/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,97 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_CommonDataService"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_a_row_is_added,_modified_or_deleted": {
+          "metadata": {
+            "operationMetadataId": "9c08a234-f7b1-421a-a6c4-4c5c4d04b220"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 1,
+              "subscriptionRequest/entityname": "mserp_hcmcompfixedemplentity",
+              "subscriptionRequest/scope": 4
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Get_a_record": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "c3ab37ad-b16f-4d78-9406-f3fe0fc574c2"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmcompfixedemplentities",
+              "recordId": "@triggerOutputs()?['body/mserp_hcmcompfixedemplentityid']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Update_a_row": {
+          "runAfter": {
+            "Get_a_record": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "519e39be-623a-485f-9df7-89492cbba54d"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "UpdateRecord",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmcompfixedemplentities",
+              "recordId": "@outputs('Get_a_record')?['body/mserp_hcmcompfixedemplentityid']",
+              "item/mserp_pwccompensationid_custom": "@outputs('Get_a_record')?['body/mserp_pwccompensationid_custom']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

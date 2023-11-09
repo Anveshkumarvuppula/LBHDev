@@ -1,0 +1,318 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_FIN_HRFO_EmployeeCertificate_Prod_name": {
+            "defaultValue": "PwC_LA_FIN_HRFO_EmployeeCertificate_Prod",
+            "type": "String"
+        },
+        "connections_dynamicsax_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/dynamicsax",
+            "type": "String"
+        },
+        "connections_webcontents_externalid": {
+            "defaultValue": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/resourceGroups/lbh-prd-uks-fno-rg-03/providers/Microsoft.Web/connections/webcontents",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_PwC_LA_FIN_HRFO_EmployeeCertificate_Prod_name')]",
+            "location": "uksouth",
+            "tags": {
+                "Availability": "24h7",
+                "Cost Centre": "1040",
+                "Department": "Finance_HR",
+                "Environment": "PRD",
+                "Owner": "platformteam@harrow.gov.uk",
+                "Service": "Dynamics F&O"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "execute": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Employee_certificate": {
+                            "actions": {
+                                "Check_Employee_certificate_export_status": {
+                                    "actions": {
+                                        "Delay": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_employee_certificate_export_status": {
+                                            "runAfter": {
+                                                "Delay": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "body": "@{base64(concat('{\"executionId\":\"',body('Export_employee_certificate')['Value'],'\"}'))}",
+                                                    "method": "POST",
+                                                    "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/codeless/InvokeHttp"
+                                            }
+                                        },
+                                        "Set_variable": {
+                                            "runAfter": {
+                                                "Get_employee_certificate_export_status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "WorkerCertificateExportStatus",
+                                                "value": "@{body('Get_employee_certificate_export_status')['Value']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Export_employee_certificate": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('WorkerCertificateExportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Check_Worker_Certificate_Import_Status": {
+                                    "actions": {
+                                        "Delay_2": {
+                                            "runAfter": {},
+                                            "type": "Wait",
+                                            "inputs": {
+                                                "interval": {
+                                                    "count": 20,
+                                                    "unit": "Second"
+                                                }
+                                            }
+                                        },
+                                        "Get_Worker_Certificate_Import_Status": {
+                                            "runAfter": {
+                                                "Delay_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "executionId": "@body('Import_worker_certificate')?['value']"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExecutionSummaryStatus'))}"
+                                            }
+                                        },
+                                        "Set_variable_2": {
+                                            "runAfter": {
+                                                "Get_Worker_Certificate_Import_Status": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "EmployeeCertificateImportStatus",
+                                                "value": "@body('Get_Worker_Certificate_Import_Status')?['value']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Import_worker_certificate": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "expression": "@equals(variables('EmployeeCertificateImportStatus'), 'Succeeded')",
+                                    "limit": {
+                                        "count": 20,
+                                        "timeout": "PT1H"
+                                    },
+                                    "type": "Until"
+                                },
+                                "Export_employee_certificate": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{','\n','    \"definitionGroupId\":\"PwCWorkerCertificateExp\",','\n','    \"packageName\":\"workercertificate.zip\",','\n','    \"executionId\":\"',variables('empcertificateexecutionid'),'\",','\n','    \"reExecute\":false,','\n','    \"legalEntityId\":\"1000\"','\n','}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ExportToPackage"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Get_employee_certificate_package_url": {
+                                    "runAfter": {
+                                        "Check_Employee_certificate_export_status": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "@{base64(concat('{\"executionId\":\"',body('Export_employee_certificate')['Value'],'\"}'))}",
+                                            "method": "POST",
+                                            "url": "https://aos-rts-sf-31a27fe6cd3-prod-uksouth.hr.talent.dynamics.com/namespaces/cbcc9e8e-d635-49c3-9f58-309c7f579b78/data/DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.GetExportedPackageUrl"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['webcontents_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/codeless/InvokeHttp"
+                                    }
+                                },
+                                "Import_worker_certificate": {
+                                    "runAfter": {
+                                        "Get_employee_certificate_package_url": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "definitionGroupId": "PwCWorkerCertificateImport",
+                                            "execute": true,
+                                            "legalEntityId": "1000",
+                                            "overwrite": true,
+                                            "packageUrl": "@{body('Get_employee_certificate_package_url')['Value']}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['dynamicsax']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('lbh-fo-prod.operations.dynamics.com'))}/procedures/@{encodeURIComponent(encodeURIComponent('DataManagementDefinitionGroups/Microsoft.Dynamics.DataEntities.ImportFromPackage'))}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Employee_certificate_execution_id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Employee_certificate_execution_id": {
+                            "runAfter": {
+                                "Initialize_variable_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "empcertificateexecutionid",
+                                        "type": "string",
+                                        "value": "empcertificate@{formatdatetime(utcnow(),'yyyyMMddHHmm')}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "WorkerCertificateExportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_2": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmployeeCertificateImportStatus",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "dynamicsax": {
+                                "connectionId": "[parameters('connections_dynamicsax_externalid')]",
+                                "connectionName": "dynamicsax",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/dynamicsax"
+                            },
+                            "webcontents_1": {
+                                "connectionId": "[parameters('connections_webcontents_externalid')]",
+                                "connectionName": "webcontents",
+                                "id": "/subscriptions/e4a03bde-f323-4ae9-9b50-5e7eb9f981b9/providers/Microsoft.Web/locations/uksouth/managedApis/webcontents"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

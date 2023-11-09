@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33927.289
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "LBH_LA_ClearAFSFolder", "LBH_LA_ClearAFSFolder\LBH_LA_ClearAFSFolder.deployproj", "{0BF9D1EA-1CBB-40B5-A93F-F88C9E3E99A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BF9D1EA-1CBB-40B5-A93F-F88C9E3E99A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BF9D1EA-1CBB-40B5-A93F-F88C9E3E99A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BF9D1EA-1CBB-40B5-A93F-F88C9E3E99A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BF9D1EA-1CBB-40B5-A93F-F88C9E3E99A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2CFACB29-61FC-424A-AD4C-57DC953FD692}
+	EndGlobalSection
+EndGlobal

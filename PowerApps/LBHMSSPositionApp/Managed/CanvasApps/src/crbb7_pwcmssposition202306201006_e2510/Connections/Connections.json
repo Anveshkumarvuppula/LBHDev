@@ -1,0 +1,241 @@
+{
+  "1ef254d8-6b40-4794-aae3-479d54770018": {
+    "appActions": [
+      "Run"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Logic flows",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "9fc0c28e-e39e-4d67-b4c4-a0e186fe5405": {
+          "value": "shared_commondataservice_1"
+        },
+        "d8e52aff-d7c2-4d10-82c4-74fa4dfd36ee": {
+          "value": "shared_commondataserviceforapps_1"
+        },
+        "workflowEntityId": {
+          "value": "a2204eeb-295d-ee11-8def-0022481b529e"
+        },
+        "workflowName": {
+          "value": "9b80e9ca-c5ca-c96a-c2ad-895df9663427"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_commondataservice_1": {
+          "value": "9fc0c28e-e39e-4d67-b4c4-a0e186fe5405"
+        },
+        "shared_commondataserviceforapps_1": {
+          "value": "d8e52aff-d7c2-4d10-82c4-74fa4dfd36ee"
+        },
+        "workflowEntityId": {
+          "value": "a2204eeb-295d-ee11-8def-0022481b529e"
+        },
+        "workflowName": {
+          "value": "9b80e9ca-c5ca-c96a-c2ad-895df9663427"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "ExpirePrevPositionDetailsRecord"
+    ],
+    "dependencies": {
+      "shared_commondataservice_1": "9fc0c28e-e39e-4d67-b4c4-a0e186fe5405",
+      "shared_commondataserviceforapps_1": "d8e52aff-d7c2-4d10-82c4-74fa4dfd36ee"
+    },
+    "dependents": [],
+    "id": "1ef254d8-6b40-4794-aae3-479d54770018"
+  },
+  "1fa17e0f-cd1f-4373-a720-305b7c7763e8": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Mail",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/sendmail/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sendmail",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "334e1c13-4d62-476b-a7aa-768fd9993017"
+    ],
+    "id": "1fa17e0f-cd1f-4373-a720-305b7c7763e8"
+  },
+  "334e1c13-4d62-476b-a7aa-768fd9993017": {
+    "appActions": [
+      "Run"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Logic flows",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "1fa17e0f-cd1f-4373-a720-305b7c7763e8": {
+          "value": "shared_sendmail_1"
+        },
+        "77ac0d0f-2786-40b5-99e7-85c209d0cccf": {
+          "value": "shared_commondataserviceforapps_1"
+        },
+        "workflowEntityId": {
+          "value": "fa0e2ff0-0f5d-ee11-8def-0022481b529e"
+        },
+        "workflowName": {
+          "value": "2c6d9a27-f6e0-6f3c-85ac-00c5b71e48b4"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_commondataserviceforapps_1": {
+          "value": "77ac0d0f-2786-40b5-99e7-85c209d0cccf"
+        },
+        "shared_commondataserviceforapps_2": {
+          "value": "77ac0d0f-2786-40b5-99e7-85c209d0cccf"
+        },
+        "shared_sendmail_1": {
+          "value": "1fa17e0f-cd1f-4373-a720-305b7c7763e8"
+        },
+        "workflowEntityId": {
+          "value": "fa0e2ff0-0f5d-ee11-8def-0022481b529e"
+        },
+        "workflowName": {
+          "value": "2c6d9a27-f6e0-6f3c-85ac-00c5b71e48b4"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "LBHSendContractExtensionEmail"
+    ],
+    "dependencies": {
+      "shared_commondataserviceforapps_1": "77ac0d0f-2786-40b5-99e7-85c209d0cccf",
+      "shared_commondataserviceforapps_2": "77ac0d0f-2786-40b5-99e7-85c209d0cccf",
+      "shared_sendmail_1": "1fa17e0f-cd1f-4373-a720-305b7c7763e8"
+    },
+    "dependents": [],
+    "id": "334e1c13-4d62-476b-a7aa-768fd9993017"
+  },
+  "57e11f9f-7022-460c-a8a6-80c8bf67d83f": {
+    "appActions": [
+      "MyProfile"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "57e11f9f-7022-460c-a8a6-80c8bf67d83f"
+  },
+  "77ac0d0f-2786-40b5-99e7-85c209d0cccf": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Premium",
+      "bypassConsent": true,
+      "displayName": "Microsoft Dataverse",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/commondataserviceforapps/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "334e1c13-4d62-476b-a7aa-768fd9993017",
+      "a303ba32-6b07-4548-bfb3-c3605dae7e9a"
+    ],
+    "id": "77ac0d0f-2786-40b5-99e7-85c209d0cccf"
+  },
+  "9fc0c28e-e39e-4d67-b4c4-a0e186fe5405": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Premium",
+      "displayName": "Microsoft Dataverse (legacy)",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/henryorsborn/partial-builds/cds-ase-migrations/1.0.1649.3374/commondataservice/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_commondataservice",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "1ef254d8-6b40-4794-aae3-479d54770018"
+    ],
+    "id": "9fc0c28e-e39e-4d67-b4c4-a0e186fe5405"
+  },
+  "a303ba32-6b07-4548-bfb3-c3605dae7e9a": {
+    "appActions": [
+      "Run"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Logic flows",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "77ac0d0f-2786-40b5-99e7-85c209d0cccf": {
+          "value": "shared_commondataserviceforapps_1"
+        },
+        "workflowEntityId": {
+          "value": "38a9e561-235d-ee11-8def-0022481b5ee5"
+        },
+        "workflowName": {
+          "value": "3bd7745f-c7ab-1acb-fb86-d46c6721dc13"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_commondataserviceforapps_1": {
+          "value": "77ac0d0f-2786-40b5-99e7-85c209d0cccf"
+        },
+        "workflowEntityId": {
+          "value": "38a9e561-235d-ee11-8def-0022481b5ee5"
+        },
+        "workflowName": {
+          "value": "3bd7745f-c7ab-1acb-fb86-d46c6721dc13"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "LBHMSSFTECalculationParent"
+    ],
+    "dependencies": {
+      "shared_commondataserviceforapps_1": "77ac0d0f-2786-40b5-99e7-85c209d0cccf"
+    },
+    "dependents": [],
+    "id": "a303ba32-6b07-4548-bfb3-c3605dae7e9a"
+  },
+  "d8e52aff-d7c2-4d10-82c4-74fa4dfd36ee": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Premium",
+      "bypassConsent": true,
+      "displayName": "Microsoft Dataverse",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1664/1.0.1664.3477/commondataserviceforapps/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "1ef254d8-6b40-4794-aae3-479d54770018"
+    ],
+    "id": "d8e52aff-d7c2-4d10-82c4-74fa4dfd36ee"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_microsoftforms_2": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedmicrosoftforms_ef66f"
+        },
+        "api": {
+          "name": "shared_microsoftforms"
+        }
+      },
+      "shared_sendmail_2": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_Mail"
+        },
+        "api": {
+          "name": "shared_sendmail"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)": {
+          "defaultValue": "LBH DEV Buy Annual Leave Confirmation ",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar"
+          }
+        }
+      },
+      "triggers": {
+        "When_a_new_response_is_submitted": {
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "2d5cae7c-fa2c-43ab-a3ef-2653968816b5"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_microsoftforms_2",
+              "operationId": "CreateFormWebhook",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+            },
+            "parameters": {
+              "form_id": "@parameters('MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)')"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Get_response_details": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f5873059-2924-4b56-99bf-3cbfafd8b6d9"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_microsoftforms_2",
+              "operationId": "GetFormResponseById",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+            },
+            "parameters": {
+              "form_id": "@parameters('MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)')",
+              "response_id": "@triggerOutputs()?['body/resourceData/responseId']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Send_an_email_notification_(V3)": {
+          "runAfter": {
+            "Get_response_details": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d32b8b61-74f6-4fd7-bae2-0a26c59aff9c"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sendmail_2",
+              "operationId": "SendEmailV3",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+            },
+            "parameters": {
+              "request/to": "test.payroll@harrow.gov.uk;",
+              "request/subject": "Buy Leave Confirmation -@{outputs('Get_response_details')?['body/responder']} , @{outputs('Get_response_details')?['body/submitDate']}",
+              "request/text": "<p>The above employee has confirmed that their buy request be dealt with \"@{outputs('Get_response_details')?['body/rb000059b90604e09b233a10b6ebc6aad']}\"<br>\nPlease consider this in your setup in payroll for this request.<br>\n<br>\nMany thanks</p>"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{5760f69b-25db-4541-aba4-97fd04010b74}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="crde1_cr504_mystaff_fno_to_cds_syncid" select="1" icon="1" preview="1">
+        <row name="result" id="crde1_cr504_mystaff_fno_to_cds_syncsid">
+          <cell name="crde1_cr504_mystaff_fno_to_cds_syncid" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="crde1_cr504_mystaff_fno_to_cds_syncs">
+          <attribute name="crde1_cr504_mystaff_fno_to_cds_syncsid" />
+          <attribute name="crde1_cr504_mystaff_fno_to_cds_syncid" />
+          <attribute name="createdon" />
+          <order attribute="crde1_cr504_mystaff_fno_to_cds_syncid" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="crde1_cr504_mystaff_fno_to_cds_syncid" operator="like" value="{0}" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active cr504_mystaff_fno_to_cds_syncss" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

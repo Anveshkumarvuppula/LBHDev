@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_PwC_LA_ACC3_AP_BACSSendtoSFTP_Prod_name": {
+            "value": null
+        },
+        "connections_azurefile_externalid": {
+            "value": null
+        },
+        "connections_azurefile_1_externalid": {
+            "value": null
+        },
+        "connections_sftpwithssh_2_externalid": {
+            "value": null
+        }
+    }
+}
