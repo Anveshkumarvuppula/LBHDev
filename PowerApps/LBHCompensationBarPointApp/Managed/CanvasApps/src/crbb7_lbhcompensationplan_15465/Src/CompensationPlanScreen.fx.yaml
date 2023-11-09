@@ -8,10 +8,11 @@ CompensationPlanScreen As screen:
         Fill: =RGBA(0, 0, 0, 0)
         Height: =417
         Items: |-
-            =SortByColumns(Filter('Compensation structure (mserp)',
+            =If(IsBlank(First(varDataSetBuffer).'Compensation id'), Blank(),
+            SortByColumns(Filter('Compensation structure (mserp)',
                 Level = First(varDataSetBuffer).Level,
                 Grid = First(varDataSetBuffer).Plan
-            ),"mserp_amount", SortOrder.Ascending)
+            ),"mserp_amount", SortOrder.Ascending))
         Width: =1262
         X: =40
         Y: =125
