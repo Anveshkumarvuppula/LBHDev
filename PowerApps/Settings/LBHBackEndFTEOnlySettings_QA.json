@@ -7,12 +7,22 @@
   ],
   "ConnectionReferences": [
     {
-      "LogicalName": "crbb7_sharedcommondataserviceforapps_afe0e",
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_66d48",
       "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
-      "LogicalName": "crbb7_shareddynamicsax_5b162",
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_f0055",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_446fd",
+      "ConnectionId": "959cd598a69c45f6914d1787a80e9525",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_fcb03",
       "ConnectionId": "959cd598a69c45f6914d1787a80e9525",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
     }

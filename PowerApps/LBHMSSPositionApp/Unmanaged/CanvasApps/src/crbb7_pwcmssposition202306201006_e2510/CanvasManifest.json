@@ -11,7 +11,7 @@
   },
   "Properties": {
     "AppCreationSource": "AppFromScratch",
-    "AppDescription": "",
+    "AppDescription": "Empowers business users to manage and update position details, working hours, and contract extensions efficiently and accurately.",
     "AppPreviewFlagsMap": {
       "aibuilderserviceenrollment": false,
       "allowmultiplescreensincanvaspages": false,
@@ -51,7 +51,6 @@
       "enableruntimepolicies": true,
       "enablesaveloadcleardataonweb": true,
       "enableupdateifdelegation": false,
-      "enhancedgalleryinitialization": false,
       "errorhandling": true,
       "expandedsavedatasupport": true,
       "exportimportcomponents2": true,
@@ -115,7 +114,7 @@
     "ManualOfflineProfileId": "",
     "Name": "PwCMSSPosition_202306201006",
     "OriginatingVersion": "1.334",
-    "ParserErrorCount": 1,
+    "ParserErrorCount": 0,
     "ShowStatusBar": false
   },
   "PublishInfo": {

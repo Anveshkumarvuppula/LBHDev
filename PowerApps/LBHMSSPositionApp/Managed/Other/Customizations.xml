@@ -13,16 +13,9 @@
   <EntityDataProviders />
   <CanvasApps />
   <connectionreferences>
-    <connectionreference connectionreferencelogicalname="crbb7_sharedcommondataservice_ea32d">
-      <connectionreferencedisplayname>Microsoft Dataverse (legacy) LBHMSSPositionApp-ea32d</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataservice</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
-    <connectionreference connectionreferencelogicalname="crbb7_sharedcommondataservice_fb1ea">
-      <connectionreferencedisplayname>Microsoft Dataverse (legacy) LBHMSSPositionApp-fb1ea</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataservice</connectorid>
+    <connectionreference connectionreferencelogicalname="crbb7_FinOpsAppsDynamics365LBHPwCExpirePrevPositionDetailsRecord">
+      <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHPwCExpirePrevPositionDetailsRecord</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>
       <iscustomizable>1</iscustomizable>
       <statecode>0</statecode>
       <statuscode>1</statuscode>
@@ -41,8 +34,15 @@
       <statecode>0</statecode>
       <statuscode>1</statuscode>
     </connectionreference>
-    <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_5b162">
-      <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHBackEndFTEOnly-5b162</connectionreferencedisplayname>
+    <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_47741">
+      <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHMSSPositionApp-47741</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_5a44b">
+      <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHMSSPositionApp-5a44b</connectionreferencedisplayname>
       <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>
       <iscustomizable>1</iscustomizable>
       <statecode>0</statecode>

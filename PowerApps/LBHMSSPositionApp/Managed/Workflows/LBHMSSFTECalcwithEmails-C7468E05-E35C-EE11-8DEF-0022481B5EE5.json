@@ -2,33 +2,7 @@
   "properties": {
     "connectionReferences": {
       "shared_commondataserviceforapps": {
-        "runtimeSource": "embedded",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_7fe85"
-        },
-        "api": {
-          "name": "shared_commondataserviceforapps"
-        }
-      },
-      "shared_dynamicsax": {
-        "runtimeSource": "embedded",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_5b162"
-        },
-        "api": {
-          "name": "shared_dynamicsax"
-        }
-      },
-      "shared_dynamicsax_1": {
-        "runtimeSource": "embedded",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_5b162"
-        },
-        "api": {
-          "name": "shared_dynamicsax"
-        }
-      },
-      "shared_commondataserviceforapps_1": {
+        "impersonation": {},
         "runtimeSource": "embedded",
         "connection": {
           "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_7fe85"
@@ -44,6 +18,35 @@
         },
         "api": {
           "name": "shared_sendmail"
+        }
+      },
+      "shared_dynamicsax_3": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_47741"
+        },
+        "api": {
+          "name": "shared_dynamicsax"
+        }
+      },
+      "shared_commondataserviceforapps_3": {
+        "impersonation": {},
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_f0055"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_commondataserviceforapps_2": {
+        "impersonation": {},
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_CommonDataService"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
         }
       }
     },
@@ -95,137 +98,9 @@
         }
       },
       "actions": {
-        "Get_Job_Position": {
-          "runAfter": {},
-          "metadata": {
-            "operationMetadataId": "cd975437-9da4-4606-88fa-27ad0ddb6c4e"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_commondataserviceforapps",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-            },
-            "parameters": {
-              "entityName": "mserp_hcmjobpositiondualwriteentities",
-              "recordId": "@triggerBody()['text']"
-            },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
-          }
-        },
-        "Get_Job": {
-          "runAfter": {
-            "Get_Job_Position": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "d7229436-7434-409b-a458-14fcaba118b8"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_commondataserviceforapps",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-            },
-            "parameters": {
-              "entityName": "mserp_hcmjobentities",
-              "recordId": "@outputs('Get_Job_Position')?['body/mserp_jobid']"
-            },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
-          }
-        },
-        "Get_Job_Function": {
-          "runAfter": {
-            "Get_Job": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "6a6ba265-90c4-41d5-8376-c1052b285c09"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_commondataserviceforapps",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-            },
-            "parameters": {
-              "entityName": "mserp_hcmjobfunctionentities",
-              "recordId": "@outputs('Get_Job')?['body/_mserp_fk_jobfunction_id_value']"
-            },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
-          }
-        },
-        "Get_Occupation": {
-          "runAfter": {
-            "Get_Job_Function": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "9a22f576-5549-4dfc-a306-5457e0f22c66"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_dynamicsax",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
-            },
-            "parameters": {
-              "dataset": "lbh-fo-preprod.sandbox.operations.dynamics.com",
-              "table": "PHROccupationsCollection",
-              "id": "1000,,@{outputs('Get_Job_Function')?['body/mserp_hcmjobfunctionentityid']}2008-01-01T12:00:00Z"
-            },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
-          }
-        },
-        "Get_a_record": {
-          "runAfter": {
-            "Get_Occupation": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "fd504378-76c9-441f-8870-58e6438fa5fe"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_dynamicsax_1",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
-            },
-            "parameters": {
-              "dataset": "lbh-fo-preprod.sandbox.operations.dynamics.com",
-              "table": "PHRUnionAfflnsCollection",
-              "id": "@{outputs('Get_Occupation')?['body/dataAreaId']},@{outputs('Get_Occupation')?['body/UnionAfflnCode']},2005-01-01T12:00:00Z"
-            },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
-          }
-        },
         "Initialize_variable,_WorkerNumber": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -244,7 +119,7 @@
         },
         "Initialize_variable,_Annual_Leave_Days": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -294,14 +169,15 @@
             "variables": [
               {
                 "name": "Manager Name",
-                "type": "string"
+                "type": "string",
+                "value": "@triggerBody()['text_1']"
               }
             ]
           }
         },
         "Initialize_variable,_Bank_Holiday_Days": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -320,7 +196,7 @@
         },
         "Initialize_variable,_YearsLocalGovService": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -339,7 +215,7 @@
         },
         "Initialize_variable,_Year": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -397,7 +273,7 @@
         },
         "Initialize_variable,_YearsLBHService_NOW": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -433,9 +309,9 @@
             ]
           }
         },
-        "YearsLBHServiceApril": {
+        "Initialize_variable,_Daily_Hours": {
           "runAfter": {
-            "Get_a_record": [
+            "Apply_to_each_9": [
               "Succeeded"
             ]
           },
@@ -448,14 +324,14 @@
               {
                 "name": "DailyHrs",
                 "type": "float",
-                "value": "@outputs('Get_a_record')?['body/DailyHrs']"
+                "value": "@variables('DailyHours')"
               }
             ]
           }
         },
         "Initialize_variable,_March_Number": {
           "runAfter": {
-            "YearsLBHServiceApril": [
+            "Initialize_variable,_Daily_Hours": [
               "Succeeded"
             ]
           },
@@ -503,19 +379,17 @@
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
               "connectionName": "shared_commondataserviceforapps",
-              "operationId": "ListRecords",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+              "operationId": "ListRecords"
             },
             "parameters": {
               "entityName": "mserp_hcmpositiondetailentities",
-              "$filter": "mserp_positionid eq '@{outputs('Get_Job_Position')?['body/mserp_hcmjobpositiondualwriteentityid']}'",
+              "$filter": "mserp_positionid eq '@{triggerBody()['text']}'",
+              "$orderby": "mserp_validto desc",
               "$top": 1
             },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
+            "authentication": "@parameters('$authentication')"
           }
         },
         "Apply_to_each": {
@@ -529,23 +403,20 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                   "connectionName": "shared_commondataserviceforapps",
-                  "operationId": "GetItem",
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                  "operationId": "GetItem"
                 },
                 "parameters": {
                   "entityName": "mserp_hcmpositiondetailentities",
                   "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']"
                 },
-                "authentication": {
-                  "type": "Raw",
-                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                }
+                "authentication": "@parameters('$authentication')"
               }
             },
             "FormatEffectiveDateForEmail": {
               "runAfter": {
-                "GetPositionDetails": [
+                "Convert_time_zone": [
                   "Succeeded"
                 ]
               },
@@ -555,48 +426,8 @@
               "type": "Compose",
               "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mserp_validfrom'],'dd/MM/yyyy hh:mm tt')"
             },
-            "FormatEndDateTemporaryForEmail": {
-              "runAfter": {
-                "FormatEffectiveDateForEmail": [
-                  "Succeeded"
-                ]
-              },
-              "metadata": {
-                "operationMetadataId": "2c37969a-b59b-401f-a0ff-6163e723c048"
-              },
-              "type": "Compose",
-              "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mserp_pwctemporaryhoursenddate_custom'],'dd/MM/yyyy hh:mm tt')"
-            },
-            "PositionAssignments": {
-              "runAfter": {
-                "FormatEndDateTemporaryForEmail": [
-                  "Succeeded"
-                ]
-              },
-              "metadata": {
-                "operationMetadataId": "971d45d7-d1bf-443f-b4db-64269878cc20"
-              },
-              "type": "OpenApiConnection",
-              "inputs": {
-                "host": {
-                  "connectionName": "shared_commondataserviceforapps",
-                  "operationId": "ListRecords",
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-                },
-                "parameters": {
-                  "entityName": "mserp_hcmpositionworkerassignmentv2entities",
-                  "$select": "mserp_FK_position_id eq '@{outputs('Get_Job_Position')?['body/mserp_hcmjobpositiondualwriteentityid']}'",
-                  "$filter": "msserp_validto desc",
-                  "$top": 1
-                },
-                "authentication": {
-                  "type": "Raw",
-                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                }
-              }
-            },
             "Apply_to_each_2": {
-              "foreach": "@outputs('PositionAssignments')?['body/value']",
+              "foreach": "@outputs('PositionAssignment')?['body/value']",
               "actions": {
                 "GetWorker": {
                   "runAfter": {},
@@ -606,18 +437,15 @@
                   "type": "OpenApiConnection",
                   "inputs": {
                     "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                       "connectionName": "shared_commondataserviceforapps",
-                      "operationId": "GetItem",
-                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      "operationId": "GetItem"
                     },
                     "parameters": {
                       "entityName": "mserp_hcmworkerentities",
                       "recordId": "@items('Apply_to_each_2')?['_mserp_fk_worker_id_value']"
                     },
-                    "authentication": {
-                      "type": "Raw",
-                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                    }
+                    "authentication": "@parameters('$authentication')"
                   }
                 },
                 "WorkerNumber": {
@@ -660,19 +488,15 @@
                       "type": "OpenApiConnection",
                       "inputs": {
                         "host": {
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                           "connectionName": "shared_commondataserviceforapps",
-                          "operationId": "ListRecords",
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                          "operationId": "ListRecords"
                         },
                         "parameters": {
                           "entityName": "mserp_hcmemploymententities",
-                          "$select": "mserp_hcmemploymententityId",
                           "$filter": "mserp_FK_EmployedWorker_Id eq '@{outputs('GetWorker')?['body/mserp_hcmworkerentityid']}'"
                         },
-                        "authentication": {
-                          "type": "Raw",
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                        }
+                        "authentication": "@parameters('$authentication')"
                       }
                     },
                     "Apply_to_each_3": {
@@ -686,19 +510,16 @@
                           "type": "OpenApiConnection",
                           "inputs": {
                             "host": {
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                               "connectionName": "shared_commondataserviceforapps",
-                              "operationId": "GetItem",
-                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                              "operationId": "GetItem"
                             },
                             "parameters": {
                               "entityName": "mserp_hcmemploymententities",
                               "recordId": "@items('Apply_to_each_3')?['mserp_hcmemploymententityid']",
                               "$select": "mserp_employmentstartdate"
                             },
-                            "authentication": {
-                              "type": "Raw",
-                              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                            }
+                            "authentication": "@parameters('$authentication')"
                           }
                         },
                         "EmploymentStartTimeTickValue_2": {
@@ -711,7 +532,7 @@
                             "operationMetadataId": "dc99d99d-195a-4e7c-bea3-67a7a538bf5c"
                           },
                           "type": "Compose",
-                          "inputs": "@ticks(outputs('GetEmploymentStartDate_2')?['body/crbb7_employmentstartdate'])"
+                          "inputs": "@ticks(outputs('GetEmploymentStartDate_2')?['body/mserp_employmentstartdate'])"
                         },
                         "DateOfEffective_2": {
                           "runAfter": {
@@ -723,7 +544,7 @@
                             "operationMetadataId": "7d8ac6ef-a86d-4170-9636-627460ddf7ac"
                           },
                           "type": "Compose",
-                          "inputs": "@ticks(outputs('GetPositionDetails')?['body/crbb7_validfrom'])"
+                          "inputs": "@ticks(outputs('ListPositionDetails')?['body/mserp_validfrom'])"
                         },
                         "EmployeesHarrowServiceUpToEffectivedate_2": {
                           "runAfter": {
@@ -762,7 +583,7 @@
                             "operationMetadataId": "25ad69d9-85e1-4c34-9284-9ded66e1ab13"
                           },
                           "type": "Compose",
-                          "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mshr_validfrom'], 'MM')"
+                          "inputs": "@substring(body('Convert_time_zone'),3,2)"
                         },
                         "Set_variable_7,_Month_Number_2": {
                           "runAfter": {
@@ -789,7 +610,7 @@
                             "operationMetadataId": "b20497eb-ba3b-4b3f-ab83-69dbe7524567"
                           },
                           "type": "Compose",
-                          "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mshr_validfrom'], 'yyyy')"
+                          "inputs": "@formatDateTime(outputs('GetPositionDetails')?['body/mserp_validfrom'], 'yyyy')"
                         },
                         "Set_variable": {
                           "runAfter": {
@@ -816,7 +637,7 @@
                               "type": "SetVariable",
                               "inputs": {
                                 "name": "LastYear",
-                                "value": "@{subtractFromTime(outputs('GetPositionDetails')?['body/mshr_validfrom'], 1, 'Year', 'yyyy')}"
+                                "value": "@{subtractFromTime(outputs('GetPositionDetails')?['body/mserp_validfrom'], 1, 'Year', 'yyyy')}"
                               }
                             },
                             "Get1stAorilLastYear_2": {
@@ -953,19 +774,17 @@
                                       "type": "OpenApiConnection",
                                       "inputs": {
                                         "host": {
+                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                           "connectionName": "shared_commondataserviceforapps",
-                                          "operationId": "ListRecords",
-                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                          "operationId": "ListRecords"
                                         },
                                         "parameters": {
                                           "entityName": "crbb7_lbhannualleavedayses",
                                           "$filter": "crbb7_Years eq '@{variables('YearsLBHService NOW')}'",
+                                          "$orderby": "crbb7_annualleave desc",
                                           "$top": 1
                                         },
-                                        "authentication": {
-                                          "type": "Raw",
-                                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                                        }
+                                        "authentication": "@parameters('$authentication')"
                                       }
                                     },
                                     "Apply_to_each_5": {
@@ -984,7 +803,7 @@
                                         },
                                         "Set_BH_Days_2": {
                                           "runAfter": {
-                                            "Set_AL_Days_2": [
+                                            "Increment_variable": [
                                               "Succeeded"
                                             ]
                                           },
@@ -995,6 +814,21 @@
                                           "inputs": {
                                             "name": "BankHolidayDays",
                                             "value": "@items('Apply_to_each_5')?['crbb7_bankholidaydays']"
+                                          }
+                                        },
+                                        "Increment_variable": {
+                                          "runAfter": {
+                                            "Set_AL_Days_2": [
+                                              "Succeeded"
+                                            ]
+                                          },
+                                          "metadata": {
+                                            "operationMetadataId": "25569d49-b82c-4e84-99f3-d780a6019eeb"
+                                          },
+                                          "type": "IncrementVariable",
+                                          "inputs": {
+                                            "name": "AnnualLeaveDays",
+                                            "value": 1
                                           }
                                         }
                                       },
@@ -1020,18 +854,17 @@
                                         "type": "OpenApiConnection",
                                         "inputs": {
                                           "host": {
+                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                             "connectionName": "shared_commondataserviceforapps",
-                                            "operationId": "ListRecords",
-                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                            "operationId": "ListRecords"
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
-                                            "$filter": "crbb7_Years eq ;@{variables('YearsLBHService NOW')}'"
+                                            "$filter": "crbb7_Years eq ;@{variables('YearsLBHService NOW')}'",
+                                            "$orderby": "crbb7_annualleave desc",
+                                            "$top": 1
                                           },
-                                          "authentication": {
-                                            "type": "Raw",
-                                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                                          }
+                                          "authentication": "@parameters('$authentication')"
                                         }
                                       },
                                       "Apply_to_each_6": {
@@ -1050,7 +883,7 @@
                                           },
                                           "Set_BH_Days_no": {
                                             "runAfter": {
-                                              "Set_AL_Days_no": [
+                                              "Increment_variable_2": [
                                                 "Succeeded"
                                               ]
                                             },
@@ -1061,6 +894,21 @@
                                             "inputs": {
                                               "name": "BankHolidayDays",
                                               "value": "@items('Apply_to_each_6')?['crbb7_bankholidaydays']"
+                                            }
+                                          },
+                                          "Increment_variable_2": {
+                                            "runAfter": {
+                                              "Set_AL_Days_no": [
+                                                "Succeeded"
+                                              ]
+                                            },
+                                            "metadata": {
+                                              "operationMetadataId": "00b76d12-8f36-4d64-8a8b-239b733a6107"
+                                            },
+                                            "type": "IncrementVariable",
+                                            "inputs": {
+                                              "name": "AnnualLeaveDays",
+                                              "value": 1
                                             }
                                           }
                                         },
@@ -1101,18 +949,16 @@
                                         "type": "OpenApiConnection",
                                         "inputs": {
                                           "host": {
+                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                             "connectionName": "shared_commondataserviceforapps",
-                                            "operationId": "ListRecords",
-                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                            "operationId": "ListRecords"
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
-                                            "$filter": "crbb7_Years eq '@{variables('YearsLBHService NOW')}'"
+                                            "$filter": "crbb7_Years eq '@{variables('YearsLBHService NOW')}'",
+                                            "$top": 1
                                           },
-                                          "authentication": {
-                                            "type": "Raw",
-                                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                                          }
+                                          "authentication": "@parameters('$authentication')"
                                         }
                                       },
                                       "Apply_to_each_7": {
@@ -1131,7 +977,7 @@
                                           },
                                           "Set_BH_Days_3_no_no": {
                                             "runAfter": {
-                                              "Set_AL_Days_3_no_no": [
+                                              "Increment_variable_3": [
                                                 "Succeeded"
                                               ]
                                             },
@@ -1142,6 +988,21 @@
                                             "inputs": {
                                               "name": "BankHolidayDays",
                                               "value": "@items('Apply_to_each_7')?['crbb7_bankholidaydays']"
+                                            }
+                                          },
+                                          "Increment_variable_3": {
+                                            "runAfter": {
+                                              "Set_AL_Days_3_no_no": [
+                                                "Succeeded"
+                                              ]
+                                            },
+                                            "metadata": {
+                                              "operationMetadataId": "79b80775-dcf9-4f64-9e7c-0bc7987c0c1d"
+                                            },
+                                            "type": "IncrementVariable",
+                                            "inputs": {
+                                              "name": "AnnualLeaveDays",
+                                              "value": 1
                                             }
                                           }
                                         },
@@ -1165,7 +1026,7 @@
                                             "operationMetadataId": "3d1332b2-53f6-4dbe-a77a-d791ecb5e959"
                                           },
                                           "type": "Compose",
-                                          "inputs": "@ticks(outputs('GetWorker')?['body/cdm_originalhiredatetime'])"
+                                          "inputs": "@ticks(outputs('GetWorker')?['body/crbb7_originalhiredate'])"
                                         },
                                         "UTCNow_2": {
                                           "runAfter": {
@@ -1215,18 +1076,16 @@
                                           "type": "OpenApiConnection",
                                           "inputs": {
                                             "host": {
+                                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                               "connectionName": "shared_commondataserviceforapps",
-                                              "operationId": "ListRecords",
-                                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                              "operationId": "ListRecords"
                                             },
                                             "parameters": {
                                               "entityName": "crbb7_localgovernmentleavedayses",
-                                              "$filter": "crbb7_Years eq '@{outputs('Total_Service_2')}'"
+                                              "$filter": "crbb7_Years eq '@{outputs('Total_Service_2')}'",
+                                              "$top": 1
                                             },
-                                            "authentication": {
-                                              "type": "Raw",
-                                              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                                            }
+                                            "authentication": "@parameters('$authentication')"
                                           }
                                         },
                                         "Apply_to_each_8": {
@@ -1245,7 +1104,7 @@
                                             },
                                             "Set_variable_4": {
                                               "runAfter": {
-                                                "Set_variable_3": [
+                                                "Increment_variable_4": [
                                                   "Succeeded"
                                                 ]
                                               },
@@ -1256,6 +1115,21 @@
                                               "inputs": {
                                                 "name": "BankHolidayDays",
                                                 "value": "@items('Apply_to_each_8')?['crbb7_bankholidaydays']"
+                                              }
+                                            },
+                                            "Increment_variable_4": {
+                                              "runAfter": {
+                                                "Set_variable_3": [
+                                                  "Succeeded"
+                                                ]
+                                              },
+                                              "metadata": {
+                                                "operationMetadataId": "0f8a92d8-c5bc-4963-b4af-98d6990321d7"
+                                              },
+                                              "type": "IncrementVariable",
+                                              "inputs": {
+                                                "name": "AnnualLeaveDays",
+                                                "value": 1
                                               }
                                             }
                                           },
@@ -1401,7 +1275,7 @@
                       "type": "Compose",
                       "inputs": "@div(outputs('ActualWorkedHoursPerYear'), outputs('CalculatePossibleHoursPerYear'))"
                     },
-                    "Format_number": {
+                    "Format_number_EF_2": {
                       "runAfter": {
                         "FTECalculation": [
                           "Succeeded"
@@ -1419,7 +1293,7 @@
                     },
                     "Format_number_for_FTE_2": {
                       "runAfter": {
-                        "Format_number": [
+                        "Format_number_EF_2": [
                           "Succeeded"
                         ]
                       },
@@ -1430,40 +1304,12 @@
                       "kind": "FormatNumber",
                       "inputs": {
                         "number": "@outputs('FTECalculation')",
-                        "format": "0#.####"
-                      }
-                    },
-                    "Update_a_row": {
-                      "runAfter": {
-                        "Format_number_for_FTE_2": [
-                          "Succeeded"
-                        ]
-                      },
-                      "metadata": {
-                        "operationMetadataId": "81d91964-8b4a-401d-85b1-69d78bd98023"
-                      },
-                      "type": "OpenApiConnection",
-                      "inputs": {
-                        "host": {
-                          "connectionName": "shared_commondataserviceforapps_1",
-                          "operationId": "UpdateRecord",
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-                        },
-                        "parameters": {
-                          "entityName": "mserp_hcmpositiondetailentities",
-                          "recordId": "@outputs('GetPositionDetails')?['body/mserp_hcmpositiondetailentityid']",
-                          "item/mserp_pwcemploymentfactor_custom": "@outputs('Format_number')?['body']",
-                          "item/mserp_fulltimeequivalent": "@outputs('Format_number_for_FTE_2')?['body']"
-                        },
-                        "authentication": {
-                          "type": "Raw",
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                        }
+                        "format": "#.##"
                       }
                     },
                     "Send_an_email_notification_(V3)": {
                       "runAfter": {
-                        "Update_a_row": [
+                        "Update_a_record_2": [
                           "Succeeded"
                         ]
                       },
@@ -1473,18 +1319,49 @@
                       "type": "OpenApiConnection",
                       "inputs": {
                         "host": {
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail",
                           "connectionName": "shared_sendmail",
-                          "operationId": "SendEmailV3",
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+                          "operationId": "SendEmailV3"
                         },
                         "parameters": {
-                          "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;",
-                          "request/subject": "@{variables('WorkerNumber')}@{variables('WorkerName')}@{outputs('Update_a_row')?['body/mserp_positionid']} Change of hours",
-                          "request/text": "<p>This worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: @{outputs('Update_a_row')?['body/crbb7_positionhoursperweek']}<br>\nEnd date (if applicable): @{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;</p>"
+                          "request/to": "yaminia@hcl.com;anveshkumar.v@hcl.com;\n",
+                          "request/subject": "@{variables('WorkerNumber')}@{variables('WorkerName')} Change of hours",
+                          "request/text": "<p>This worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: <br>\nEnd date (if applicable): <br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;</p>"
                         },
                         "authentication": {
-                          "type": "Raw",
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+                          "type": "Raw"
+                        }
+                      }
+                    },
+                    "Update_a_record_2": {
+                      "runAfter": {
+                        "Format_number_for_FTE_2": [
+                          "Succeeded"
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "5f529ddc-18f1-48e9-88e7-1fcd85838330"
+                      },
+                      "type": "OpenApiConnection",
+                      "inputs": {
+                        "host": {
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
+                          "connectionName": "shared_dynamicsax_3",
+                          "operationId": "PatchItem"
+                        },
+                        "parameters": {
+                          "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                          "table": "PositionDetails",
+                          "id": "@{outputs('GetPositionDetails')?['body/mserp_positionid']},@{outputs('GetPositionDetails')?['body/mserp_validfrom']},@{outputs('GetPositionDetails')?['body/mserp_validto']}",
+                          "item/PositionId": "@outputs('GetPositionDetails')?['body/mserp_positionid']",
+                          "item/JobId": "@outputs('GetPositionDetails')?['body/mserp_jobid']",
+                          "item/FullTimeEquivalent": "@body('Format_number_for_FTE_2')",
+                          "item/PwCEmploymentFactor_Custom": "@body('Format_number_EF_2')"
+                        },
+                        "authentication": {
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+                          "type": "Raw"
                         }
                       }
                     }
@@ -1514,7 +1391,7 @@
                           "operationMetadataId": "b3c0a445-6fc7-47e7-9826-9cc1936525b4"
                         },
                         "type": "Compose",
-                        "inputs": "@div(outputs('GetPositionDetails')?['body/mshr_pwcpositionhoursperweek_custom'], outputs('FullTimeHoursPerWeekNonTerm'))"
+                        "inputs": "@div(outputs('GetPositionDetails')?['body/mserp_pwcpositionhoursperweek_custom'],outputs('FullTimeHoursPerWeekNonTerm'))"
                       },
                       "Format_number_for_EF": {
                         "runAfter": {
@@ -1548,37 +1425,9 @@
                           "format": "#.##"
                         }
                       },
-                      "Update_a_row_2": {
-                        "runAfter": {
-                          "Format_number_for_FTE": [
-                            "Succeeded"
-                          ]
-                        },
-                        "metadata": {
-                          "operationMetadataId": "f0d2fafb-13ec-4b09-98ac-1907552172a3"
-                        },
-                        "type": "OpenApiConnection",
-                        "inputs": {
-                          "host": {
-                            "connectionName": "shared_commondataserviceforapps",
-                            "operationId": "UpdateRecord",
-                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-                          },
-                          "parameters": {
-                            "entityName": "mserp_hcmpositiondetailentities",
-                            "recordId": "@outputs('GetPositionDetails')?['body/mserp_hcmpositiondetailentityid']",
-                            "item/mserp_pwcemploymentfactor_custom": "@outputs('Format_number_for_EF')?['body']",
-                            "item/mserp_fulltimeequivalent": "@outputs('Format_number_for_FTE')?['body']"
-                          },
-                          "authentication": {
-                            "type": "Raw",
-                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                          }
-                        }
-                      },
                       "Send_an_email_notification_(V3)_2": {
                         "runAfter": {
-                          "Update_a_row_2": [
+                          "Update_a_record": [
                             "Succeeded"
                           ]
                         },
@@ -1588,18 +1437,49 @@
                         "type": "OpenApiConnection",
                         "inputs": {
                           "host": {
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail",
                             "connectionName": "shared_sendmail",
-                            "operationId": "SendEmailV3",
-                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+                            "operationId": "SendEmailV3"
                           },
                           "parameters": {
-                            "request/to": "yaminia@hcl.com;anveshkumar.v@hcl.com;",
-                            "request/subject": "@{variables('MonthNumber')}@{variables('WorkerName')}@{outputs('Update_a_row_2')?['body/mserp_positionid']} Change of hours ",
-                            "request/text": "<p>This worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: @{outputs('Update_a_row_2')?['body/crbb7_positionhoursperweek']}<br>\nEnd date (if applicable): @{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: No<br>\nFTE:&nbsp; @{outputs('Update_a_row_2')?['body/crbb7_employmentfactor']}</p>"
+                            "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;\n",
+                            "request/subject": "@{variables('MonthNumber')}@{variables('WorkerName')} Change of hours ",
+                            "request/text": "<p>This worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: <br>\nEnd date (if applicable): <br>\nTerm time: No<br>\nFTE:&nbsp; </p>"
                           },
                           "authentication": {
-                            "type": "Raw",
-                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+                            "type": "Raw"
+                          }
+                        }
+                      },
+                      "Update_a_record": {
+                        "runAfter": {
+                          "Format_number_for_FTE": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "edc8cfc7-2689-439f-b7ee-4f1095dc41b7"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "host": {
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
+                            "connectionName": "shared_dynamicsax_3",
+                            "operationId": "PatchItem"
+                          },
+                          "parameters": {
+                            "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                            "table": "PositionDetails",
+                            "id": "@{outputs('GetPositionDetails')?['body/mserp_positionid']},@{outputs('GetPositionDetails')?['body/mserp_validfrom']},@{outputs('GetPositionDetails')?['body/mserp_validto']}",
+                            "item/PositionId": "@outputs('GetPositionDetails')?['body/mserp_positionid']",
+                            "item/JobId": "@outputs('GetPositionDetails')?['body/mserp_jobid']",
+                            "item/FullTimeEquivalent": "@body('Format_number_for_FTE')",
+                            "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
+                          },
+                          "authentication": {
+                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+                            "type": "Raw"
                           }
                         }
                       }
@@ -1618,7 +1498,7 @@
                 }
               },
               "runAfter": {
-                "PositionAssignments": [
+                "PositionAssignment": [
                   "Succeeded"
                 ]
               },
@@ -1626,6 +1506,47 @@
                 "operationMetadataId": "9dbf9bc7-59ee-40a1-ab43-e517925a4b10"
               },
               "type": "Foreach"
+            },
+            "PositionAssignment": {
+              "runAfter": {
+                "FormatEffectiveDateForEmail": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "e32fe2b0-aed4-475f-b743-ec7cf224f2e7"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "connectionName": "shared_commondataserviceforapps_3",
+                  "operationId": "ListRecords"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositionworkerassignmentv2entities",
+                  "$filter": "mserp_positionid eq '50000329'"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Convert_time_zone": {
+              "runAfter": {
+                "GetPositionDetails": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "247ac580-bc0a-46c4-b6e7-d4bec6da8c31"
+              },
+              "type": "Expression",
+              "kind": "ConvertTimeZone",
+              "inputs": {
+                "baseTime": "@outputs('GetPositionDetails')?['body/mserp_validfrom']",
+                "formatString": "dd/MM/yyyy",
+                "sourceTimeZone": "GMT Standard Time",
+                "destinationTimeZone": "UTC"
+              }
             }
           },
           "runAfter": {
@@ -1665,10 +1586,209 @@
               }
             }
           }
+        },
+        "List_rows_5": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "34091500-d45f-4a7c-9fcc-64737fa9d515"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "connectionName": "shared_commondataserviceforapps_2",
+              "operationId": "ListRecords"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmpositionv2entities",
+              "$filter": "mserp_positionid eq '@{triggerBody()['text']}'",
+              "$top": 1
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Apply_to_each_9": {
+          "foreach": "@outputs('List_rows_5')?['body/value']",
+          "actions": {
+            "Get_Job_Position": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "cd975437-9da4-4606-88fa-27ad0ddb6c4e"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "GetItem"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositionv2entities",
+                  "recordId": "@items('Apply_to_each_9')?['mserp_hcmpositionv2entityid']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Get_Job": {
+              "runAfter": {
+                "Get_Job_Position": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8741316e-52e7-43d3-a924-420d8ee8732a"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "connectionName": "shared_commondataserviceforapps_2",
+                  "operationId": "GetItem"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmjobentities",
+                  "recordId": "@outputs('Get_Job_Position')?['body/_mserp_fk_job_id_value']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Get_Job_Function": {
+              "runAfter": {
+                "Get_Job": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ef079efa-0dcc-4d07-8388-406b5a536ec9"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "connectionName": "shared_commondataserviceforapps_2",
+                  "operationId": "GetItem"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmjobfunctionentities",
+                  "recordId": "@outputs('Get_Job')?['body/_mserp_fk_jobfunction_id_value']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Get_a_record": {
+              "runAfter": {
+                "Get_Job_Function": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "825aea56-e244-44db-afbb-671c15ec70c4"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
+                  "connectionName": "shared_dynamicsax_3",
+                  "operationId": "GetItem"
+                },
+                "parameters": {
+                  "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                  "table": "PHROccupationsCollection",
+                  "id": "1000,@{outputs('Get_Job_Function')?['body/mserp_jobfunctionid']},2008-01-01T12:00:00Z"
+                },
+                "authentication": {
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+                  "type": "Raw"
+                }
+              }
+            },
+            "Get_a_record_": {
+              "runAfter": {
+                "Get_a_record": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "2129c922-e3b3-4c9a-98d2-d3706fcc0c67"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
+                  "connectionName": "shared_dynamicsax_3",
+                  "operationId": "GetItem"
+                },
+                "parameters": {
+                  "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                  "table": "PHRUnionAfflnsCollection",
+                  "id": "@{outputs('Get_a_record')?['body/dataAreaId']},@{outputs('Get_a_record')?['body/UnionAfflnCode']},2005-01-01T12:00:00Z"
+                },
+                "authentication": {
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+                  "type": "Raw"
+                }
+              }
+            },
+            "Set_variable_5": {
+              "runAfter": {
+                "Get_a_record_": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "7d55524c-e9e5-4f7a-a39d-9f4b7321ecb5"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "DailyHours",
+                "value": "@outputs('Get_a_record_')?['body/DailyHrs']"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_variable_-_Float": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "051ab204-fb77-4464-ba2d-e51af7ea5727"
+          },
+          "type": "Foreach"
+        },
+        "Compose": {
+          "runAfter": {
+            "List_rows_5": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a803155c-4d68-453a-8168-5f1f78b188ac"
+          },
+          "type": "Compose",
+          "inputs": "@outputs('List_rows_5')?['body/value']"
+        },
+        "Initialize_variable_-_Float": {
+          "runAfter": {
+            "Compose": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "12df0f5a-220f-4563-b105-2718724b411d"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "DailyHours",
+                "type": "float"
+              }
+            ]
+          }
         }
       }
     },
-    "templateName": ""
+    "templateName": null
   },
   "schemaVersion": "1.0.0.0"
 }

@@ -1,19 +1,19 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_commondataservice_1": {
-        "runtimeSource": "invoker",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_sharedcommondataservice_ea32d"
-        },
-        "api": {
-          "name": "shared_commondataservice"
-        }
-      },
       "shared_commondataserviceforapps_1": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_7fe85"
+          "connectionReferenceLogicalName": "crbb7_RVMSDataVerseLoqateBankValidation"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_CommonDataService"
         },
         "api": {
           "name": "shared_commondataserviceforapps"
@@ -156,7 +156,7 @@
           "type": "SetVariable",
           "inputs": {
             "name": "Time",
-            "value": "@{outputs('Compose')}"
+            "value": "@{triggerBody()['Compose_Inputs']}"
           }
         },
         "Convert_time_zone": {
@@ -177,42 +177,13 @@
             "destinationTimeZone": "UTC"
           }
         },
-        "List_rows_(legacy)": {
-          "runAfter": {
-            "Convert_time_zone": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "7d65517f-9dd4-47a5-bba6-4f802458d9bb"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_commondataservice_1",
-              "operationId": "GetItems_V2",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataservice"
-            },
-            "parameters": {
-              "dataset": "default.cds",
-              "table": "mserp_hcmpositiondetailentities",
-              "$filter": "mserp_positionid",
-              "$orderby": "mserp_validto",
-              "$top": 1
-            },
-            "authentication": {
-              "type": "Raw",
-              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-            }
-          }
-        },
         "Apply_to_each": {
-          "foreach": "@outputs('List_rows_(legacy)')?['body/value']",
+          "foreach": "@outputs('List_rows')?['body/value']",
           "actions": {
             "Update_a_row": {
               "runAfter": {},
               "metadata": {
-                "operationMetadataId": "c8ffff24-bc5d-4d14-b315-5f246a50af40"
+                "operationMetadataId": "49abd8df-03da-4d4b-ada3-7658f5b7094b"
               },
               "type": "OpenApiConnection",
               "inputs": {
@@ -234,7 +205,7 @@
             }
           },
           "runAfter": {
-            "List_rows_(legacy)": [
+            "List_rows": [
               "Succeeded"
             ]
           },
@@ -261,7 +232,9 @@
         "Set_variable_4": {
           "runAfter": {
             "Apply_to_each": [
-              "Succeeded"
+              "Failed",
+              "Skipped",
+              "TimedOut"
             ]
           },
           "metadata": {
@@ -298,6 +271,34 @@
                   "type": "string"
                 }
               }
+            }
+          }
+        },
+        "List_rows": {
+          "runAfter": {
+            "Convert_time_zone": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2a0f6658-f777-4c41-91e5-172b5deacaad"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmpositiondetailentities",
+              "$filter": "mserp_positionid eq '@{variables('PositionNumber')}'",
+              "$orderby": "mserp_validto desc",
+              "$top": 1
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
             }
           }
         }
