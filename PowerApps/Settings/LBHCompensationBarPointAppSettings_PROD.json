@@ -3,7 +3,7 @@
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_CommonDataService",
-      "ConnectionId": "cc2b1830738544ffa507d91dc9350406",
+      "ConnectionId": "ab760981af5b4f86a87c935395a0d19e",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     }
   ]

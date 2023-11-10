@@ -2,36 +2,36 @@
   "EnvironmentVariables": [
     {
       "SchemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar",
-      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUNlJXRDJINzRLOEpSMkFHRDk5SEIyS1IyRC4u"
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPiloywIGY9MvtgXuNP7-yZUNEU4MFVaQjhHSE1JMDc2VjRZMTVaTVA5OS4u"
     },
     {
       "SchemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar",
-      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUQUpFTE5ZQU01Q1o3NlZDQjhWM1IzTkQ0RC4u"
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPiloywIGY9MvtgXuNP7-yZUMVNRRkE0NVlPRTNKWjBEVkVYVjNFRUdaVS4u"
     },
     {
       "SchemaName": "crbb7_MSFormsSellLeaveRequestConfVar",
-      "Value": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUQk42TDdROVQ4WUc2TllFRzRUT09BUzRGMy4u"
+      "Value": "U5nD0tuoPEyX8tLcdvs-LPiloywIGY9MvtgXuNP7-yZUNFc3QVZERktVMk5ET0w4OVA2WklJMlpLUS4u"
     }
   ],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_Mail",
-      "ConnectionId": "2175780a62f240cd9b0b280a79e6d5fa",
+      "ConnectionId": "cbddaa4a9a274f12a2162329a115d4ea",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_c69c9",
-      "ConnectionId": "17df25f375954630ae00acf479da83f9",
+      "ConnectionId": "14abb8077536489093583d9d6520383f",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_edfa2",
-      "ConnectionId": "17df25f375954630ae00acf479da83f9",
+      "ConnectionId": "14abb8077536489093583d9d6520383f",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_ef66f",
-      "ConnectionId": "17df25f375954630ae00acf479da83f9",
+      "ConnectionId": "14abb8077536489093583d9d6520383f",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     }
   ]

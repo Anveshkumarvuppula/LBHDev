@@ -7,6 +7,11 @@
   ],
   "ConnectionReferences": [
     {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_66d48",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_f0055",
       "ConnectionId": "",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
