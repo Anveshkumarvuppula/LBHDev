@@ -6,7 +6,7 @@
       <LocalizedName description="LBH Clear Off Position Details" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.163</Version>
+    <Version>10.0.165</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>DefaultPublisheroperationslbhfodev11</UniqueName>
@@ -385,10 +385,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="60" displayName="Information" parentDisplayName="Job Positions Dual Write (mserp)" id="{406c01d5-3b94-a79a-b085-e49c39660fc7}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_RVMSDataVerseLoqateBankValidation" solution="Active" id.connectionreferencelogicalname="crbb7_RVMSDataVerseLoqateBankValidation" />
-        <Dependent type="29" displayName="LBHClearOffPositionDetails" id="{5ba311a7-5559-ee11-be6f-0022481b529e}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
