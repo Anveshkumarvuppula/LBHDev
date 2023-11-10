@@ -6,7 +6,7 @@
       <LocalizedName description="LBH BackEndFTEOnly" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.162</Version>
+    <Version>10.0.163</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -569,10 +569,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="60" displayName="Information" parentDisplayName="Job Positions Dual Write (mserp)" id="{406c01d5-3b94-a79a-b085-e49c39660fc7}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_66d48" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_66d48" />
-        <Dependent type="29" displayName="PwCLBHFTEBackendCalculationV2" id="{dba37a65-147b-ee11-8179-0022481b5dbb}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
