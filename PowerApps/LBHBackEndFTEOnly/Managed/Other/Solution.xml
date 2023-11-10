@@ -6,7 +6,7 @@
       <LocalizedName description="LBH BackEndFTEOnly" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.160</Version>
+    <Version>10.0.162</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -572,10 +572,6 @@
       </MissingDependency>
       <MissingDependency>
         <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_66d48" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_66d48" />
-        <Dependent type="29" displayName="PwCLBHFTEBackendCalculationV2" id="{dba37a65-147b-ee11-8179-0022481b5dbb}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_shareddynamicsax_fcb03" solution="Active" id.connectionreferencelogicalname="crbb7_shareddynamicsax_fcb03" />
         <Dependent type="29" displayName="PwCLBHFTEBackendCalculationV2" id="{dba37a65-147b-ee11-8179-0022481b5dbb}" />
       </MissingDependency>
     </MissingDependencies>
