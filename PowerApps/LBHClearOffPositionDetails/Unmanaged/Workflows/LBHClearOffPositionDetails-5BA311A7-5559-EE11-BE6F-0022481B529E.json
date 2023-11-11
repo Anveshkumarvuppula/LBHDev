@@ -9,15 +9,6 @@
         "api": {
           "name": "shared_commondataserviceforapps"
         }
-      },
-      "shared_commondataserviceforapps_1": {
-        "runtimeSource": "embedded",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_RVMSDataVerseLoqateBankValidation"
-        },
-        "api": {
-          "name": "shared_commondataserviceforapps"
-        }
       }
     },
     "definition": {
@@ -107,7 +98,7 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "connectionName": "shared_commondataserviceforapps_1",
+                  "connectionName": "shared_commondataserviceforapps",
                   "operationId": "UpdateRecord",
                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },
@@ -133,7 +124,7 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "connectionName": "shared_commondataserviceforapps_1",
+                  "connectionName": "shared_commondataserviceforapps",
                   "operationId": "CreateRecord",
                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },

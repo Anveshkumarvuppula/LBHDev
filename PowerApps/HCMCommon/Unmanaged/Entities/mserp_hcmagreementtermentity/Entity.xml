@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Entity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name LocalizedName="Terms of employment (mserp)" OriginalName="Terms of employment (mserp)">mserp_hcmagreementtermentity</Name>
+  <EntityInfo>
+    <entity Name="mserp_hcmagreementtermentity" unmodified="1">
+      <attributes />
+    </entity>
+  </EntityInfo>
+  <RibbonDiffXml />
+</Entity>

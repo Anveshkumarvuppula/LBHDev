@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{9809aa8c-f74b-65a3-98e8-827ada077b74}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="mserp_primaryfield" select="1" icon="1" preview="1">
+        <row name="result" id="mserp_hcmworkerbankaccountentityid">
+          <cell name="mserp_primaryfield" width="300" />
+          <cell name="mserp_fk_worker_id" width="100" />
+          <cell name="mserp_hcmworkerbankaccountentityid" width="212" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>1</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="mserp_hcmworkerbankaccountentity">
+          <attribute name="mserp_hcmworkerbankaccountentityid" />
+          <attribute name="mserp_primaryfield" />
+          <attribute name="mserp_fk_worker_id" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Worker bank accounts (mserp) Advanced Find View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{a46fc30b-7965-cc5b-a18f-6c51445ce03c}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="mserp_positionid" select="1" icon="1" preview="1">
+        <row name="result" id="mserp_hcmjobpositiondualwriteentityid">
+          <cell name="mserp_positionid" width="300" />
+          <cell name="crbb7_testjob" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="mserp_hcmjobpositiondualwriteentity">
+          <attribute name="mserp_hcmjobpositiondualwriteentityid" />
+          <attribute name="mserp_positionid" />
+          <attribute name="crbb7_testjob" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Job Positions Dual Write (mserp)" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
