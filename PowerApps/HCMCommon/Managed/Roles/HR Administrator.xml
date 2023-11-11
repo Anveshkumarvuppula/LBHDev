@@ -2,11 +2,7 @@
 <Role id="{1c487ffc-9880-ee11-8179-0022481b5dbb}" name="HR Administrator" isinherited="0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <IsCustomizable>1</IsCustomizable>
   <RolePrivileges>
-    <RolePrivilege name="prvAppendcdm_company" level="Deep" />
-    <RolePrivilege name="prvAppendcrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvAppendcrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvAppendcrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvAppendmsdyn_oclanguage" level="Deep" />
     <RolePrivilege name="prvAppendmserp_hcmcompensationregionentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmcompensationstructuredualwritev2entity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmcompensationstructureentity" level="Global" />
@@ -27,11 +23,7 @@
     <RolePrivilege name="prvAppendmserp_hcmworkerbankaccountentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_payrollbankaccountdisbursemententity" level="Global" />
-    <RolePrivilege name="prvAppendTocdm_company" level="Deep" />
-    <RolePrivilege name="prvAppendTocrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvAppendTocrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvAppendTocrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvAppendTomsdyn_oclanguage" level="Deep" />
     <RolePrivilege name="prvAppendTomserp_hcmcompensationregionentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmcompensationstructuredualwritev2entity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmcompensationstructureentity" level="Global" />
@@ -52,16 +44,8 @@
     <RolePrivilege name="prvAppendTomserp_hcmworkerbankaccountentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_payrollbankaccountdisbursemententity" level="Global" />
-    <RolePrivilege name="prvAssigncdm_company" level="Deep" />
-    <RolePrivilege name="prvAssigncrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvAssigncrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvAssigncrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvAssignmsdyn_oclanguage" level="Deep" />
-    <RolePrivilege name="prvCreatecdm_company" level="Deep" />
-    <RolePrivilege name="prvCreatecrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvCreatecrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvCreatecrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvCreatemsdyn_oclanguage" level="Deep" />
     <RolePrivilege name="prvCreatemserp_hcmcompensationregionentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmcompensationstructuredualwritev2entity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmcompensationstructureentity" level="Global" />
@@ -83,11 +67,7 @@
     <RolePrivilege name="prvCreatemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_payrollbankaccountdisbursemententity" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
-    <RolePrivilege name="prvDeletecdm_company" level="Deep" />
-    <RolePrivilege name="prvDeletecrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvDeletecrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvDeletecrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvDeletemsdyn_oclanguage" level="Deep" />
     <RolePrivilege name="prvDeletemserp_hcmcompensationregionentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmcompensationstructuredualwritev2entity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmcompensationstructureentity" level="Global" />
@@ -108,11 +88,7 @@
     <RolePrivilege name="prvDeletemserp_hcmworkerbankaccountentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_payrollbankaccountdisbursemententity" level="Global" />
-    <RolePrivilege name="prvReadcdm_company" level="Deep" />
-    <RolePrivilege name="prvReadcrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvReadcrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvReadcrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvReadmsdyn_oclanguage" level="Deep" />
     <RolePrivilege name="prvReadmserp_hcmcompensationregionentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmcompensationstructuredualwritev2entity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmcompensationstructureentity" level="Global" />
@@ -140,16 +116,8 @@
     <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
-    <RolePrivilege name="prvSharecdm_company" level="Deep" />
-    <RolePrivilege name="prvSharecrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvSharecrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvSharecrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvSharemsdyn_oclanguage" level="Deep" />
-    <RolePrivilege name="prvWritecdm_company" level="Deep" />
-    <RolePrivilege name="prvWritecrbb7_EthnicOrigin" level="Deep" />
     <RolePrivilege name="prvWritecrbb7_LBHAnnualLeaveDays" level="Deep" />
-    <RolePrivilege name="prvWritecrbb7_Title" level="Deep" />
-    <RolePrivilege name="prvWritemsdyn_oclanguage" level="Deep" />
     <RolePrivilege name="prvWritemserp_hcmcompensationregionentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmcompensationstructuredualwritev2entity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmcompensationstructureentity" level="Global" />

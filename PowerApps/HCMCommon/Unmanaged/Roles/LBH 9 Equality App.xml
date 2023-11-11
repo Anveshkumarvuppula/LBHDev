@@ -2,23 +2,11 @@
 <Role id="{e8860d25-a080-ee11-8179-0022481b5836}" name="LBH 9 Equality App" isinherited="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <IsCustomizable>1</IsCustomizable>
   <RolePrivileges>
-    <RolePrivilege name="prvAppendcrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvAppendcrbb7_WorkerPersonalDetail" level="Local" />
     <RolePrivilege name="prvAppendmserp_hcmworkerentity" level="Global" />
-    <RolePrivilege name="prvAppendTocrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvAppendTocrbb7_WorkerPersonalDetail" level="Local" />
     <RolePrivilege name="prvAppendTomserp_hcmworkerentity" level="Global" />
-    <RolePrivilege name="prvAssigncrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvAssigncrbb7_WorkerPersonalDetail" level="Local" />
-    <RolePrivilege name="prvCreatecrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvCreatecrbb7_WorkerPersonalDetail" level="Local" />
     <RolePrivilege name="prvCreatemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
-    <RolePrivilege name="prvDeletecrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvDeletecrbb7_WorkerPersonalDetail" level="Local" />
     <RolePrivilege name="prvDeletemserp_hcmworkerentity" level="Global" />
-    <RolePrivilege name="prvReadcrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvReadcrbb7_WorkerPersonalDetail" level="Local" />
     <RolePrivilege name="prvReadmserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvReadPluginAssembly" level="Global" />
     <RolePrivilege name="prvReadPluginType" level="Global" />
@@ -27,10 +15,6 @@
     <RolePrivilege name="prvReadSdkMessageProcessingStepImage" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
-    <RolePrivilege name="prvSharecrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvSharecrbb7_WorkerPersonalDetail" level="Local" />
-    <RolePrivilege name="prvWritecrbb7_EthnicOrigin" level="Deep" />
-    <RolePrivilege name="prvWritecrbb7_WorkerPersonalDetail" level="Local" />
     <RolePrivilege name="prvWritemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
   </RolePrivileges>

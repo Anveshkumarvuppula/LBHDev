@@ -6,7 +6,7 @@
       <LocalizedName description="HCM Common" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.168</Version>
+    <Version>10.0.169</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -78,9 +78,6 @@
       </Addresses>
     </Publisher>
     <RootComponents>
-      <RootComponent type="1" schemaName="cdm_company" behavior="0" />
-      <RootComponent type="1" schemaName="crbb7_employment" behavior="0" />
-      <RootComponent type="1" schemaName="crbb7_title" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmagreementtermentity" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmcompensationregionentity" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmcompensationstructuredualwritev2entity" behavior="0" />
@@ -102,18 +99,11 @@
       <RootComponent type="1" schemaName="mserp_hcmworkerbankaccountentity" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmworkerentity" behavior="0" />
       <RootComponent type="1" schemaName="mserp_payrollbankaccountdisbursemententity" behavior="0" />
-      <RootComponent type="1" schemaName="transactioncurrency" behavior="0" />
       <RootComponent type="20" id="{09fbffa8-a080-ee11-8179-0022481b5836}" behavior="0" />
       <RootComponent type="20" id="{1c487ffc-9880-ee11-8179-0022481b5dbb}" behavior="0" />
       <RootComponent type="20" id="{e8860d25-a080-ee11-8179-0022481b5836}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="1" schemaName="cdm_company" displayName="Company" />
-      </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
@@ -137,78 +127,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="10" schemaName="cdm_team_cdm_company_defaultowningteam" displayName="cdm_team_cdm_company_defaultowningteam" parentSchemaName="team" parentDisplayName="Team" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="createdby" displayName="Created By" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="createdonbehalfby" displayName="Created By (Delegate)" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="modifiedonbehalfby" displayName="Modified By (Delegate)" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="ownerid" displayName="Owner" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="owningbusinessunit" displayName="Owning Business Unit" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="owningteam" displayName="Owning Team" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="owninguser" displayName="Owning User" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="cdm_company" displayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="2" schemaName="versionnumber" displayName="Version Number" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="crbb7_jobposition" displayName="Job Position(T)" solution="Active" />
-        <Dependent type="1" schemaName="crbb7_title" displayName="Title" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="crbb7_reasoncode" displayName="Reason Code(T)" solution="Active" />
-        <Dependent type="10" schemaName="crbb7_crbb7_employment_TerminationReason_crbb7_" displayName="crbb7_crbb7_employment_TerminationReason_crbb7_" parentSchemaName="crbb7_reasoncode" parentDisplayName="Reason Code(T)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="crbb7_worker" displayName="Worker(T)" solution="Active" />
-        <Dependent type="10" schemaName="crbb7_crbb7_employment_Theminimumamountofnotice" displayName="crbb7_crbb7_employment_Theminimumamountofnotice" parentSchemaName="crbb7_worker" parentDisplayName="Worker(T)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmagreementtermentity" displayName="Terms of employment (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -631,12 +549,6 @@
         <Dependent type="10" schemaName="mserp_FK_PayrollBankAccountDisbursementEntity_Worker" displayName="mserp_FK_PayrollBankAccountDisbursementEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="10" schemaName="cdm_team_cdm_company_defaultowningteam" displayName="cdm_team_cdm_company_defaultowningteam" parentSchemaName="team" parentDisplayName="Team" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="10" schemaName="cdm_team_cdm_company_defaultowningteam" displayName="cdm_team_cdm_company_defaultowningteam" parentSchemaName="team" parentDisplayName="Team" />
-      </MissingDependency>
-      <MissingDependency>
         <Required type="10" schemaName="mserp_FK_HcmEmployeeV2Entity_Worker" displayName="mserp_FK_HcmEmployeeV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
@@ -827,28 +739,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="2" schemaName="cdm_defaultowningteam" displayName="Default owning team" parentSchemaName="cdm_company" parentDisplayName="Company" solution="Dynamics365Company (2.2.2.132)">
-          <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
-        </Required>
-        <Dependent type="10" schemaName="cdm_team_cdm_company_defaultowningteam" displayName="cdm_team_cdm_company_defaultowningteam" parentSchemaName="team" parentDisplayName="Team" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="2" schemaName="crbb7_name" displayName="Name" parentSchemaName="crbb7_reasoncode" parentDisplayName="Reason Code(T)" solution="Active" />
-        <Dependent type="10" schemaName="crbb7_crbb7_employment_TerminationReason_crbb7_" displayName="crbb7_crbb7_employment_TerminationReason_crbb7_" parentSchemaName="crbb7_reasoncode" parentDisplayName="Reason Code(T)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="2" schemaName="crbb7_name" displayName="Worker Number" parentSchemaName="crbb7_worker" parentDisplayName="Worker(T)" solution="Active" />
-        <Dependent type="10" schemaName="crbb7_crbb7_employment_Theminimumamountofnotice" displayName="crbb7_crbb7_employment_Theminimumamountofnotice" parentSchemaName="crbb7_worker" parentDisplayName="Worker(T)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="2" schemaName="crbb7_reasoncodeid" displayName="Reason Code" parentSchemaName="crbb7_reasoncode" parentDisplayName="Reason Code(T)" solution="Active" />
-        <Dependent type="10" schemaName="crbb7_crbb7_employment_TerminationReason_crbb7_" displayName="crbb7_crbb7_employment_TerminationReason_crbb7_" parentSchemaName="crbb7_reasoncode" parentDisplayName="Reason Code(T)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="2" schemaName="crbb7_workerid" displayName="Worker" parentSchemaName="crbb7_worker" parentDisplayName="Worker(T)" solution="Active" />
-        <Dependent type="10" schemaName="crbb7_crbb7_employment_Theminimumamountofnotice" displayName="crbb7_crbb7_employment_Theminimumamountofnotice" parentSchemaName="crbb7_worker" parentDisplayName="Worker(T)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="2" schemaName="mserp_dataareaid_id" displayName="Company" parentSchemaName="mserp_hcmcompensationstructuredualwritev2entity" parentDisplayName="Compensation structure V2 (DualWrite) (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -1341,18 +1231,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.9.169)</package>
         </Required>
         <Dependent type="60" displayName="Information" parentDisplayName="Worker bank accounts (mserp)" id="{bfd4f003-63eb-5910-4ab3-4ce9eaab6520}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="9" schemaName="crbb7_employmentunitofnotice" displayName="Employment Unit of Notice" solution="Active" />
-        <Dependent type="2" schemaName="crbb7_employerunitofnotice" displayName="Employer Unit of Notice" parentSchemaName="crbb7_employment" parentDisplayName="Employment(T)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="9" schemaName="crbb7_employmentunitofnotice" displayName="Employment Unit of Notice" solution="Active" />
-        <Dependent type="2" schemaName="crbb7_workerunitofnotice" displayName="Worker Unit of Notice" parentSchemaName="crbb7_employment" parentDisplayName="Employment(T)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="9" schemaName="crbb7_workertype" displayName="Worker Type" solution="Active" />
-        <Dependent type="2" schemaName="crbb7_workertype" displayName="Worker Type" parentSchemaName="crbb7_employment" parentDisplayName="Employment(T)" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>

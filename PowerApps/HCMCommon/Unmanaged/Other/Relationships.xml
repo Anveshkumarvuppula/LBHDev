@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <EntityRelationship Name="business_unit_cdm_company" />
-  <EntityRelationship Name="business_unit_crbb7_employment" />
-  <EntityRelationship Name="business_unit_crbb7_title" />
-  <EntityRelationship Name="cdm_team_cdm_company_defaultowningteam" />
-  <EntityRelationship Name="crbb7_crbb7_employment_OwningTeam_team" />
-  <EntityRelationship Name="crbb7_crbb7_employment_OwningUser_systemuser" />
-  <EntityRelationship Name="crbb7_crbb7_employment_TerminationReason_crbb7_" />
-  <EntityRelationship Name="crbb7_crbb7_employment_Theminimumamountofnotice" />
   <EntityRelationship Name="crbb7_mserp_hcmjobpositiondualwriteentity_TestJ" />
-  <EntityRelationship Name="lk_cdm_company_createdby" />
-  <EntityRelationship Name="lk_cdm_company_modifiedby" />
-  <EntityRelationship Name="lk_crbb7_employment_createdby" />
-  <EntityRelationship Name="lk_crbb7_employment_modifiedby" />
-  <EntityRelationship Name="lk_crbb7_title_createdby" />
-  <EntityRelationship Name="lk_crbb7_title_modifiedby" />
   <EntityRelationship Name="mserp_FK_HcmEmployeeV2Entity_Worker" />
   <EntityRelationship Name="mserp_FK_HcmEmploymentEntity_EmployedWorker" />
   <EntityRelationship Name="mserp_FK_HcmJobEntity_JobFunction" />
@@ -38,13 +24,4 @@
   <EntityRelationship Name="mserp_HcmCompensationStructureEntity_dataAreaId_rel" />
   <EntityRelationship Name="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" />
   <EntityRelationship Name="mserp_hcmParametersEntity_dataAreaId_rel" />
-  <EntityRelationship Name="owner_cdm_company" />
-  <EntityRelationship Name="owner_crbb7_employment" />
-  <EntityRelationship Name="owner_crbb7_title" />
-  <EntityRelationship Name="team_cdm_company" />
-  <EntityRelationship Name="team_crbb7_employment" />
-  <EntityRelationship Name="team_crbb7_title" />
-  <EntityRelationship Name="user_cdm_company" />
-  <EntityRelationship Name="user_crbb7_employment" />
-  <EntityRelationship Name="user_crbb7_title" />
 </EntityRelationships>
