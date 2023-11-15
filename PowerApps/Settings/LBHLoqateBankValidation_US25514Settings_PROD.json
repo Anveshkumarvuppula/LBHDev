@@ -6,7 +6,7 @@
     },
     {
       "SchemaName": "crbb7_LBHTestPayrolEmail",
-      "Value": "test.payroll@harrow.gov.uk"
+      "Value": "payroll@harrow.gov.uk"
     }
   ],
   "ConnectionReferences": [
