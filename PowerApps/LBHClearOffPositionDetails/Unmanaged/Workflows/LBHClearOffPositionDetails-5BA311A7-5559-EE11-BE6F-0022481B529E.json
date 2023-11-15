@@ -137,7 +137,7 @@
                   "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
                   "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
                   "item/mserp_validfrom": "@addSeconds(variables('AssignmentEndDate'), 1)",
-                  "item/mserp_validto": "@addSeconds(variables('AssignmentEndDate'), 1)",
+                  "item/mserp_validto": "2154-12-31 00:00:00",
                   "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
                   "item/mserp_pwcprobcompleted_custom": 200000000,
                   "item/mserp_pwcprobperiod_custom": "@null",
