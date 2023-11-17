@@ -1,0 +1,346 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_a1724"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_0c486"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "349a56f4-543d-44e1-992c-f577130b90e6"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Position Number",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "date": {
+                  "description": "Please enter your input",
+                  "format": "date",
+                  "title": "Contract End Date",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "Please enter your input",
+                  "title": "Time",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "date",
+                "text_1"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Initialize_variable_-_PositionNumber": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "04aad117-fd6a-4b7b-8945-65d46edab2f1"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PositionNumber",
+                "type": "string",
+                "value": "@triggerBody()['text']"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_-_Result": {
+          "runAfter": {
+            "Initialize_variable_-_PositionNumber": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f509d1f1-2f0d-4807-b558-adb1c4e80e46"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Result",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_-_Time": {
+          "runAfter": {
+            "Initialize_variable_-_Contract_end_date": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "70e7cbeb-0002-4305-b904-1cbf968fd14c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Time",
+                "type": "string",
+                "value": "@triggerBody()?['text_1']"
+              }
+            ]
+          }
+        },
+        "Convert_time_zone": {
+          "runAfter": {
+            "Initialize_variable_-_Time": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ed69fff6-7f90-485b-88aa-461225edd70e"
+          },
+          "type": "Expression",
+          "kind": "ConvertTimeZone",
+          "inputs": {
+            "baseTime": "@variables('Time')",
+            "formatString": "u",
+            "sourceTimeZone": "GMT Standard Time",
+            "destinationTimeZone": "UTC"
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('List_rows')?['body/value']",
+          "actions": {
+            "Update_a_row": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "49abd8df-03da-4d4b-ada3-7658f5b7094b"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "UpdateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
+                  "item/mserp_validto": "@variables('Time')"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Add_a_new_row": {
+              "runAfter": {
+                "Update_a_row": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "63ad219d-6787-47f7-81c1-b75aec8ce313"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "CreateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
+                  "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
+                  "item/mserp_availableforassignment": "@outputs('Update_a_row')?['body/mserp_availableforassignment']",
+                  "item/mserp_compensationregionid": "@outputs('Update_a_row')?['body/mserp_compensationregionid']",
+                  "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
+                  "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
+                  "item/mserp_validfrom": "@outputs('Update_a_row')?['body/mserp_validfrom']",
+                  "item/mserp_pwcemploymentfactor_custom": "@outputs('Update_a_row')?['body/mserp_pwcemploymentfactor_custom']",
+                  "item/mserp_validto": "@variables('Time')",
+                  "item/mserp_jobfamilyid": "@outputs('Update_a_row')?['body/mserp_jobfamilyid']",
+                  "item/mserp_fulltimeequivalent": "@outputs('Update_a_row')?['body/mserp_fulltimeequivalent']",
+                  "item/mserp_pwcirregularpattern_custom": "@outputs('Update_a_row')?['body/mserp_pwcirregularpattern_custom']",
+                  "item/mserp_pwcpositionhoursperweek_custom": "@outputs('Update_a_row')?['body/mserp_pwcpositionhoursperweek_custom']",
+                  "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
+                  "item/mserp_primaryfield": "@outputs('Update_a_row')?['body/mserp_primaryfield']",
+                  "item/mserp_pwcprobcompleted_custom": "@outputs('Update_a_row')?['body/mserp_pwcprobcompleted_custom']",
+                  "item/mserp_pwcprobduration_custom": "@outputs('Update_a_row')?['body/mserp_pwcprobduration_custom']",
+                  "item/mserp_pwcprobperiod_custom": "@outputs('Update_a_row')?['body/mserp_pwcprobperiod_custom']",
+                  "item/mserp_pwcpositionweeksperyear_custom": "@outputs('Update_a_row')?['body/mserp_pwcpositionweeksperyear_custom']",
+                  "item/mserp_lbhpositionreasonchange": "@outputs('Update_a_row')?['body/mserp_lbhpositionreasonchange']",
+                  "item/mserp_pwcredundancydate_custom": "@outputs('Update_a_row')?['body/mserp_pwcredundancydate_custom']",
+                  "item/mserp_pwcteachingstaff_custom": "@outputs('Update_a_row')?['body/mserp_pwcteachingstaff_custom']",
+                  "item/mserp_pwcteachingstuff_custom": "@outputs('Update_a_row')?['body/mserp_pwcteachingstuff_custom']",
+                  "item/mserp_pwctemporaryhoursenddate_custom": "@outputs('Update_a_row')?['body/mserp_pwctemporaryhoursenddate_custom']",
+                  "item/mserp_pwctermtime_custom": "@outputs('Update_a_row')?['body/mserp_pwctermtime_custom']",
+                  "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']",
+                  "item/mserp_pwcweekendworking_custom": "@outputs('Update_a_row')?['body/mserp_pwcweekendworking_custom']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "List_rows": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d6c86f20-e17b-42da-ba45-97f8b8bfedc0"
+          },
+          "type": "Foreach"
+        },
+        "Set_Result_Success": {
+          "runAfter": {
+            "Apply_to_each": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "528655c7-2617-4306-a1d4-dfbcc3611b0f"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "Result",
+            "value": "Success"
+          }
+        },
+        "Set_Result_Fail": {
+          "runAfter": {
+            "Apply_to_each": [
+              "Failed",
+              "Skipped",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6e0bca8f-11a5-48ac-8d5e-058a64b45293"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "Result",
+            "value": "Fail"
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow": {
+          "runAfter": {
+            "Set_Result_Success": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f432dccc-b5d7-4ab3-bedc-e70569edc780"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "result": "@variables('Result')"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "title": "Result",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "List_rows": {
+          "runAfter": {
+            "Convert_time_zone": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2a0f6658-f777-4c41-91e5-172b5deacaad"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmpositiondetailentities",
+              "$filter": "mserp_positionid eq '@{variables('PositionNumber')}'",
+              "$orderby": "mserp_validfrom desc",
+              "$top": 1
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Initialize_variable_-_Contract_end_date": {
+          "runAfter": {
+            "Initialize_variable_-_Result": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f5369d6b-e72d-40de-a592-858a5659ffa8"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Contract end date",
+                "type": "string",
+                "value": "@triggerBody()?['date']"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

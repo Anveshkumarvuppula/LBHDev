@@ -1,6 +1,10 @@
 "'Contract extension form page' As screen":
     OnVisible: |-
-        =UpdateContext({ButtonVisible:false})
+        =Set(varItem, First(SortByColumns(Filter('Position details (mserp)', Position = Param("EntityID")),"mserp_validfrom",SortOrder.Descending,"mserp_hcmpositiondetailentityid")))
+        
+        //Set(varItem, First(SortByColumns(Filter('Position details (mserp)', Position = Param("mserp_hcmpositiondetailentityId")),"mserp_validfrom",SortOrder.Descending)))
+        
+        //UpdateContext({ButtonVisible:false})
 
     "'Contract extension table' As dataTable.datatable":
         BorderStyle: =BorderStyle.Solid
@@ -329,24 +333,12 @@
         AccessibleLabel: ="Back button"
         Fill: =RGBA(109, 49, 162, 1)
         Height: =59
-        OnSelect: =Navigate('Home Screen')
+        OnSelect: =Navigate('Home Screen'); Refresh('Position details (mserp)')
         TabIndex: =0
         Width: =59
-        X: =290
-        Y: =1077
+        X: =255
+        Y: =1018
         ZIndex: =2
-
-    "'Save record button' As button":
-        DisplayMode: =If('Flow Message_1'.Text="Success",DisplayMode.Edit,DisplayMode.Disabled)
-        Fill: =RGBA(78, 15, 120, 1)
-        Height: =63
-        OnSelect: =SubmitForm('Contract extension form')
-        Size: =24
-        Text: ="Save new record"
-        Width: =466
-        X: =73
-        Y: =975
-        ZIndex: =3
 
     "'Contract extension form' As form":
         BorderColor: =RGBA(109, 49, 162, 1)
@@ -354,7 +346,7 @@
         DefaultMode: =FormMode.New
         Fill: =RGBA(255, 255, 255, 1)
         Height: =626
-        Item: ='Contract extension table'.Selected
+        Item: =varItem
         OnFailure: =Notify('Contract extension form'.Error);Navigate(Fail)
         OnSuccess: =LBHSendContractExtensionEmail.Run('Contract extension table'.Selected.Position,'Contract extension table'.Selected.Position,ManagerName,'Effective date for flow');Navigate(ConfirmSave)
         Width: =640
@@ -499,7 +491,7 @@
 
         "'Contract end date_DataCard4' As typedDataCard.dateTimeEditCard":
             BorderStyle: =BorderStyle.Solid
-            DataField: ="mshr_pwccontractenddate_custom"
+            DataField: ="mserp_pwccontractenddate_custom"
             Default: =Blank()
             DisplayMode: =Parent.DisplayMode
             DisplayName: ="FT/SC/Int End Date"
@@ -529,6 +521,12 @@
                 DefaultDate: =Parent.Default
                 DisplayMode: =Parent.DisplayMode
                 EndYear: =Year(Today())+100
+                Format: |-
+                    =Text(DateValue(DateValue7.SelectedDate),"[$-en-GB]yyyy-mm-dd")
+                    
+                    //Text(DateValue(DateValue7.SelectedDate, "en"), DateTimeFormat.LongDateTime)
+                    
+                     //"[$-en-GB]yyyy-mm-ddThh:mm:ssZ"))
                 Height: =70
                 InputTextPlaceholder: =
                 IsEditable: =true
@@ -780,7 +778,7 @@
             DataField: ="mserp_pwccontractenddate_custom"
             Default: =ThisItem.'Temporary contract end date'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwccontractenddate_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwccontractenddate_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -905,7 +903,7 @@
             DataField: ="mserp_validto"
             Default: =ThisItem.Expiration
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_validto")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_validto")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -1030,7 +1028,7 @@
             DataField: ="mserp_pwctemporaryhoursenddate_custom"
             Default: =ThisItem.'Temporary hours end date '
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwctemporaryhoursenddate_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwctemporaryhoursenddate_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -1155,10 +1153,10 @@
             DataField: ="mserp_positionid"
             Default: =ThisItem.Position
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_positionid")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_positionid")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_positionid")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_positionid")
             Required: =true
             Update: =DataCardValue27.Text
             Visible: =false
@@ -1230,10 +1228,10 @@
             DataField: ="mserp_jobid"
             Default: =ThisItem.Job
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_jobid")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_jobid")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_jobid")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_jobid")
             Required: =true
             Update: =DataCardValue28.Text
             Visible: =false
@@ -1305,10 +1303,10 @@
             DataField: ="mserp_compensationregionid"
             Default: =ThisItem.'Compensation region'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_compensationregionid")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_compensationregionid")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_compensationregionid")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_compensationregionid")
             Required: =false
             Update: =DataCardValue29.Text
             Visible: =false
@@ -1380,7 +1378,7 @@
             DataField: ="mserp_pwcprobcompleted_custom"
             Default: =ThisItem.'Probation completed'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobcompleted_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcprobcompleted_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -1454,7 +1452,7 @@
             DataField: ="mserp_lbhpositionreasonchange"
             Default: =ThisItem.'Reason code'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_lbhpositionreasonchange")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_lbhpositionreasonchange")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -1566,7 +1564,7 @@
             DataField: ="mserp_pwcprobduration_custom"
             Default: =ThisItem.'Probation duration'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobduration_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcprobduration_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -1640,7 +1638,7 @@
             DataField: ="mserp_pwcprobperiod_custom"
             Default: =ThisItem.'Probation period'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobperiod_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcprobperiod_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -1765,10 +1763,10 @@
             DataField: ="mserp_titleid"
             Default: =ThisItem.Title
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_titleid")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_titleid")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_titleid")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_titleid")
             Required: =false
             Update: =DataCardValue34.Text
             Visible: =false
@@ -1840,10 +1838,10 @@
             DataField: ="mserp_positiontypeid"
             Default: =ThisItem.'Position type'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_positiontypeid")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_positiontypeid")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_positiontypeid")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_positiontypeid")
             Required: =false
             Update: =DataCardValue35.Text
             Visible: =false
@@ -1918,7 +1916,7 @@
             DisplayName: ="Teaching stuff"
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_pwcteachingstaff_custom")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_pwcteachingstaff_custom")
             Required: =false
             Update: =DataCardValue36.Text
             Visible: =false
@@ -1990,7 +1988,7 @@
             DataField: ="mserp_pwcweekendworking_custom"
             Default: =ThisItem.'Weekend working'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcweekendworking_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcweekendworking_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -2064,7 +2062,7 @@
             DataField: ="mserp_pwctermtime_custom"
             Default: =ThisItem.'Term time employee'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwctermtime_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwctermtime_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -2138,7 +2136,7 @@
             DataField: ="mserp_pwcirregularpattern_custom"
             Default: =ThisItem.'Irregular patterns'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcirregularpattern_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcirregularpattern_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
             Required: =false
@@ -2212,10 +2210,10 @@
             DataField: ="mserp_pwcemploymentfactor_custom"
             Default: =ThisItem.'Employment factor'
             DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcemploymentfactor_custom")
+            DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcemploymentfactor_custom")
             Fill: =RGBA(0, 0, 0, 0)
             Height: =50
-            MaxLength: =DataSourceInfo([@'Position details (mserp)'], DataSourceInfo.MaxLength, "mserp_pwcemploymentfactor_custom")
+            MaxLength: =DataSourceInfo('Position details (mserp)', DataSourceInfo.MaxLength, "mserp_pwcemploymentfactor_custom")
             Required: =false
             Update: =DataCardValue40.Text
             Visible: =false
@@ -2296,15 +2294,12 @@
         DisplayMode: =If('Flow Message_1'.Text="Success",DisplayMode.Disabled,DisplayMode.Edit)
         Fill: =RGBA(78, 15, 120, 1)
         Height: =73
-        OnSelect: |-
-            =Set(PowerAppsResult,
-            ExpirePrevPositionDetailsRecord.Run('Contract extension table'.Selected.Position, 'Expire date format_1'))
-            //'Expire date format_1'))
+        OnSelect: =Set(PowerAppsResult, Test1.Run(DataCardValue7.Text, 'Contract End Date', 'Expire date format_1')); If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail))
         Size: =24
-        Text: ="End date previous record"
+        Text: ="Submit"
         Width: =466
-        X: =73
-        Y: =819
+        X: =87
+        Y: =812
         ZIndex: =6
 
     "'Expire date format_1' As label":
@@ -2324,7 +2319,7 @@
         Text: =PowerAppsResult.result
         Width: =352
         X: =130
-        Y: =898
+        Y: =913
         ZIndex: =8
 
     ManagerName As label:
@@ -2345,4 +2340,19 @@
         X: =387
         Y: =1077
         ZIndex: =10
+
+    "'Contract End Date' As label":
+        Height: =66
+        Size: =21
+        Text: |-
+            =Text(DateValue(DateValue7.SelectedDate),"[$-en-GB]yyyy-mm-dd")
+            
+            //Text(DateValue(DateValue7.SelectedDate, "en"), DateTimeFormat.LongDateTime)
+            
+             //"[$-en-GB]yyyy-mm-ddThh:mm:ssZ"))
+        Visible: =false
+        Width: =307
+        X: =25
+        Y: =577
+        ZIndex: =11
 
