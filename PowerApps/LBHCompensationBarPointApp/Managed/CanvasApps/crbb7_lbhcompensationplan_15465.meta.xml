@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>crbb7_lbhcompensationplan_15465</Name>
-  <AppVersion>2023-11-09T14:57:04Z</AppVersion>
+  <AppVersion>2023-11-17T11:26:36Z</AppVersion>
   <Status>Ready</Status>
-  <CreatedByClientVersion>3.23105.15.0</CreatedByClientVersion>
-  <MinClientVersion>3.23105.15.0</MinClientVersion>
-  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.23105.15","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","sienaVersion":"20231109T110609Z-3.23105.15.0"}</Tags>
+  <CreatedByClientVersion>3.23105.18.0</CreatedByClientVersion>
+  <MinClientVersion>3.23105.18.0</MinClientVersion>
+  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.23105.18","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","sienaVersion":"20231117T112204Z-3.23105.18.0"}</Tags>
   <IsCdsUpgraded>0</IsCdsUpgraded>
   <GalleryItemId xsi:nil="true"></GalleryItemId>
   <BackgroundColor>RGBA(0,176,240,1)</BackgroundColor>

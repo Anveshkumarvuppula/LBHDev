@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "6cc89ee5-f951-4dec-a2cc-ad29fba4ef59",
+    "Name": "Workinghourschange",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "1c88db0c-8d84-ee11-8179-0022481b5dbb"
+  }
+]

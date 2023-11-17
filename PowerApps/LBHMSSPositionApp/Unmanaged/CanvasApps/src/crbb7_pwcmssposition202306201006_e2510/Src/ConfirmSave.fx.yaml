@@ -1,7 +1,9 @@
 ConfirmSave As screen:
+    OnVisible: =
 
     Icon1 As icon.Home:
         Icon: =Icon.Home
+        OnSelect: =Navigate('Home Screen')
         X: =274
         Y: =926
         ZIndex: =1

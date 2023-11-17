@@ -1,0 +1,318 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_b69ce"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "bdc17c3d-2200-41c0-b856-5f8abf715ab4"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "title": "ContractEndDate",
+                  "type": "string",
+                  "format": "date",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter or select a date (YYYY-MM-DD)",
+                  "x-ms-content-hint": "DATE"
+                },
+                "date_1": {
+                  "title": "Time",
+                  "type": "string",
+                  "format": "date",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter or select a date (YYYY-MM-DD)",
+                  "x-ms-content-hint": "DATE"
+                },
+                "text": {
+                  "title": "PositionNumber",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "date",
+                "date_1",
+                "text"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Initialize_variable_-_ContractEndDate": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "a4f56d88-c79d-4eca-a6cf-7fd60c5df4b0"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ContractEndDate",
+                "type": "string",
+                "value": "@triggerBody()['date']"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_-_Time": {
+          "runAfter": {
+            "Initialize_variable_-_ContractEndDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "34eccece-7f08-4393-8efd-dcd54b61d539"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Time",
+                "type": "string",
+                "value": "@triggerBody()['date_1']"
+              }
+            ]
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow": {
+          "runAfter": {
+            "Set_Result_-_Success": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "95d2459f-341e-4e95-87a9-e1edd32b96c0"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "result": "@{variables('Result')}"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "title": "Result",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Initialize_variable_-_PositionNumber": {
+          "runAfter": {
+            "Initialize_variable_-_Time": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "43ac6745-0569-459d-a77a-fa4bdee7a0e8"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PositionNumber",
+                "type": "string",
+                "value": "@triggerBody()['text']"
+              }
+            ]
+          }
+        },
+        "Convert_time_zone": {
+          "runAfter": {
+            "Initialize_variable_-_Result": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "31414d93-7a7b-4927-bd7e-f21ee7ece644"
+          },
+          "type": "Expression",
+          "kind": "ConvertTimeZone",
+          "inputs": {
+            "baseTime": "@variables('Time')",
+            "formatString": "u",
+            "sourceTimeZone": "GMT Standard Time",
+            "destinationTimeZone": "UTC"
+          }
+        },
+        "List_rows": {
+          "runAfter": {
+            "Convert_time_zone": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b3a0634c-d778-4c4b-86e3-a064926dc07d"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps_1",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "mserp_hcmpositiondetailentities",
+              "$filter": "mserp_positionid eq '@{variables('PositionNumber')}'",
+              "$orderby": "mserp_validfrom desc",
+              "$top": 1
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('List_rows')?['body/value']",
+          "actions": {
+            "Update_a_row": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "1f2fcfe9-4868-49f2-b3e7-807954efdbae"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "UpdateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']",
+                  "item/mserp_validto": "@variables('Time')"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Add_a_new_row": {
+              "runAfter": {
+                "Update_a_row": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "a23216bb-f216-45d9-8354-d313a2f9e965"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "CreateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
+                  "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
+                  "item/mserp_pwcirregularpattern_custom": "@outputs('Update_a_row')?['body/mserp_pwcirregularpattern_custom']",
+                  "item/mserp_lbhpositionreasonchange": "@outputs('Update_a_row')?['body/mserp_lbhpositionreasonchange']",
+                  "item/mserp_pwctermtime_custom": "@outputs('Update_a_row')?['body/mserp_pwctermtime_custom']",
+                  "item/mserp_pwcweekendworking_custom": "@outputs('Update_a_row')?['body/mserp_pwcweekendworking_custom']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "List_rows": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ca318c29-2df4-4fd1-93d2-5318dfb406f2"
+          },
+          "type": "Foreach"
+        },
+        "Set_Result_-_Failed": {
+          "runAfter": {
+            "Apply_to_each": [
+              "Failed",
+              "Skipped",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "eafa99f5-db1f-4aeb-af9c-556704055f61"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "Result",
+            "value": "Failed"
+          }
+        },
+        "Initialize_variable_-_Result": {
+          "runAfter": {
+            "Initialize_variable_-_PositionNumber": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1d578b49-59cb-4ff8-a8ec-1df8be39d33c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Result",
+                "type": "string",
+                "value": "Success"
+              }
+            ]
+          }
+        },
+        "Set_Result_-_Success": {
+          "runAfter": {
+            "Apply_to_each": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8b5fb9d5-cba7-48de-ac15-320996b1bcd0"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "Result",
+            "value": "Success"
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

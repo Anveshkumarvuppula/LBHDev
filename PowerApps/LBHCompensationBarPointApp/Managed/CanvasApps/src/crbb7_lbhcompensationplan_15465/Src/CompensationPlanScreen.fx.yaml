@@ -55,7 +55,7 @@ CompensationPlanScreen As screen:
             LayoutHeight: =Parent.Height
             Order: =10
             Text: |-
-                =Text(ThisItem.Amount, "$###.##")
+                =Text(ThisItem.Amount, "£#,###.00")
             Width: =100
             X: =0
             Y: =0
