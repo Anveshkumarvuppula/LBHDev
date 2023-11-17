@@ -3,23 +3,33 @@
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",
-      "ConnectionId": "cc2b1830738544ffa507d91dc9350406",
+      "ConnectionId": "",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_7fe85",
-      "ConnectionId": "cc2b1830738544ffa507d91dc9350406",
+      "ConnectionId": "",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
-      "LogicalName": "crbb7_sharedcommondataservice_ea32d",
-      "ConnectionId": "996194454d6e474483efacc3d1a1076f",
-      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataservice"
+      "LogicalName": "crbb7_shareddynamicsax_47741",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
     },
     {
-      "LogicalName": "crbb7_shareddynamicsax_5b162",
-      "ConnectionId": "fc28c1a39ced4026b06ba87d3d4c9044",
-      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+      "LogicalName": "new_sharedcommondataserviceforapps_0c486",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "new_sharedcommondataserviceforapps_a1724",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "new_sharedcommondataserviceforapps_b69ce",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     }
   ]
 }
