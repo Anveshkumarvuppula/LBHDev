@@ -1,6 +1,6 @@
 "'New working hours page' As screen":
     OnVisible: |-
-        =UpdateContext({ButtonVisible:false})
+        =//UpdateContext({ButtonVisible:false})
 
     "'New Details Table' As dataTable.datatable":
         BorderStyle: =BorderStyle.Solid
@@ -85,7 +85,7 @@
             Order: =2
             Text: =Text(ThisItem.'Temporary hours end date ',DateTimeFormat.LongDateTime)
             Width: =100
-            X: =0
+            X: =141
             Y: =0
             ZIndex: =12
 
@@ -243,18 +243,6 @@
             Y: =0
             ZIndex: =24
 
-    "'Save record button_1' As button":
-        DisplayMode: =If('Flow Message'.Text="Success", DisplayMode.Edit,DisplayMode.Disabled)
-        Fill: =RGBA(78, 15, 120, 1)
-        Height: =63
-        OnSelect: =SubmitForm('Change working hours form')
-        Size: =24
-        Text: ="Save new record"
-        Width: =466
-        X: =73
-        Y: =975
-        ZIndex: =2
-
     Arrow1 As arrow.backArrow:
         AccessibleLabel: ="Arrow"
         Fill: =RGBA(109, 49, 162, 1)
@@ -262,8 +250,8 @@
         OnSelect: =Navigate('Home Screen')
         TabIndex: =0
         Width: =59
-        X: =290
-        Y: =1077
+        X: =255
+        Y: =1045
         ZIndex: =3
 
     "'Change working hours form' As form":
@@ -305,8 +293,8 @@
                 ZIndex: =1
 
             DateValue3 As datepicker:
+                AccessibleLabel: ="Effective"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                DefaultDate: =Parent.Default
                 DisplayMode: =Parent.DisplayMode
                 EndYear: =Year(Today())+100
                 Height: =70
@@ -376,6 +364,7 @@
                 ZIndex: =1
 
             DateValue2 As datepicker:
+                AccessibleLabel: ="ExpirationDate"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultDate: =Parent.Default
                 DisplayMode: =Parent.DisplayMode
@@ -446,6 +435,7 @@
                 ZIndex: =1
 
             DataCardValue5 As text:
+                AccessibleLabel: ="Position hours per week"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -518,6 +508,7 @@
                 ZIndex: =1
 
             DateValue4 As datepicker:
+                AccessibleLabel: ="Temporary hours end date"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultDate: =Parent.Default
                 DisplayMode: =Parent.DisplayMode
@@ -535,6 +526,7 @@
                 ZIndex: =2
 
             HourValue4 As dropdown:
+                AccessibleLabel: ="Hour Value"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Text(Hour(Parent.Default),"00")
                 DisplayMode: =Parent.DisplayMode
@@ -571,6 +563,7 @@
                 ZIndex: =4
 
             MinuteValue4 As dropdown:
+                AccessibleLabel: ="Minute Value"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Text(Minute(Parent.Default),"00")
                 DisplayMode: =Parent.DisplayMode
@@ -642,6 +635,7 @@
                 ZIndex: =1
 
             DataCardValue6 As combobox:
+                AccessibleLabel: ="Term time employee"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
@@ -714,6 +708,7 @@
                 ZIndex: =1
 
             DataCardValue12 As text:
+                AccessibleLabel: ="Position weeks per year"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -786,6 +781,7 @@
                 ZIndex: =1
 
             DataCardValue13 As combobox:
+                AccessibleLabel: ="Weekend working"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
@@ -858,6 +854,7 @@
                 ZIndex: =1
 
             DataCardValue14 As combobox:
+                AccessibleLabel: ="Irregular patterns"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
@@ -932,6 +929,7 @@
                 ZIndex: =1
 
             DataCardValue26 As text:
+                AccessibleLabel: ="Position"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1006,6 +1004,7 @@
                 ZIndex: =1
 
             DataCardValue32 As text:
+                AccessibleLabel: ="Job"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1079,15 +1078,17 @@
                 ZIndex: =1
 
             DataCardValue15 As combobox:
+                AccessibleLabel: ="Positions_v2"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["mserp_positionid"]
                 DisplayMode: =Parent.DisplayMode
                 Height: =70
-                Items: =Choices([@'Position details (mserp)'].mserp_FK_Position_id)
+                IsSearchable: =false
+                Items: =Choices('Position details (mserp)'.mserp_FK_Position_id)
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 SearchFields: =["mserp_positionid"]
-                SearchItems: =Search(Choices([@'Position details (mserp)'].mserp_FK_Position_id),DataCardValue15.SearchText,"mserp_positionid")
+                SearchItems: =[]
                 SelectMultiple: =false
                 Size: =21
                 Tooltip: =Parent.DisplayName
@@ -1151,15 +1152,17 @@
                 ZIndex: =1
 
             DataCardValue16 As combobox:
+                AccessibleLabel: ="Job_id"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["mserp_jobid"]
                 DisplayMode: =Parent.DisplayMode
                 Height: =70
-                Items: =Choices([@'Position details (mserp)'].mserp_FK_Job_id)
+                IsSearchable: =false
+                Items: =Choices('Position details (mserp)'.mserp_FK_Job_id)
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 SearchFields: =["mserp_jobid"]
-                SearchItems: =Search(Choices([@'Position details (mserp)'].mserp_FK_Job_id),DataCardValue16.SearchText,"mserp_jobid")
+                SearchItems: =[]
                 SelectMultiple: =false
                 Size: =21
                 Tooltip: =Parent.DisplayName
@@ -1224,6 +1227,7 @@
                 ZIndex: =1
 
             DataCardValue17 As text:
+                AccessibleLabel: ="Department number"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1297,6 +1301,7 @@
                 ZIndex: =1
 
             DataCardValue18 As combobox:
+                AccessibleLabel: ="Reason code"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
@@ -1370,6 +1375,7 @@
                 ZIndex: =1
 
             DataCardValue20 As combobox:
+                AccessibleLabel: ="Probation completed"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
@@ -1443,6 +1449,7 @@
                 ZIndex: =1
 
             DataCardValue19 As combobox:
+                AccessibleLabel: ="Probation duration"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultSelectedItems: =[Parent.Default]
                 DisplayFields: =["Value"]
@@ -1516,6 +1523,7 @@
                 ZIndex: =1
 
             DateValue5 As datepicker:
+                AccessibleLabel: ="Probation period"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultDate: =Parent.Default
                 DisplayMode: =Parent.DisplayMode
@@ -1533,6 +1541,7 @@
                 ZIndex: =2
 
             HourValue5 As dropdown:
+                AccessibleLabel: ="Probation hour"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Text(Hour(Parent.Default),"00")
                 DisplayMode: =Parent.DisplayMode
@@ -1567,6 +1576,7 @@
                 ZIndex: =4
 
             MinuteValue5 As dropdown:
+                AccessibleLabel: ="Probation minute"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Text(Minute(Parent.Default),"00")
                 DisplayMode: =Parent.DisplayMode
@@ -1639,6 +1649,7 @@
                 ZIndex: =1
 
             DataCardValue21 As text:
+                AccessibleLabel: ="Title"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1713,6 +1724,7 @@
                 ZIndex: =1
 
             DataCardValue22 As text:
+                AccessibleLabel: ="Description"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1787,6 +1799,7 @@
                 ZIndex: =1
 
             DataCardValue23 As text:
+                AccessibleLabel: ="Position type"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1861,6 +1874,7 @@
                 ZIndex: =1
 
             DataCardValue24 As text:
+                AccessibleLabel: ="Teaching staff"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Parent.Default
                 DelayOutput: =true
@@ -1934,6 +1948,7 @@
                 ZIndex: =1
 
             DateValue6 As datepicker:
+                AccessibleLabel: ="Redundancy date"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 DefaultDate: =Parent.Default
                 DisplayMode: =Parent.DisplayMode
@@ -1951,6 +1966,7 @@
                 ZIndex: =2
 
             HourValue6 As dropdown:
+                AccessibleLabel: ="Redundancy hour"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Text(Hour(Parent.Default),"00")
                 DisplayMode: =Parent.DisplayMode
@@ -1985,6 +2001,7 @@
                 ZIndex: =4
 
             MinuteValue6 As dropdown:
+                AccessibleLabel: ="Redundancy minute"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                 Default: =Text(Minute(Parent.Default),"00")
                 DisplayMode: =Parent.DisplayMode
@@ -2032,12 +2049,14 @@
         DisplayMode: =If('Flow Message'.Text="Success",DisplayMode.Disabled,DisplayMode.Edit)
         Fill: =RGBA(109, 49, 162, 1)
         Height: =73
-        OnSelect: =Set(PowerAppsResult,ExpirePrevPositionDetailsRecord.Run('New Details Table'.Selected.Position,'Expire date format'))
+        OnSelect: |-
+            =Set(PowerAppsResult, Workinghourschange.Run(DataCardValue7.Text, 'Expire date format', DataCardValue5.Text, DateValue4.SelectedDate, DataCardValue6.Selected.Value, DataCardValue12.Text, DataCardValue13.Selected.Value, DataCardValue14.Selected.Value)); If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail))
+            //Set(PowerAppsResult,ExpirePrevPositionDetailsRecord.Run('New Details Table'.Selected.Position,'Expire date format'))
         Size: =24
-        Text: ="End date previous record"
+        Text: ="Submit"
         Width: =466
         X: =73
-        Y: =819
+        Y: =873
         ZIndex: =5
 
     "'Expiry Date' As label":
@@ -2046,7 +2065,7 @@
         Text: =DateAdd('Change working hours form'.Updates.Effective,-1,TimeUnit.Seconds)
         Visible: =false
         Width: =482
-        Y: =1066
+        Y: =1007
         ZIndex: =6
 
     "'Expire date format' As label":
@@ -2064,12 +2083,10 @@
         Align: =Align.Center
         Height: =70
         Size: =21
-        Text: |-
-            =
-            PowerAppsResult.result
+        Text: =PowerAppsResult.result
         Width: =352
         X: =130
-        Y: =898
+        Y: =959
         ZIndex: =8
 
     UserName As label:

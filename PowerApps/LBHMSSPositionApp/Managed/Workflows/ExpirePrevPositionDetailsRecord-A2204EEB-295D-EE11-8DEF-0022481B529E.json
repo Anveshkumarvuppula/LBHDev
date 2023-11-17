@@ -44,27 +44,31 @@
             "schema": {
               "type": "object",
               "properties": {
-                "Setvariable_Value": {
+                "Initializevariable-TempContractEndDate_Value": {
+                  "type": "any"
+                },
+                "Addanewrow_Temporarycontractenddate": {
                   "type": "string",
-                  "description": "Enter variable value",
+                  "format": "date-time",
                   "x-ms-powerflows-param-ispartial": false
                 },
-                "Compose_Inputs": {
-                  "type": "any",
-                  "description": "Inputs",
+                "Initializevariable-Temporarycontractenddate_Value": {
+                  "type": "string",
+                  "description": "Enter initial value",
                   "x-ms-powerflows-param-ispartial": false
                 }
               },
               "required": [
-                "Setvariable_Value",
-                "Compose_Inputs"
+                "Initializevariable-TempContractEndDate_Value",
+                "Addanewrow_Temporarycontractenddate",
+                "Initializevariable-Temporarycontractenddate_Value"
               ]
             }
           }
         }
       },
       "actions": {
-        "Initialize_variable": {
+        "Initialize_variable_-_PositionNumber": {
           "runAfter": {},
           "metadata": {
             "operationMetadataId": "04aad117-fd6a-4b7b-8945-65d46edab2f1"
@@ -74,41 +78,15 @@
             "variables": [
               {
                 "name": "PositionNumber",
-                "type": "string"
+                "type": "string",
+                "value": "@triggerBody()['Setvariable_Value']"
               }
             ]
           }
         },
-        "Set_variable": {
+        "Initialize_variable_-_Result": {
           "runAfter": {
-            "Initialize_variable": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "34312986-f024-494f-8527-9b3c89afe569"
-          },
-          "type": "SetVariable",
-          "inputs": {
-            "name": "PositionNumber",
-            "value": "@{triggerBody()['Setvariable_Value']}"
-          }
-        },
-        "Compose": {
-          "runAfter": {
-            "Set_variable": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "66d173ba-cc28-4f45-b1a9-841c8c26c2f6"
-          },
-          "type": "Compose",
-          "inputs": "@triggerBody()['Compose_Inputs']"
-        },
-        "Initialize_variable_3": {
-          "runAfter": {
-            "Compose": [
+            "Initialize_variable_-_PositionNumber": [
               "Succeeded"
             ]
           },
@@ -125,9 +103,9 @@
             ]
           }
         },
-        "Initialize_variable_2": {
+        "Initialize_variable_-_Time": {
           "runAfter": {
-            "Initialize_variable_3": [
+            "Initialize_variable_-_Temporary_contract_end_date": [
               "Succeeded"
             ]
           },
@@ -139,29 +117,15 @@
             "variables": [
               {
                 "name": "Time",
-                "type": "string"
+                "type": "string",
+                "value": "@{triggerBody()['Compose_Inputs']}"
               }
             ]
           }
         },
-        "Set_variable_2": {
-          "runAfter": {
-            "Initialize_variable_2": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "fba2793e-1961-4c26-90ff-e40e889ad9bd"
-          },
-          "type": "SetVariable",
-          "inputs": {
-            "name": "Time",
-            "value": "@{triggerBody()['Compose_Inputs']}"
-          }
-        },
         "Convert_time_zone": {
           "runAfter": {
-            "Set_variable_2": [
+            "Initialize_variable_-_Time": [
               "Succeeded"
             ]
           },
@@ -202,6 +166,58 @@
                   "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                 }
               }
+            },
+            "Add_a_new_row": {
+              "runAfter": {
+                "Update_a_row": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "63ad219d-6787-47f7-81c1-b75aec8ce313"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps_1",
+                  "operationId": "CreateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "mserp_hcmpositiondetailentities",
+                  "item/mserp_jobid": "@outputs('Update_a_row')?['body/mserp_jobid']",
+                  "item/mserp_positionid": "@outputs('Update_a_row')?['body/mserp_positionid']",
+                  "item/mserp_availableforassignment": "@outputs('Update_a_row')?['body/mserp_availableforassignment']",
+                  "item/mserp_compensationregionid": "@outputs('Update_a_row')?['body/mserp_compensationregionid']",
+                  "item/mserp_departmentnumber": "@outputs('Update_a_row')?['body/mserp_departmentnumber']",
+                  "item/mserp_description": "@outputs('Update_a_row')?['body/mserp_description']",
+                  "item/mserp_validfrom": "@outputs('Update_a_row')?['body/mserp_validfrom']",
+                  "item/mserp_pwcemploymentfactor_custom": "@outputs('Update_a_row')?['body/mserp_pwcemploymentfactor_custom']",
+                  "item/mserp_validto": "@variables('Time')",
+                  "item/mserp_jobfamilyid": "@outputs('Update_a_row')?['body/mserp_jobfamilyid']",
+                  "item/mserp_fulltimeequivalent": "@outputs('Update_a_row')?['body/mserp_fulltimeequivalent']",
+                  "item/mserp_pwcirregularpattern_custom": "@outputs('Update_a_row')?['body/mserp_pwcirregularpattern_custom']",
+                  "item/mserp_pwcpositionhoursperweek_custom": "@outputs('Update_a_row')?['body/mserp_pwcpositionhoursperweek_custom']",
+                  "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
+                  "item/mserp_primaryfield": "@outputs('Update_a_row')?['body/mserp_primaryfield']",
+                  "item/mserp_pwcprobcompleted_custom": "@outputs('Update_a_row')?['body/mserp_pwcprobcompleted_custom']",
+                  "item/mserp_pwcprobduration_custom": "@outputs('Update_a_row')?['body/mserp_pwcprobduration_custom']",
+                  "item/mserp_pwcprobperiod_custom": "@outputs('Update_a_row')?['body/mserp_pwcprobperiod_custom']",
+                  "item/mserp_pwcpositionweeksperyear_custom": "@outputs('Update_a_row')?['body/mserp_pwcpositionweeksperyear_custom']",
+                  "item/mserp_lbhpositionreasonchange": "@outputs('Update_a_row')?['body/mserp_lbhpositionreasonchange']",
+                  "item/mserp_pwcredundancydate_custom": "@outputs('Update_a_row')?['body/mserp_pwcredundancydate_custom']",
+                  "item/mserp_pwcteachingstaff_custom": "@outputs('Update_a_row')?['body/mserp_pwcteachingstaff_custom']",
+                  "item/mserp_pwcteachingstuff_custom": "@outputs('Update_a_row')?['body/mserp_pwcteachingstuff_custom']",
+                  "item/mserp_pwctemporaryhoursenddate_custom": "@outputs('Update_a_row')?['body/mserp_pwctemporaryhoursenddate_custom']",
+                  "item/mserp_pwctermtime_custom": "@outputs('Update_a_row')?['body/mserp_pwctermtime_custom']",
+                  "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']",
+                  "item/mserp_pwcweekendworking_custom": "@outputs('Update_a_row')?['body/mserp_pwcweekendworking_custom']"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
             }
           },
           "runAfter": {
@@ -214,7 +230,7 @@
           },
           "type": "Foreach"
         },
-        "Set_variable_3": {
+        "Set_Result_Success": {
           "runAfter": {
             "Apply_to_each": [
               "Succeeded"
@@ -229,7 +245,7 @@
             "value": "Success"
           }
         },
-        "Set_variable_4": {
+        "Set_Result_Fail": {
           "runAfter": {
             "Apply_to_each": [
               "Failed",
@@ -248,7 +264,7 @@
         },
         "Respond_to_a_PowerApp_or_flow": {
           "runAfter": {
-            "Set_variable_3": [
+            "Set_Result_Success": [
               "Succeeded"
             ]
           },
@@ -293,13 +309,32 @@
             "parameters": {
               "entityName": "mserp_hcmpositiondetailentities",
               "$filter": "mserp_positionid eq '@{variables('PositionNumber')}'",
-              "$orderby": "mserp_validto desc",
+              "$orderby": "mserp_validfrom desc",
               "$top": 1
             },
             "authentication": {
               "type": "Raw",
               "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
             }
+          }
+        },
+        "Initialize_variable_-_Temporary_contract_end_date": {
+          "runAfter": {
+            "Initialize_variable_-_Result": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f5369d6b-e72d-40de-a592-858a5659ffa8"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Temporary contract end date",
+                "type": "string"
+              }
+            ]
           }
         }
       }
