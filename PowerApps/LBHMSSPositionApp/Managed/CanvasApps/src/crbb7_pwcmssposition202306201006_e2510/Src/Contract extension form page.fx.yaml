@@ -1,4 +1,5 @@
 "'Contract extension form page' As screen":
+    OnHidden: =Set(PowerAppsResult, Blank())
     OnVisible: |-
         =Set(varItem, First(SortByColumns(Filter('Position details (mserp)', Position = Param("EntityID")),"mserp_validfrom",SortOrder.Descending,"mserp_hcmpositiondetailentityid")))
         
@@ -336,7 +337,7 @@
         OnSelect: =Navigate('Home Screen'); Refresh('Position details (mserp)')
         TabIndex: =0
         Width: =59
-        X: =255
+        X: =276
         Y: =1018
         ZIndex: =2
 

@@ -18,7 +18,7 @@
     },
     {
       "LogicalName": "new_sharedcommondataserviceforapps_0c486",
-      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c,
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {

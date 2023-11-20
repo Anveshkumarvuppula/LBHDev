@@ -1,4 +1,5 @@
 "'New working hours page' As screen":
+    OnHidden: =Set(PowerAppsResult, Blank())
     OnVisible: |-
         =//UpdateContext({ButtonVisible:false})
 
@@ -250,7 +251,7 @@
         OnSelect: =Navigate('Home Screen')
         TabIndex: =0
         Width: =59
-        X: =255
+        X: =276
         Y: =1045
         ZIndex: =3
 
