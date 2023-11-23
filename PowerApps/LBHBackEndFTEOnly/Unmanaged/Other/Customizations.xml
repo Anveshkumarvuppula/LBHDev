@@ -33,6 +33,13 @@
       <statecode>0</statecode>
       <statuscode>1</statuscode>
     </connectionreference>
+    <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_cb0dc">
+      <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHBackEndFTEOnly-cb0dc</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
     <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_fcb03">
       <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHBackEndFTEOnly-fcb03</connectionreferencedisplayname>
       <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>

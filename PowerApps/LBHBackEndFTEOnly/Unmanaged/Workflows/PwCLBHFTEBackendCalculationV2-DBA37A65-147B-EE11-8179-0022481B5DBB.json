@@ -10,13 +10,22 @@
           "name": "shared_commondataserviceforapps"
         }
       },
-      "shared_dynamicsax": {
+      "shared_dynamicsax_2": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_fcb03"
+          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_cb0dc"
         },
         "api": {
           "name": "shared_dynamicsax"
+        }
+      },
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_f0055"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
         }
       }
     },
@@ -133,7 +142,7 @@
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_dynamicsax",
+              "connectionName": "shared_dynamicsax_2",
               "operationId": "GetItem",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
             },
@@ -157,7 +166,7 @@
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_dynamicsax",
+              "connectionName": "shared_dynamicsax_2",
               "operationId": "GetItem",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
             },
@@ -1440,30 +1449,27 @@
                     "format": "#.##"
                   }
                 },
-                "Update_a_record_2": {
+                "Update_a_row_2": {
                   "runAfter": {
                     "Format_number_3": [
                       "Succeeded"
                     ]
                   },
                   "metadata": {
-                    "operationMetadataId": "0636a695-1670-486a-8bf3-7e9ef945b63e"
+                    "operationMetadataId": "5e73e40e-51c9-445c-afe1-f7e308f93b2a"
                   },
                   "type": "OpenApiConnection",
                   "inputs": {
                     "host": {
-                      "connectionName": "shared_dynamicsax",
-                      "operationId": "PatchItem",
-                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+                      "connectionName": "shared_commondataserviceforapps_1",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                     },
                     "parameters": {
-                      "dataset": "lbh-fo-uat-10.sandbox.operations.dynamics.com",
-                      "table": "PositionDetails",
-                      "id": "@{outputs('Get_Position')?['body/mserp_positionid']},@{outputs('Get_Position_Details')?['body/mserp_validfrom']},@{outputs('Get_Position_Details')?['body/mserp_validto']}",
-                      "item/PositionId": "@outputs('Get_Position')?['body/mserp_positionid']",
-                      "item/JobId": "@outputs('Get_Position_Details')?['body/mserp_jobid']",
-                      "item/FullTimeEquivalent": "@body('Format_number_3')",
-                      "item/PwCEmploymentFactor_Custom": "@body('Format_number')"
+                      "entityName": "mserp_hcmpositiondetailentities",
+                      "recordId": "@outputs('Get_Position_Details')?['body/mserp_hcmpositiondetailentityid']",
+                      "item/mserp_pwcemploymentfactor_custom": "@body('Format_number')",
+                      "item/mserp_fulltimeequivalent": "@body('Format_number_3')"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
@@ -1525,33 +1531,31 @@
                     "kind": "FormatNumber",
                     "inputs": {
                       "number": "@outputs('FTECalculationNonTerm')",
-                      "format": "#.##"
+                      "format": "0#.##"
                     }
                   },
-                  "Update_a_record_4": {
+                  "Update_a_row": {
                     "runAfter": {
                       "Format_number_2": [
                         "Succeeded"
                       ]
                     },
                     "metadata": {
-                      "operationMetadataId": "0636a695-1670-486a-8bf3-7e9ef945b63e"
+                      "operationMetadataId": "67699374-acdd-4050-82fa-0b8b988944e9"
                     },
                     "type": "OpenApiConnection",
                     "inputs": {
                       "host": {
-                        "connectionName": "shared_dynamicsax",
-                        "operationId": "PatchItem",
-                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+                        "connectionName": "shared_commondataserviceforapps_1",
+                        "operationId": "UpdateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                       },
                       "parameters": {
-                        "dataset": "lbh-fo-uat-10.sandbox.operations.dynamics.com",
-                        "table": "PositionDetails",
-                        "id": "@{outputs('Get_Position')?['body/mserp_positionid']},@{outputs('Get_Position_Details')?['body/mserp_validfrom']},@{outputs('Get_Position_Details')?['body/mserp_validto']}",
-                        "item/PositionId": "@outputs('Get_Position')?['body/mserp_positionid']",
-                        "item/JobId": "@outputs('Get_Position_Details')?['body/mserp_jobid']",
-                        "item/FullTimeEquivalent": "@body('Format_number_2')",
-                        "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
+                        "entityName": "mserp_hcmpositiondetailentities",
+                        "recordId": "@outputs('Get_Position_Details')?['body/mserp_hcmpositiondetailentityid']",
+                        "item/mserp_pwcemploymentfactor_custom": "@body('Format_number_for_EF')",
+                        "item/mserp_fulltimeequivalent": "@body('Format_number_2')",
+                        "item/mserp_pwcpositionweeksperyear_custom": 0
                       },
                       "authentication": "@parameters('$authentication')"
                     }
