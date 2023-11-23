@@ -225,7 +225,7 @@
         },
         "List_rows": {
           "runAfter": {
-            "Convert_time_zone": [
+            "Convert_time_zone_2": [
               "Succeeded"
             ]
           },
@@ -473,6 +473,24 @@
           },
           "type": "Compose",
           "inputs": "@variables('TermTimeEmployee')"
+        },
+        "Convert_time_zone_2": {
+          "runAfter": {
+            "Convert_time_zone": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "c7647c99-5bed-4886-a1d8-7e8104db3de8"
+          },
+          "type": "Expression",
+          "kind": "ConvertTimeZone",
+          "inputs": {
+            "baseTime": "@{formatDateTime(variables('TemporaryHoursEndDate'), 'yyyy-MM-ddTHH:mm:ssZ')}",
+            "formatString": "u",
+            "sourceTimeZone": "GMT Standard Time",
+            "destinationTimeZone": "UTC"
+          }
         }
       }
     },

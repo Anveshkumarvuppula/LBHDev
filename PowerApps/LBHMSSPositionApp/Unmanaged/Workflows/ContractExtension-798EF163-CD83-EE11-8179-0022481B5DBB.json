@@ -154,9 +154,7 @@
         "Set_Result_-_Failed": {
           "runAfter": {
             "Apply_to_each": [
-              "Failed",
-              "Skipped",
-              "TimedOut"
+              "Succeeded"
             ]
           },
           "metadata": {
@@ -201,6 +199,24 @@
           "inputs": {
             "name": "Result",
             "value": "Success"
+          }
+        },
+        "Convert_time_zone": {
+          "runAfter": {
+            "Initialize_variable_-_Result": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "c7647c99-5bed-4886-a1d8-7e8104db3de8"
+          },
+          "type": "Expression",
+          "kind": "ConvertTimeZone",
+          "inputs": {
+            "baseTime": "@{formatDateTime(variables('Time'), 'yyyy-MM-ddTHH:mm:ssZ')}",
+            "formatString": "u",
+            "sourceTimeZone": "GMT Standard Time",
+            "destinationTimeZone": "UTC"
           }
         },
         "List_rows": {
@@ -299,24 +315,6 @@
             "operationMetadataId": "4283218a-0a39-400e-a5da-74ee7ae89387"
           },
           "type": "Foreach"
-        },
-        "Convert_time_zone": {
-          "runAfter": {
-            "Initialize_variable_-_Result": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "c7647c99-5bed-4886-a1d8-7e8104db3de8"
-          },
-          "type": "Expression",
-          "kind": "ConvertTimeZone",
-          "inputs": {
-            "baseTime": "@{formatDateTime(variables('Time'), 'yyyy-MM-ddTHH:mm:ssZ')}",
-            "formatString": "u",
-            "sourceTimeZone": "GMT Standard Time",
-            "destinationTimeZone": "UTC"
-          }
         }
       }
     },

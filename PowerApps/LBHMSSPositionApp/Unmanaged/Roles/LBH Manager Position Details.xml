@@ -3,18 +3,39 @@
   <IsCustomizable>1</IsCustomizable>
   <RolePrivileges>
     <RolePrivilege name="prvActivateSynchronousWorkflow" level="Basic" />
+    <RolePrivilege name="prvAppendcdm_company" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmpositiondetailentity" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmpositionentity" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvAppendToAsyncOperation" level="Basic" />
+    <RolePrivilege name="prvAppendTocdm_company" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmpositiondetailentity" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmpositionentity" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvAppendToWorkflow" level="Basic" />
     <RolePrivilege name="prvAppendToWorkflowSession" level="Basic" />
     <RolePrivilege name="prvAppendWorkflow" level="Basic" />
     <RolePrivilege name="prvAppendWorkflowSession" level="Basic" />
     <RolePrivilege name="prvAssignAsyncOperation" level="Basic" />
+    <RolePrivilege name="prvAssigncdm_company" level="Global" />
     <RolePrivilege name="prvAssignWorkflow" level="Basic" />
     <RolePrivilege name="prvAssignWorkflowSession" level="Basic" />
+    <RolePrivilege name="prvCreatecdm_company" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmpositiondetailentity" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmpositionentity" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
     <RolePrivilege name="prvCreateUserApplicationMetadata" level="Basic" />
     <RolePrivilege name="prvCreateWorkflow" level="Basic" />
     <RolePrivilege name="prvCreateWorkflowSession" level="Basic" />
+    <RolePrivilege name="prvDeletecdm_company" level="Global" />
+    <RolePrivilege name="prvDeletemserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvDeletemserp_hcmpositiondetailentity" level="Global" />
+    <RolePrivilege name="prvDeletemserp_hcmpositionentity" level="Global" />
+    <RolePrivilege name="prvDeletemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvDeleteUserApplicationMetadata" level="Basic" />
     <RolePrivilege name="prvDeleteWorkflow" level="Basic" />
     <RolePrivilege name="prvDeleteWorkflowSession" level="Basic" />
@@ -24,12 +45,17 @@
     <RolePrivilege name="prvReadAttribute" level="Global" />
     <RolePrivilege name="prvReadAttributeMap" level="Global" />
     <RolePrivilege name="prvReadBusinessUnit" level="Global" />
+    <RolePrivilege name="prvReadcdm_company" level="Global" />
     <RolePrivilege name="prvReadComplexControl" level="Global" />
     <RolePrivilege name="prvReadCustomization" level="Global" />
     <RolePrivilege name="prvReadEntity" level="Global" />
     <RolePrivilege name="prvReadEntityKey" level="Global" />
     <RolePrivilege name="prvReadEntityMap" level="Global" />
     <RolePrivilege name="prvReadHierarchyRule" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmpositiondetailentity" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmpositionentity" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvReadOptionSet" level="Global" />
     <RolePrivilege name="prvReadOrganization" level="Global" />
     <RolePrivilege name="prvReadPluginAssembly" level="Global" />
@@ -56,10 +82,16 @@
     <RolePrivilege name="prvReadWorkflow" level="Global" />
     <RolePrivilege name="prvReadWorkflowSession" level="Global" />
     <RolePrivilege name="prvRetrieveMultipleSocialInsights" level="Global" />
+    <RolePrivilege name="prvSharecdm_company" level="Global" />
     <RolePrivilege name="prvShareWorkflow" level="Basic" />
     <RolePrivilege name="prvShareWorkflowSession" level="Basic" />
     <RolePrivilege name="prvWorkflowExecution" level="Global" />
     <RolePrivilege name="prvWriteAsyncOperation" level="Basic" />
+    <RolePrivilege name="prvWritecdm_company" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmpositiondetailentity" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmpositionentity" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
     <RolePrivilege name="prvWriteUserApplicationMetadata" level="Basic" />
     <RolePrivilege name="prvWriteWorkflow" level="Basic" />
