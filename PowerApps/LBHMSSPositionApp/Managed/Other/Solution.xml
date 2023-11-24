@@ -6,7 +6,7 @@
       <LocalizedName description="LBH MSSPositionApp" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.205</Version>
+    <Version>10.0.206</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -163,6 +163,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.10.179)</package>
         </Required>
         <Dependent type="1" schemaName="mserp_hcmjobentity" displayName="Jobs (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.10.179)</package>
+        </Required>
+        <Dependent type="29" displayName="Working hours change" id="{1c88db0c-8d84-ee11-8179-0022481b5dbb}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
