@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23104.216" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.23105.230" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>LBHCompensationBarPointApp</UniqueName>
     <LocalizedNames>
       <LocalizedName description="LBH Compensation Bar Point App" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.186</Version>
+    <Version>10.0.213</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -78,6 +78,8 @@
       </Addresses>
     </Publisher>
     <RootComponents>
+      <RootComponent type="1" schemaName="crbb7_compensationautonumbering" behavior="0" />
+      <RootComponent type="1" schemaName="crbb7_jobposition" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmcompensationstructureentity" behavior="0" />
       <RootComponent type="20" id="{a452670c-7a5c-ee11-8def-0022481b5ee5}" behavior="0" />
       <RootComponent type="29" id="{ff4bfcb3-115d-ee11-8def-0022481b529e}" behavior="0" />
@@ -89,6 +91,18 @@
           <package>MicrosoftOperationsVEAnchor (2.8.10.179)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" displayName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="crbb7_compensationregion" displayName="Compensation Region(T)" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_CompensationRegion_crbb" displayName="crbb7_crbb7_jobposition_CompensationRegion_crbb" parentSchemaName="crbb7_compensationregion" parentDisplayName="Compensation Region(T)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="crbb7_job" displayName="Job(T)" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_Job_crbb7_job" displayName="crbb7_crbb7_jobposition_Job_crbb7_job" parentSchemaName="crbb7_job" parentDisplayName="Job(T)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="crbb7_title" displayName="Title" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_Title_crbb7_title" displayName="crbb7_crbb7_jobposition_Title_crbb7_title" parentSchemaName="crbb7_title" parentDisplayName="Title" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmcompensationstructureentity" displayName="Compensation structure (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -145,10 +159,38 @@
         <Dependent type="10" schemaName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" displayName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="2" schemaName="crbb7_compensationregionid" displayName="Compensation Region" parentSchemaName="crbb7_compensationregion" parentDisplayName="Compensation Region(T)" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_CompensationRegion_crbb" displayName="crbb7_crbb7_jobposition_CompensationRegion_crbb" parentSchemaName="crbb7_compensationregion" parentDisplayName="Compensation Region(T)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="crbb7_jobid" displayName="Job" parentSchemaName="crbb7_job" parentDisplayName="Job(T)" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_Job_crbb7_job" displayName="crbb7_crbb7_jobposition_Job_crbb7_job" parentSchemaName="crbb7_job" parentDisplayName="Job(T)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="crbb7_name" displayName="Name" parentSchemaName="crbb7_compensationregion" parentDisplayName="Compensation Region(T)" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_CompensationRegion_crbb" displayName="crbb7_crbb7_jobposition_CompensationRegion_crbb" parentSchemaName="crbb7_compensationregion" parentDisplayName="Compensation Region(T)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="crbb7_name" displayName="Name" parentSchemaName="crbb7_job" parentDisplayName="Job(T)" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_Job_crbb7_job" displayName="crbb7_crbb7_jobposition_Job_crbb7_job" parentSchemaName="crbb7_job" parentDisplayName="Job(T)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="crbb7_name" displayName="Name" parentSchemaName="crbb7_title" parentDisplayName="Title" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_Title_crbb7_title" displayName="crbb7_crbb7_jobposition_Title_crbb7_title" parentSchemaName="crbb7_title" parentDisplayName="Title" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="crbb7_titleid" displayName="Title" parentSchemaName="crbb7_title" parentDisplayName="Title" solution="Active" />
+        <Dependent type="10" schemaName="crbb7_crbb7_jobposition_Title_crbb7_title" displayName="crbb7_crbb7_jobposition_Title_crbb7_title" parentSchemaName="crbb7_title" parentDisplayName="Title" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="2" schemaName="mserp_dataareaid_id" displayName="Company" parentSchemaName="mserp_hcmcompensationstructureentity" parentDisplayName="Compensation structure (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.10.179)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" displayName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="9" schemaName="crbb7_jobtitledeprecated" displayName="Job Title(deprecated)" solution="Active" />
+        <Dependent type="2" schemaName="crbb7_titledeprecated" displayName="Title(deprecated)" parentSchemaName="crbb7_jobposition" parentDisplayName="Job Position(T)" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>

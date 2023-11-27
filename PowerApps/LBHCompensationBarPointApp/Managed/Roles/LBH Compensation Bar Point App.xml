@@ -3,12 +3,22 @@
   <IsCustomizable>1</IsCustomizable>
   <RolePrivileges>
     <RolePrivilege name="prvAppendcdm_company" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmcompensationstructureentity" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmcompfixedemplentity" level="Global" />
     <RolePrivilege name="prvAppendTocdm_company" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmcompensationstructureentity" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmcompfixedemplentity" level="Global" />
     <RolePrivilege name="prvAssigncdm_company" level="Global" />
     <RolePrivilege name="prvCreatecdm_company" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmcompensationstructureentity" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmcompfixedemplentity" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
     <RolePrivilege name="prvDeletecdm_company" level="Global" />
+    <RolePrivilege name="prvDeletemserp_hcmcompensationstructureentity" level="Global" />
+    <RolePrivilege name="prvDeletemserp_hcmcompfixedemplentity" level="Global" />
     <RolePrivilege name="prvReadcdm_company" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmcompensationstructureentity" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmcompfixedemplentity" level="Global" />
     <RolePrivilege name="prvReadPluginAssembly" level="Global" />
     <RolePrivilege name="prvReadPluginType" level="Global" />
     <RolePrivilege name="prvReadSdkMessage" level="Global" />
@@ -18,6 +28,8 @@
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
     <RolePrivilege name="prvSharecdm_company" level="Global" />
     <RolePrivilege name="prvWritecdm_company" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmcompensationstructureentity" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmcompfixedemplentity" level="Global" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
   </RolePrivileges>
 </Role>
