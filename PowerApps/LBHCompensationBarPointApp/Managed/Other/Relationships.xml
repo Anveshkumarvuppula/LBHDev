@@ -1,37 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <EntityRelationship Name="business_unit_crbb7_compensationautonumbering" />
-  <EntityRelationship Name="business_unit_crbb7_compensationregion" />
-  <EntityRelationship Name="business_unit_crbb7_job" />
-  <EntityRelationship Name="business_unit_crbb7_jobposition" />
-  <EntityRelationship Name="crbb7_compensationautonumbering_Position_crbb7_" />
-  <EntityRelationship Name="crbb7_crbb7_job_JobFunction_crbb7_jobfunction" />
-  <EntityRelationship Name="crbb7_crbb7_job_JobType_crbb7_jobtype" />
-  <EntityRelationship Name="crbb7_crbb7_jobposition_CompensationRegion_crbb" />
-  <EntityRelationship Name="crbb7_crbb7_jobposition_Job_crbb7_job" />
-  <EntityRelationship Name="crbb7_crbb7_jobposition_OwningTeam_team" />
-  <EntityRelationship Name="crbb7_crbb7_jobposition_OwningUser_systemuser" />
-  <EntityRelationship Name="crbb7_crbb7_jobposition_ParentJobPosition_crbb7" />
-  <EntityRelationship Name="crbb7_crbb7_jobposition_Title_crbb7_title" />
   <EntityRelationship Name="lk_crbb7_compensationautonumbering_createdby" />
   <EntityRelationship Name="lk_crbb7_compensationautonumbering_modifiedby" />
-  <EntityRelationship Name="lk_crbb7_compensationregion_createdby" />
-  <EntityRelationship Name="lk_crbb7_compensationregion_modifiedby" />
-  <EntityRelationship Name="lk_crbb7_job_createdby" />
-  <EntityRelationship Name="lk_crbb7_job_modifiedby" />
-  <EntityRelationship Name="lk_crbb7_jobposition_createdby" />
-  <EntityRelationship Name="lk_crbb7_jobposition_modifiedby" />
   <EntityRelationship Name="mserp_HcmCompensationStructureEntity_dataAreaId_rel" />
   <EntityRelationship Name="owner_crbb7_compensationautonumbering" />
-  <EntityRelationship Name="owner_crbb7_compensationregion" />
-  <EntityRelationship Name="owner_crbb7_job" />
-  <EntityRelationship Name="owner_crbb7_jobposition" />
   <EntityRelationship Name="team_crbb7_compensationautonumbering" />
-  <EntityRelationship Name="team_crbb7_compensationregion" />
-  <EntityRelationship Name="team_crbb7_job" />
-  <EntityRelationship Name="team_crbb7_jobposition" />
   <EntityRelationship Name="user_crbb7_compensationautonumbering" />
-  <EntityRelationship Name="user_crbb7_compensationregion" />
-  <EntityRelationship Name="user_crbb7_job" />
-  <EntityRelationship Name="user_crbb7_jobposition" />
 </EntityRelationships>
