@@ -126,7 +126,7 @@
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
             Order: =6
-            Text: =Text(ThisItem.'Redundancy date',DateTimeFormat.LongDateTime)
+            Text: =Text(ThisItem.'Redundancy date (mserp_pwcredundancydate_custom)',DateTimeFormat.LongDateTime)
             Width: =100
             X: =0
             Y: =0
@@ -168,7 +168,7 @@
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
             Order: =9
-            Text: =Text(ThisItem.'Probation period',DateTimeFormat.LongDateTime)
+            Text: =Text(ThisItem.'Probation period (mserp_pwcprobperiod_custom)',DateTimeFormat.LongDateTime)
             Width: =100
             X: =0
             Y: =0
@@ -238,7 +238,7 @@
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
             Order: =19
-            Text: =ThisItem.'Positions V2'.mserp_hcmpositionv2entityid
+            Text: =ThisItem.'Positions V2'.'Positions V2 (mserp)'
             Width: =100
             X: =0
             Y: =0
@@ -1442,7 +1442,7 @@
         "'Probation period_DataCard1' As typedDataCard.dateTimeEditCard":
             BorderStyle: =BorderStyle.Solid
             DataField: ="mserp_pwcprobperiod_custom"
-            Default: =ThisItem.'Probation period'
+            Default: =ThisItem.'Probation period (mserp_pwcprobperiod_custom)'
             DisplayMode: =Parent.DisplayMode
             DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcprobperiod_custom")
             Fill: =RGBA(0, 0, 0, 0)
@@ -1867,7 +1867,7 @@
         "'Redundancy date_DataCard1' As typedDataCard.dateTimeEditCard":
             BorderStyle: =BorderStyle.Solid
             DataField: ="mserp_pwcredundancydate_custom"
-            Default: =ThisItem.'Redundancy date'
+            Default: =ThisItem.'Redundancy date (mserp_pwcredundancydate_custom)'
             DisplayMode: =Parent.DisplayMode
             DisplayName: =DataSourceInfo([@'Position details (mserp)'],DataSourceInfo.DisplayName,"mserp_pwcredundancydate_custom")
             Fill: =RGBA(0, 0, 0, 0)
