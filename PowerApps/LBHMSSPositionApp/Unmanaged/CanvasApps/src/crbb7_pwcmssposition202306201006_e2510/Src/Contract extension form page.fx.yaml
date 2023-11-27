@@ -254,7 +254,7 @@
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
             Order: =17
-            Text: =Text(ThisItem.'Redundancy date',DateTimeFormat.LongDateTime)
+            Text: =Text(ThisItem.'Redundancy date (mserp_pwcredundancydate_custom)',DateTimeFormat.LongDateTime)
             Width: =100
             X: =0
             Y: =0
@@ -268,7 +268,7 @@
             Height: =Parent.Height
             LayoutHeight: =Parent.Height
             Order: =18
-            Text: =Text(ThisItem.'Probation period',DateTimeFormat.LongDateTime)
+            Text: =Text(ThisItem.'Probation period (mserp_pwcprobperiod_custom)',DateTimeFormat.LongDateTime)
             Width: =100
             X: =0
             Y: =0
@@ -523,7 +523,8 @@
                 DisplayMode: =Parent.DisplayMode
                 EndYear: =Year(Today())+100
                 Format: |-
-                    =Text(DateValue(DateValue7.SelectedDate),"[$-en-GB]yyyy-mm-dd")
+                    ="dd/mm/yyyy" 
+                    //Text(DateValue(DateValue7.SelectedDate),"[$-en-GB]yyyy-mm-dd")
                     
                     //Text(DateValue(DateValue7.SelectedDate, "en"), DateTimeFormat.LongDateTime)
                     
@@ -1637,7 +1638,7 @@
         "'Probation period_DataCard2' As typedDataCard.dateTimeEditCard":
             BorderStyle: =BorderStyle.Solid
             DataField: ="mserp_pwcprobperiod_custom"
-            Default: =ThisItem.'Probation period'
+            Default: =ThisItem.'Probation period (mserp_pwcprobperiod_custom)'
             DisplayMode: =Parent.DisplayMode
             DisplayName: =DataSourceInfo('Position details (mserp)', DataSourceInfo.DisplayName,"mserp_pwcprobperiod_custom")
             Fill: =RGBA(0, 0, 0, 0)

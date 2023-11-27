@@ -5,12 +5,14 @@
     <RolePrivilege name="prvActivateSynchronousWorkflow" level="Basic" />
     <RolePrivilege name="prvAppendcdm_company" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvAppendmserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmworkerentity" level="Global" />
     <RolePrivilege name="prvAppendToAsyncOperation" level="Basic" />
     <RolePrivilege name="prvAppendTocdm_company" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvAppendTomserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmworkerentity" level="Global" />
@@ -24,6 +26,7 @@
     <RolePrivilege name="prvAssignWorkflowSession" level="Basic" />
     <RolePrivilege name="prvCreatecdm_company" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvCreatemserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmworkerentity" level="Global" />
@@ -53,6 +56,7 @@
     <RolePrivilege name="prvReadEntityMap" level="Global" />
     <RolePrivilege name="prvReadHierarchyRule" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvReadmserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmworkerentity" level="Global" />
@@ -89,6 +93,7 @@
     <RolePrivilege name="prvWriteAsyncOperation" level="Basic" />
     <RolePrivilege name="prvWritecdm_company" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmjobentity" level="Global" />
+    <RolePrivilege name="prvWritemserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmworkerentity" level="Global" />
