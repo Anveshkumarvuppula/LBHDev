@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23104.216" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.23105.230" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>LBHCompensationBarPointApp</UniqueName>
     <LocalizedNames>
       <LocalizedName description="LBH Compensation Bar Point App" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.186</Version>
+    <Version>10.0.216</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -78,6 +78,7 @@
       </Addresses>
     </Publisher>
     <RootComponents>
+      <RootComponent type="1" schemaName="crbb7_compensationautonumbering" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmcompensationstructureentity" behavior="0" />
       <RootComponent type="20" id="{a452670c-7a5c-ee11-8def-0022481b5ee5}" behavior="0" />
       <RootComponent type="29" id="{ff4bfcb3-115d-ee11-8def-0022481b529e}" behavior="0" />

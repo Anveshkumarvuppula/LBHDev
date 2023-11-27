@@ -25,7 +25,7 @@
         }
       },
       "triggers": {
-        "When_a_row_is_added,_modified_or_deleted": {
+        "When_a_row_is_added": {
           "metadata": {
             "operationMetadataId": "9c08a234-f7b1-421a-a6c4-4c5c4d04b220"
           },
@@ -46,28 +46,9 @@
         }
       },
       "actions": {
-        "Get_a_record": {
-          "runAfter": {},
-          "metadata": {
-            "operationMetadataId": "c3ab37ad-b16f-4d78-9406-f3fe0fc574c2"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "host": {
-              "connectionName": "shared_commondataserviceforapps",
-              "operationId": "GetItem",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-            },
-            "parameters": {
-              "entityName": "mserp_hcmcompfixedemplentities",
-              "recordId": "@triggerOutputs()?['body/mserp_hcmcompfixedemplentityid']"
-            },
-            "authentication": "@parameters('$authentication')"
-          }
-        },
-        "Update_a_row": {
+        "Update_the_auto_numbering_too_Emp_Fixed_Compensation": {
           "runAfter": {
-            "Get_a_record": [
+            "Generate_Auto_Numbering_for_Compensation_created_above": [
               "Succeeded"
             ]
           },
@@ -83,8 +64,27 @@
             },
             "parameters": {
               "entityName": "mserp_hcmcompfixedemplentities",
-              "recordId": "@outputs('Get_a_record')?['body/mserp_hcmcompfixedemplentityid']",
-              "item/mserp_pwccompensationid_custom": "@outputs('Get_a_record')?['body/mserp_pwccompensationid_custom']"
+              "recordId": "@triggerOutputs()?['body/mserp_hcmcompfixedemplentityid']",
+              "item/mserp_pwccompensationid_custom": "@outputs('Generate_Auto_Numbering_for_Compensation_created_above')?['body/crbb7_compensationidautonumber']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Generate_Auto_Numbering_for_Compensation_created_above": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "931b6111-726f-4eb8-88ce-34395c151cb4"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "CreateRecord",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "crbb7_compensationautonumberings",
+              "item/crbb7_name": "@triggerOutputs()?['body/mserp_hcmcompfixedemplentityid']"
             },
             "authentication": "@parameters('$authentication')"
           }
