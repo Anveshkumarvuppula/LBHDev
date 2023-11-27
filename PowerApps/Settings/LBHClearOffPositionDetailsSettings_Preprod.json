@@ -2,7 +2,7 @@
   "EnvironmentVariables": [],
   "ConnectionReferences": [
     {
-      "LogicalName": "crbb7_CommonDataService",
+      "LogicalName": "new_sharedcommondataserviceforapps_5ed54",
       "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     }

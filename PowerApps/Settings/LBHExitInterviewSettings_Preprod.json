@@ -2,18 +2,18 @@
   "EnvironmentVariables": [
     {
       "SchemaName": "crbb7_MSFormsExitInterviewVar",
-      "Value": "LBH QA Exit Interview"
+      "Value": "bb668e591e7543c4b14d776537f030bd"
     }
   ],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_Mail",
-      "ConnectionId": "3e9249b7273c4663a81aa380afb81abb",
+      "ConnectionId": "1bb33474cd854d6bb6f0bec4fb34ddd2",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
     },
     {
       "LogicalName": "crbb7_sharedmicrosoftforms_042d1",
-      "ConnectionId": "8c3263eea2254ae48556d7682e2dae1b",
+      "ConnectionId": "bb668e591e7543c4b14d776537f030bd",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
     }
   ]
