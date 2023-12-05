@@ -2,7 +2,6 @@
   "properties": {
     "connectionReferences": {
       "shared_commondataserviceforapps": {
-        "impersonation": {},
         "runtimeSource": "embedded",
         "connection": {
           "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_7fe85"
@@ -27,26 +26,6 @@
         },
         "api": {
           "name": "shared_dynamicsax"
-        }
-      },
-      "shared_commondataserviceforapps_3": {
-        "impersonation": {},
-        "runtimeSource": "embedded",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_f0055"
-        },
-        "api": {
-          "name": "shared_commondataserviceforapps"
-        }
-      },
-      "shared_commondataserviceforapps_2": {
-        "impersonation": {},
-        "runtimeSource": "embedded",
-        "connection": {
-          "connectionReferenceLogicalName": "crbb7_CommonDataService"
-        },
-        "api": {
-          "name": "shared_commondataserviceforapps"
         }
       }
     },
@@ -379,9 +358,9 @@
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
               "connectionName": "shared_commondataserviceforapps",
-              "operationId": "ListRecords"
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
             "parameters": {
               "entityName": "mserp_hcmpositiondetailentities",
@@ -389,7 +368,10 @@
               "$orderby": "mserp_validto desc",
               "$top": 1
             },
-            "authentication": "@parameters('$authentication')"
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
           }
         },
         "Apply_to_each": {
@@ -403,15 +385,18 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                   "connectionName": "shared_commondataserviceforapps",
-                  "operationId": "GetItem"
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },
                 "parameters": {
                   "entityName": "mserp_hcmpositiondetailentities",
                   "recordId": "@items('Apply_to_each')?['mserp_hcmpositiondetailentityid']"
                 },
-                "authentication": "@parameters('$authentication')"
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
               }
             },
             "FormatEffectiveDateForEmail": {
@@ -437,15 +422,18 @@
                   "type": "OpenApiConnection",
                   "inputs": {
                     "host": {
-                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                       "connectionName": "shared_commondataserviceforapps",
-                      "operationId": "GetItem"
+                      "operationId": "GetItem",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                     },
                     "parameters": {
                       "entityName": "mserp_hcmworkerentities",
                       "recordId": "@items('Apply_to_each_2')?['_mserp_fk_worker_id_value']"
                     },
-                    "authentication": "@parameters('$authentication')"
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
                   }
                 },
                 "WorkerNumber": {
@@ -488,15 +476,18 @@
                       "type": "OpenApiConnection",
                       "inputs": {
                         "host": {
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                           "connectionName": "shared_commondataserviceforapps",
-                          "operationId": "ListRecords"
+                          "operationId": "ListRecords",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                         },
                         "parameters": {
                           "entityName": "mserp_hcmemploymententities",
                           "$filter": "mserp_FK_EmployedWorker_Id eq '@{outputs('GetWorker')?['body/mserp_hcmworkerentityid']}'"
                         },
-                        "authentication": "@parameters('$authentication')"
+                        "authentication": {
+                          "type": "Raw",
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                        }
                       }
                     },
                     "Apply_to_each_3": {
@@ -510,16 +501,19 @@
                           "type": "OpenApiConnection",
                           "inputs": {
                             "host": {
-                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                               "connectionName": "shared_commondataserviceforapps",
-                              "operationId": "GetItem"
+                              "operationId": "GetItem",
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                             },
                             "parameters": {
                               "entityName": "mserp_hcmemploymententities",
                               "recordId": "@items('Apply_to_each_3')?['mserp_hcmemploymententityid']",
                               "$select": "mserp_employmentstartdate"
                             },
-                            "authentication": "@parameters('$authentication')"
+                            "authentication": {
+                              "type": "Raw",
+                              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                            }
                           }
                         },
                         "EmploymentStartTimeTickValue_2": {
@@ -774,9 +768,9 @@
                                       "type": "OpenApiConnection",
                                       "inputs": {
                                         "host": {
-                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                           "connectionName": "shared_commondataserviceforapps",
-                                          "operationId": "ListRecords"
+                                          "operationId": "ListRecords",
+                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                                         },
                                         "parameters": {
                                           "entityName": "crbb7_lbhannualleavedayses",
@@ -784,7 +778,10 @@
                                           "$orderby": "crbb7_annualleave desc",
                                           "$top": 1
                                         },
-                                        "authentication": "@parameters('$authentication')"
+                                        "authentication": {
+                                          "type": "Raw",
+                                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                                        }
                                       }
                                     },
                                     "Apply_to_each_5": {
@@ -854,9 +851,9 @@
                                         "type": "OpenApiConnection",
                                         "inputs": {
                                           "host": {
-                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                             "connectionName": "shared_commondataserviceforapps",
-                                            "operationId": "ListRecords"
+                                            "operationId": "ListRecords",
+                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
@@ -864,7 +861,10 @@
                                             "$orderby": "crbb7_annualleave desc",
                                             "$top": 1
                                           },
-                                          "authentication": "@parameters('$authentication')"
+                                          "authentication": {
+                                            "type": "Raw",
+                                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                                          }
                                         }
                                       },
                                       "Apply_to_each_6": {
@@ -949,16 +949,19 @@
                                         "type": "OpenApiConnection",
                                         "inputs": {
                                           "host": {
-                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                             "connectionName": "shared_commondataserviceforapps",
-                                            "operationId": "ListRecords"
+                                            "operationId": "ListRecords",
+                                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
                                             "$filter": "crbb7_Years eq '@{variables('YearsLBHService NOW')}'",
                                             "$top": 1
                                           },
-                                          "authentication": "@parameters('$authentication')"
+                                          "authentication": {
+                                            "type": "Raw",
+                                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                                          }
                                         }
                                       },
                                       "Apply_to_each_7": {
@@ -1076,16 +1079,19 @@
                                           "type": "OpenApiConnection",
                                           "inputs": {
                                             "host": {
-                                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                                               "connectionName": "shared_commondataserviceforapps",
-                                              "operationId": "ListRecords"
+                                              "operationId": "ListRecords",
+                                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                                             },
                                             "parameters": {
                                               "entityName": "crbb7_localgovernmentleavedayses",
                                               "$filter": "crbb7_Years eq '@{outputs('Total_Service_2')}'",
                                               "$top": 1
                                             },
-                                            "authentication": "@parameters('$authentication')"
+                                            "authentication": {
+                                              "type": "Raw",
+                                              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                                            }
                                           }
                                         },
                                         "Apply_to_each_8": {
@@ -1319,9 +1325,9 @@
                       "type": "OpenApiConnection",
                       "inputs": {
                         "host": {
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail",
                           "connectionName": "shared_sendmail",
-                          "operationId": "SendEmailV3"
+                          "operationId": "SendEmailV3",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                         },
                         "parameters": {
                           "request/to": "yaminia@hcl.com;anveshkumar.v@hcl.com;\n",
@@ -1329,8 +1335,8 @@
                           "request/text": "<p>This worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: <br>\nEnd date (if applicable): <br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;</p>"
                         },
                         "authentication": {
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
-                          "type": "Raw"
+                          "type": "Raw",
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                         }
                       }
                     },
@@ -1346,9 +1352,9 @@
                       "type": "OpenApiConnection",
                       "inputs": {
                         "host": {
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
                           "connectionName": "shared_dynamicsax_3",
-                          "operationId": "PatchItem"
+                          "operationId": "PatchItem",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                         },
                         "parameters": {
                           "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
@@ -1360,8 +1366,8 @@
                           "item/PwCEmploymentFactor_Custom": "@body('Format_number_EF_2')"
                         },
                         "authentication": {
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
-                          "type": "Raw"
+                          "type": "Raw",
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                         }
                       }
                     }
@@ -1437,9 +1443,9 @@
                         "type": "OpenApiConnection",
                         "inputs": {
                           "host": {
-                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail",
                             "connectionName": "shared_sendmail",
-                            "operationId": "SendEmailV3"
+                            "operationId": "SendEmailV3",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                           },
                           "parameters": {
                             "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;\n",
@@ -1447,8 +1453,8 @@
                             "request/text": "<p>This worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: <br>\nEnd date (if applicable): <br>\nTerm time: No<br>\nFTE:&nbsp; </p>"
                           },
                           "authentication": {
-                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
-                            "type": "Raw"
+                            "type": "Raw",
+                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                           }
                         }
                       },
@@ -1464,9 +1470,9 @@
                         "type": "OpenApiConnection",
                         "inputs": {
                           "host": {
-                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
                             "connectionName": "shared_dynamicsax_3",
-                            "operationId": "PatchItem"
+                            "operationId": "PatchItem",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                           },
                           "parameters": {
                             "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
@@ -1478,8 +1484,8 @@
                             "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
                           },
                           "authentication": {
-                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
-                            "type": "Raw"
+                            "type": "Raw",
+                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                           }
                         }
                       }
@@ -1519,15 +1525,18 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
-                  "connectionName": "shared_commondataserviceforapps_3",
-                  "operationId": "ListRecords"
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },
                 "parameters": {
                   "entityName": "mserp_hcmpositionworkerassignmentv2entities",
                   "$filter": "mserp_positionid eq '50000329'"
                 },
-                "authentication": "@parameters('$authentication')"
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
               }
             },
             "Convert_time_zone": {
@@ -1595,16 +1604,19 @@
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
-              "connectionName": "shared_commondataserviceforapps_2",
-              "operationId": "ListRecords"
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
             "parameters": {
               "entityName": "mserp_hcmpositionv2entities",
               "$filter": "mserp_positionid eq '@{triggerBody()['text']}'",
               "$top": 1
             },
-            "authentication": "@parameters('$authentication')"
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
           }
         },
         "Apply_to_each_9": {
@@ -1618,15 +1630,18 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
                   "connectionName": "shared_commondataserviceforapps",
-                  "operationId": "GetItem"
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },
                 "parameters": {
                   "entityName": "mserp_hcmpositionv2entities",
                   "recordId": "@items('Apply_to_each_9')?['mserp_hcmpositionv2entityid']"
                 },
-                "authentication": "@parameters('$authentication')"
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
               }
             },
             "Get_Job": {
@@ -1641,15 +1656,18 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
-                  "connectionName": "shared_commondataserviceforapps_2",
-                  "operationId": "GetItem"
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },
                 "parameters": {
                   "entityName": "mserp_hcmjobentities",
                   "recordId": "@outputs('Get_Job_Position')?['body/_mserp_fk_job_id_value']"
                 },
-                "authentication": "@parameters('$authentication')"
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
               }
             },
             "Get_Job_Function": {
@@ -1664,15 +1682,18 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
-                  "connectionName": "shared_commondataserviceforapps_2",
-                  "operationId": "GetItem"
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                 },
                 "parameters": {
                   "entityName": "mserp_hcmjobfunctionentities",
                   "recordId": "@outputs('Get_Job')?['body/_mserp_fk_jobfunction_id_value']"
                 },
-                "authentication": "@parameters('$authentication')"
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
               }
             },
             "Get_a_record": {
@@ -1687,9 +1708,9 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
                   "connectionName": "shared_dynamicsax_3",
-                  "operationId": "GetItem"
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                 },
                 "parameters": {
                   "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
@@ -1697,8 +1718,8 @@
                   "id": "1000,@{outputs('Get_Job_Function')?['body/mserp_jobfunctionid']},2008-01-01T12:00:00Z"
                 },
                 "authentication": {
-                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
-                  "type": "Raw"
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                 }
               }
             },
@@ -1714,9 +1735,9 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax",
                   "connectionName": "shared_dynamicsax_3",
-                  "operationId": "GetItem"
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                 },
                 "parameters": {
                   "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
@@ -1724,8 +1745,8 @@
                   "id": "@{outputs('Get_a_record')?['body/dataAreaId']},@{outputs('Get_a_record')?['body/UnionAfflnCode']},2005-01-01T12:00:00Z"
                 },
                 "authentication": {
-                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
-                  "type": "Raw"
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
                 }
               }
             },
@@ -1788,7 +1809,7 @@
         }
       }
     },
-    "templateName": null
+    "templateName": ""
   },
   "schemaVersion": "1.0.0.0"
 }
