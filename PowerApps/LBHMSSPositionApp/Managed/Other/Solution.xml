@@ -6,7 +6,7 @@
       <LocalizedName description="LBH MSSPositionApp" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.248</Version>
+    <Version>10.0.249</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -319,12 +319,12 @@
         <Dependent type="29" displayName="Working hours change" id="{1c88db0c-8d84-ee11-8179-0022481b5dbb}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_afe0e" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e" />
-        <Dependent type="29" displayName="LBH Send Contract Extension Email" id="{fa0e2ff0-0f5d-ee11-8def-0022481b529e}" />
+        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_66d48" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_66d48" />
+        <Dependent type="29" displayName="Contract Extension" id="{798ef163-cd83-ee11-8179-0022481b5dbb}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_f0055" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_f0055" />
-        <Dependent type="29" displayName="Contract Extension" id="{798ef163-cd83-ee11-8179-0022481b5dbb}" />
+        <Required type="connectionreference" displayName="crbb7_sharedcommondataserviceforapps_afe0e" solution="Active" id.connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_afe0e" />
+        <Dependent type="29" displayName="LBH Send Contract Extension Email" id="{fa0e2ff0-0f5d-ee11-8def-0022481b529e}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="connectionreference" displayName="crbb7_sharedsendmail_49c4a" solution="Active" id.connectionreferencelogicalname="crbb7_sharedsendmail_49c4a" />
