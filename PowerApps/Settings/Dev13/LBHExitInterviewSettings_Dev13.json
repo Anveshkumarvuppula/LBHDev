@@ -1,0 +1,20 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_MSFormsExitInterviewVar",
+      "Value": "U5nD0tuoPEyX8tLcdvs-LFg7Rur8FWVGoa3dQU0EHTlUNERIWEU0MjRFM1FFQ09SMzJXMVBQU1hSQy4u"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_Mail",
+      "ConnectionId": "f866e5cb07ab45ebadfbfdb62be28048",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_042d1",
+      "ConnectionId": "2b918732f55b4ca9a1f8328afce554dd",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    }
+  ]
+}

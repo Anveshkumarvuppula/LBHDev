@@ -1,0 +1,34 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_LBHRoutingNumber",
+      "Value": "200000007"
+    },
+    {
+      "SchemaName": "crbb7_LBHTestPayrolEmail",
+      "Value": "test.payroll@harrow.gov.uk"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_Mail",
+      "ConnectionId": "f866e5cb07ab45ebadfbfdb62be28048",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+    },
+    {
+      "LogicalName": "crbb7_RVMSDataVerseLoqateBankValidation",
+      "ConnectionId": "84af91815404463184b4adf21876a1cf",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_afe0e",
+      "ConnectionId": "84af91815404463184b4adf21876a1cf",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_sharedsendmail_49c4a",
+      "ConnectionId": "f866e5cb07ab45ebadfbfdb62be28048",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_entityEnvVariable",
+      "Value": "https://lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_66d48",
+      "ConnectionId": "337c82da6a994833883c46cdf3cdf607",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_f0055",
+      "ConnectionId": "337c82da6a994833883c46cdf3cdf607",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_446fd",
+      "ConnectionId": "36d88e030f9e4b95bea02b893a48d801",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_fcb03",
+      "ConnectionId": "36d88e030f9e4b95bea02b893a48d801",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    }
+  ]
+}
