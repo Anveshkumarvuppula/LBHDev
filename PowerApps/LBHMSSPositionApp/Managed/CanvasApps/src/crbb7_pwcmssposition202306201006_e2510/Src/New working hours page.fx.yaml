@@ -262,7 +262,7 @@
         Height: =626
         Item: ='New Details Table'.Selected
         OnFailure: =Notify('Change working hours form'.Error);Navigate(Fail)
-        OnSuccess: =LBHMSSFTECalculationParent.Run('New Details Table'.Selected.Position,UserName);Navigate(ConfirmSave)
+        OnSuccess: =//LBHMSSFTECalculationParent.Run('New Details Table'.Selected.Position,UserName);Navigate(ConfirmSave)
         Width: =640
         Y: =193
         ZIndex: =4
@@ -1994,7 +1994,9 @@
         Fill: =RGBA(109, 49, 162, 1)
         Height: =73
         OnSelect: |-
-            =Set(PowerAppsResult, Workinghourschange.Run(DataCardValue7.Text, 'Expire date format', DataCardValue5.Text, 'Temp Hour End date', DataCardValue6.Selected.Value, DataCardValue12.Text, DataCardValue13.Selected.Value, DataCardValue14.Selected.Value)); If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail))
+            =Set(PowerAppsResult, Workinghourschange.Run(DataCardValue7.Text, 'Expire date format', DataCardValue5.Text, 'Temp Hour End date', DataCardValue6.Selected.Value, DataCardValue12.Text, DataCardValue13.Selected.Value, DataCardValue14.Selected.Value));
+            If(PowerAppsResult.result = "Success",LBHMSSFTECalculationParent.Run('New Details Table'.Selected.Position,UserName);Navigate(ConfirmSave));
+            If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail))
             //Set(PowerAppsResult,ExpirePrevPositionDetailsRecord.Run('New Details Table'.Selected.Position,'Expire date format'))
         Size: =24
         Text: ="Submit"

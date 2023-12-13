@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="crbb7_D365FOURL">
+  <defaultvalue>lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com</defaultvalue>
+  <description default="Environment of FO">
+    <label description="Environment of FO" languagecode="1033" />
+  </description>
+  <displayname default="D365FOURL">
+    <label description="D365FOURL" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.265</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>
