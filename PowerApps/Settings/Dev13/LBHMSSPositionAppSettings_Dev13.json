@@ -1,5 +1,15 @@
 {
-  "EnvironmentVariables": [],
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_MSSAPPEmail",
+      "Value": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk"
+    },
+    {
+      "SchemaName": "crbb7_D365FOURL",
+      "Value": "https://lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com"
+    }
+
+],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",
@@ -11,6 +21,7 @@
       "ConnectionId": "84af91815404463184b4adf21876a1cf",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
+
     {
       "LogicalName": "crbb7_shareddynamicsax_47741",
       "ConnectionId": "36d88e030f9e4b95bea02b893a48d801",

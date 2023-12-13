@@ -1,5 +1,14 @@
 {
-  "EnvironmentVariables": [],
+  "EnvironmentVariables": [
+     {
+      "SchemaName": "crbb7_MSSAPPEmail",
+      "Value": "D365.Support@harrow.gov.uk"
+    },
+    {
+      "SchemaName": "crbb7_D365FOURL",
+      "Value": "lbh-fo-preprod.sandbox.operations.dynamics.com"
+    }
+],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",
