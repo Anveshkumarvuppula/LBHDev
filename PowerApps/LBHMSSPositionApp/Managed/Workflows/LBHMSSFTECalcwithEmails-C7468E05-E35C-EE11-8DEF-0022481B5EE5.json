@@ -40,6 +40,22 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "D365FOURL (crbb7_D365FOURL)": {
+          "defaultValue": "lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_D365FOURL",
+            "description": "Environment of FO"
+          }
+        },
+        "MSSAPPEmail (crbb7_MSSAPPEmail)": {
+          "defaultValue": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk;",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSSAPPEmail",
+            "description": "Mss postion app email"
+          }
         }
       },
       "triggers": {
@@ -448,7 +464,7 @@
                   "type": "SetVariable",
                   "inputs": {
                     "name": "WorkerNumber",
-                    "value": "@outputs('GetWorker')?['body/mserp_hcmworkerentityid']"
+                    "value": "@outputs('GetWorker')?['body/mserp_personnelnumber']"
                   }
                 },
                 "WorkerName": {
@@ -463,7 +479,7 @@
                   "type": "SetVariable",
                   "inputs": {
                     "name": "WorkerName",
-                    "value": "@outputs('GetWorker')?['body/mserp_hcmworkerentityid']"
+                    "value": "@outputs('GetWorker')?['body/mserp_name']"
                   }
                 },
                 "TermTIme": {
@@ -1330,9 +1346,9 @@
                           "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                         },
                         "parameters": {
-                          "request/to": "yaminia@hcl.com;anveshkumar.v@hcl.com;\n",
-                          "request/subject": "@{variables('WorkerNumber')}@{variables('WorkerName')} Change of hours",
-                          "request/text": "<p>This worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: <br>\nEnd date (if applicable): <br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;</p>"
+                          "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
+                          "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours@{items('Apply_to_each')?['mserp_positionid']}",
+                          "request/text": "<p>This worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record_2')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;@{outputs('Update_a_record_2')?['body/PwCEmploymentFactor_Custom']}</p>"
                         },
                         "authentication": {
                           "type": "Raw",
@@ -1357,7 +1373,7 @@
                           "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                         },
                         "parameters": {
-                          "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                          "dataset": "lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com",
                           "table": "PositionDetails",
                           "id": "@{outputs('GetPositionDetails')?['body/mserp_positionid']},@{outputs('GetPositionDetails')?['body/mserp_validfrom']},@{outputs('GetPositionDetails')?['body/mserp_validto']}",
                           "item/PositionId": "@outputs('GetPositionDetails')?['body/mserp_positionid']",
@@ -1448,9 +1464,9 @@
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                           },
                           "parameters": {
-                            "request/to": "anveshkumar.v@hcl.com;yaminia@hcl.com;\n",
-                            "request/subject": "@{variables('MonthNumber')}@{variables('WorkerName')} Change of hours ",
-                            "request/text": "<p>This worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours: <br>\nEnd date (if applicable): <br>\nTerm time: No<br>\nFTE:&nbsp; </p>"
+                            "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
+                            "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours @{items('Apply_to_each')?['mserp_positionid']}",
+                            "request/text": "<p>This worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: No<br>\nFTE:&nbsp;@{outputs('Update_a_record')?['body/PwCEmploymentFactor_Custom']}</p>"
                           },
                           "authentication": {
                             "type": "Raw",
@@ -1475,7 +1491,7 @@
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                           },
                           "parameters": {
-                            "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                            "dataset": "@parameters('D365FOURL (crbb7_D365FOURL)')",
                             "table": "PositionDetails",
                             "id": "@{outputs('GetPositionDetails')?['body/mserp_positionid']},@{outputs('GetPositionDetails')?['body/mserp_validfrom']},@{outputs('GetPositionDetails')?['body/mserp_validto']}",
                             "item/PositionId": "@outputs('GetPositionDetails')?['body/mserp_positionid']",
@@ -1515,7 +1531,7 @@
             },
             "PositionAssignment": {
               "runAfter": {
-                "FormatEffectiveDateForEmail": [
+                "FormatEndDateTemporaryForEmail": [
                   "Succeeded"
                 ]
               },
@@ -1531,7 +1547,7 @@
                 },
                 "parameters": {
                   "entityName": "mserp_hcmpositionworkerassignmentv2entities",
-                  "$filter": "mserp_positionid eq '50000329'"
+                  "$filter": "mserp_positionid eq '@{outputs('GetPositionDetails')?['body/mserp_positionid']}'"
                 },
                 "authentication": {
                   "type": "Raw",
@@ -1556,6 +1572,18 @@
                 "sourceTimeZone": "GMT Standard Time",
                 "destinationTimeZone": "UTC"
               }
+            },
+            "FormatEndDateTemporaryForEmail": {
+              "runAfter": {
+                "FormatEffectiveDateForEmail": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "1ed6a707-ebd2-418f-a07e-51a9502980aa"
+              },
+              "type": "Compose",
+              "inputs": "@formatDateTime(items('Apply_to_each')?['mserp_pwctemporaryhoursenddate_custom'],'dd/MM/yyyy')"
             }
           },
           "runAfter": {
@@ -1713,7 +1741,7 @@
                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                 },
                 "parameters": {
-                  "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                  "dataset": "@parameters('D365FOURL (crbb7_D365FOURL)')",
                   "table": "PHROccupationsCollection",
                   "id": "1000,@{outputs('Get_Job_Function')?['body/mserp_jobfunctionid']},2008-01-01T12:00:00Z"
                 },
@@ -1740,7 +1768,7 @@
                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                 },
                 "parameters": {
-                  "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+                  "dataset": "@parameters('D365FOURL (crbb7_D365FOURL)')",
                   "table": "PHRUnionAfflnsCollection",
                   "id": "@{outputs('Get_a_record')?['body/dataAreaId']},@{outputs('Get_a_record')?['body/UnionAfflnCode']},2005-01-01T12:00:00Z"
                 },
