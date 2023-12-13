@@ -1,39 +1,48 @@
 {
-  "EnvironmentVariables": [],
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_MSSAPPEmail",
+      "Value": "D365.Support@harrow.gov.uk"
+    },
+    {
+      "SchemaName": "crbb7_D365FOURL",
+      "Value": "lbh-fo-qa-10.sandbox.operations.dynamics.com"
+    }
+],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",
-      "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_7fe85",
-      "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "crbb7_shareddynamicsax_47741",
-      "ConnectionId": "0340eeffedb143f68c13ca8fc1168619",
+      "ConnectionId": "959cd598a69c45f6914d1787a80e9525",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
     },
     {
       "LogicalName": "new_sharedcommondataserviceforapps_0c486",
-      "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c,
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "new_sharedcommondataserviceforapps_a1724",
-      "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "new_sharedcommondataserviceforapps_b69ce",
-      "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     },
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_66d48",
-      "ConnectionId": "292fa36de3a740a1a1c3c35cbacaaaa0",
+      "ConnectionId": "02858bd8c5de4d5696dc8de57e18718c",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     }
   ]

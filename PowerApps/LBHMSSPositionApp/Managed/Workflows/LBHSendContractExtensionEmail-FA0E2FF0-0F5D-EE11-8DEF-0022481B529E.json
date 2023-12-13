@@ -40,6 +40,14 @@
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "MSSAPPEmail (crbb7_MSSAPPEmail)": {
+          "defaultValue": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk;",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_MSSAPPEmail",
+            "description": "Mss postion app email"
+          }
         }
       },
       "triggers": {
@@ -67,18 +75,12 @@
                   "type": "string",
                   "description": "Enter initial value",
                   "x-ms-powerflows-param-ispartial": false
-                },
-                "SetContract_Value": {
-                  "type": "string",
-                  "description": "Enter variable value",
-                  "x-ms-powerflows-param-ispartial": false
                 }
               },
               "required": [
                 "Setvariable_Value",
                 "ManagerSet_Value",
-                "Contract_Value",
-                "SetContract_Value"
+                "Contract_Value"
               ]
             }
           }
@@ -195,24 +197,9 @@
             ]
           }
         },
-        "SetContract": {
-          "runAfter": {
-            "Contract": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "58459146-0762-4293-b1ff-e37d77581aaa"
-          },
-          "type": "SetVariable",
-          "inputs": {
-            "name": "Contract End Date",
-            "value": "@{triggerBody()['SetContract_Value']}"
-          }
-        },
         "EndDate": {
           "runAfter": {
-            "SetContract": [
+            "Contract": [
               "Succeeded"
             ]
           },
@@ -274,7 +261,7 @@
                 },
                 "parameters": {
                   "entityName": "mserp_hcmpositionworkerassignmentv2entities",
-                  "$filter": "mserp_FK_Position_id eq '@{items('Apply_to_each')?['mserp_hcmjobpositiondualwriteentityid']}'",
+                  "$filter": "_mserp_fk_position_id_value eq '@{items('Apply_to_each')?['mserp_hcmpositionv2entityid']}'",
                   "$orderby": "mserp_validfrom desc",
                   "$top": 1
                 },
@@ -321,7 +308,7 @@
                   "type": "SetVariable",
                   "inputs": {
                     "name": "EmployeeNumber",
-                    "value": "@outputs('Get_a_row_by_ID')?['body/crbb7_fullname']"
+                    "value": "@outputs('Get_a_row_by_ID')?['body/mserp_personnelnumber']"
                   }
                 },
                 "Set_variable_3": {
@@ -335,8 +322,8 @@
                   },
                   "type": "SetVariable",
                   "inputs": {
-                    "name": "EmployeeNumber",
-                    "value": "@outputs('Get_a_row_by_ID')?['body/crbb7_name']"
+                    "name": "EmployeeName",
+                    "value": "@outputs('Get_a_row_by_ID')?['body/mserp_name']"
                   }
                 }
               },
@@ -387,8 +374,8 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
             "parameters": {
-              "request/to": "yaminia@hcl.com;anveshkumar.v@hcl.com;",
-              "request/subject": "TEST    Extension of Contract - @{variables('EmployeeName')}@{variables('EmployeeNumber')}@{variables('PositionNumber')}",
+              "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
+              "request/subject": "Dev13 @{variables('EmployeeNumber')} Extension of Contract -@{variables('EmployeeName')} - @{variables('PositionNumber')}",
               "request/text": "<p>The employee has had a contract extension:-<br>\n<br>\nNew contract end date : &nbsp;@{variables('EndDate')}<br>\nManagers name : &nbsp;@{variables('ManagerName')}</p>"
             },
             "authentication": {

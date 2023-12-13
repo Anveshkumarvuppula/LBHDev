@@ -1,5 +1,7 @@
 "'Home Screen' As screen":
-    OnVisible: =Set(varEntityID, First(SortByColumns(Filter('Position details (mserp)', Position = Param("EntityId")),"mserp_validfrom",SortOrder.Descending)))
+    OnVisible: |+
+        =Set(varEntityID, First(SortByColumns(Filter('Position details (mserp)', Position = Param("EntityId")),"mserp_validfrom",SortOrder.Descending)))
+        
 
     "'New position details' As button":
         Fill: =RGBA(109, 49, 162, 1)
@@ -597,7 +599,8 @@
         HeadingFill: =
         HeadingSize: =21
         Height: =421
-        Items: =LookUp('Position details (mserp)', Position= Param("mserp_hcmpositiondetailentityId"))
+        Items: |
+            =LookUp('Position details (mserp)', Position= Param("mserp_hcmpositiondetailentityId"))
         Size: =21
         Visible: =false
         Width: =640

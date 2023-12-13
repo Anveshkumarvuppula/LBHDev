@@ -349,7 +349,10 @@
         Height: =626
         Item: =varItem
         OnFailure: =Notify('Contract extension form'.Error);Navigate(Fail)
-        OnSuccess: =LBHSendContractExtensionEmail.Run('Contract extension table'.Selected.Position,'Contract extension table'.Selected.Position,ManagerName,'Effective date for flow');Navigate(ConfirmSave)
+        OnSuccess: |+
+            =//LBHSendContractExtensionEmail.Run('Contract extension table'.Selected.Position,'Contract extension table'.Selected.Position,ManagerName,'Effective date for flow');
+            //Navigate(ConfirmSave)
+            
         Width: =640
         Y: =193
         ZIndex: =4
@@ -2296,7 +2299,10 @@
         DisplayMode: =If('Flow Message_1'.Text="Success",DisplayMode.Disabled,DisplayMode.Edit)
         Fill: =RGBA(78, 15, 120, 1)
         Height: =73
-        OnSelect: =Set(PowerAppsResult, Test1.Run(DataCardValue7.Text, 'Contract End Date', 'Expire date format_1')); If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail))
+        OnSelect: |
+            =Set(PowerAppsResult, Test1.Run(DataCardValue7.Text, 'Contract End Date', 'Expire date format_1'));
+            If(PowerAppsResult.result = "Success",LBHSendContractExtensionEmail.Run('Contract extension table'.Selected.Position,ManagerName,'Contract End Date','Contract extension table'.Selected.Position));
+            If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail));
         Size: =24
         Text: ="Submit"
         Width: =466
@@ -2336,7 +2342,9 @@
     "'Effective date for flow' As label":
         Height: =59
         Size: =21
-        Text: ='Contract extension form'.LastSubmit.'Temporary contract end date'
+        Text: |-
+            ='Contract extension form'.LastSubmit.'Temporary contract end date'
+            //DateValue10.SelectedDate
         Visible: =false
         Width: =252
         X: =387

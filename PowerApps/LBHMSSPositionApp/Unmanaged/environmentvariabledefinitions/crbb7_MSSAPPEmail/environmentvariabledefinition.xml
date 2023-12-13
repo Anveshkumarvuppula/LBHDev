@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="crbb7_MSSAPPEmail">
+  <defaultvalue>anveshkumar.v@hcl.com</defaultvalue>
+  <description default="Mss postion app email">
+    <label description="Mss postion app email" languagecode="1033" />
+  </description>
+  <displayname default="MSSAPPEmail">
+    <label description="MSSAPPEmail" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.265</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>
