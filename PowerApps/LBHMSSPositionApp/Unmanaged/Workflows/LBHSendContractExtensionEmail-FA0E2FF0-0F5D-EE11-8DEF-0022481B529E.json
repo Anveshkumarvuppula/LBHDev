@@ -42,7 +42,7 @@
           "type": "SecureObject"
         },
         "MSSAPPEmail (crbb7_MSSAPPEmail)": {
-          "defaultValue": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk;",
+          "defaultValue": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSSAPPEmail",
@@ -375,7 +375,7 @@
             },
             "parameters": {
               "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
-              "request/subject": "Dev13 @{variables('EmployeeNumber')} Extension of Contract -@{variables('EmployeeName')} - @{variables('PositionNumber')}",
+              "request/subject": " @{variables('EmployeeNumber')} Extension of Contract -@{variables('EmployeeName')} - @{variables('PositionNumber')}",
               "request/text": "<p>The employee has had a contract extension:-<br>\n<br>\nNew contract end date : &nbsp;@{variables('EndDate')}<br>\nManagers name : &nbsp;@{variables('ManagerName')}</p>"
             },
             "authentication": {
