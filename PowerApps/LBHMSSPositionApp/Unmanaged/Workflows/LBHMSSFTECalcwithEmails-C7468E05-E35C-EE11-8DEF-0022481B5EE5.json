@@ -50,7 +50,7 @@
           }
         },
         "MSSAPPEmail (crbb7_MSSAPPEmail)": {
-          "defaultValue": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk;",
+          "defaultValue": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSSAPPEmail",
@@ -1373,7 +1373,7 @@
                           "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                         },
                         "parameters": {
-                          "dataset": "lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com",
+                          "dataset": "@parameters('D365FOURL (crbb7_D365FOURL)')",
                           "table": "PositionDetails",
                           "id": "@{outputs('GetPositionDetails')?['body/mserp_positionid']},@{outputs('GetPositionDetails')?['body/mserp_validfrom']},@{outputs('GetPositionDetails')?['body/mserp_validto']}",
                           "item/PositionId": "@outputs('GetPositionDetails')?['body/mserp_positionid']",

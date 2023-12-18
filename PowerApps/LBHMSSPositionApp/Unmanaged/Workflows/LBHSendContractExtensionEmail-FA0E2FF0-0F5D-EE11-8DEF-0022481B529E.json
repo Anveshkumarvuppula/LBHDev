@@ -42,7 +42,7 @@
           "type": "SecureObject"
         },
         "MSSAPPEmail (crbb7_MSSAPPEmail)": {
-          "defaultValue": "anveshkumar.v@hcl.com",
+          "defaultValue": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSSAPPEmail",

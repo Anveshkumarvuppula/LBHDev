@@ -1,5 +1,5 @@
 <environmentvariabledefinition schemaname="crbb7_MSSAPPEmail">
-  <defaultvalue>anveshkumar.v@hcl.com</defaultvalue>
+  <defaultvalue>shubham_kum@hcl.com;anveshkumar.v@hcl.com</defaultvalue>
   <description default="Mss postion app email">
     <label description="Mss postion app email" languagecode="1033" />
   </description>
