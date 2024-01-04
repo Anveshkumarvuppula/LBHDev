@@ -11,7 +11,7 @@
   },
   "Properties": {
     "AppCreationSource": "AppFromScratch",
-    "AppDescription": "Empowers business users to manage and update position details, working hours, and contract extensions efficiently and accurately.",
+    "AppDescription": "Update the date format for date fields, also removed the todays date on temp hours end date.",
     "AppPreviewFlagsMap": {
       "aibuilderserviceenrollment": false,
       "allowmultiplescreensincanvaspages": false,

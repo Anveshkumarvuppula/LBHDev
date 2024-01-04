@@ -86,7 +86,7 @@
             Order: =2
             Text: =Text(ThisItem.'Temporary hours end date ',DateTimeFormat.LongDateTime)
             Width: =100
-            X: =141
+            X: =382
             Y: =0
             ZIndex: =12
 
@@ -296,9 +296,11 @@
             DateValue3 As datepicker:
                 AccessibleLabel: ="Effective"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Text(Today(), "dd/mm/yyyy")
                 DisplayMode: =Parent.DisplayMode
                 EndYear: =Year(Today())+100
                 Height: =70
+                InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Date(2001,12,31), "dd/mm/yyyy", Self.Language))
                 IsEditable: =true
                 PaddingBottom: =0
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
@@ -473,10 +475,10 @@
 
             StarVisible6 As label:
                 Align: =Align.Center
+                Color: =RGBA(255, 0, 0, 1)
                 Height: =DataCardKey13.Height
                 Size: =21
                 Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey13.Y
@@ -511,9 +513,12 @@
             DateValue4 As datepicker:
                 AccessibleLabel: ="Temporary hours end date"
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =
                 DisplayMode: =Parent.DisplayMode
                 EndYear: =Year(Today())+100
                 Height: =70
+                InputTextPlaceholder: |
+                    =If(IsBlank(Self.SelectedDate), Text(Date(2001,12,31), "dd/mm/yyyy", Self.Language))
                 IsEditable: =true
                 PaddingBottom: =0
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
@@ -616,10 +621,10 @@
 
             StarVisible9 As label:
                 Align: =Align.Center
+                Color: =RGBA(255, 0, 0, 1)
                 Height: =DataCardKey15.Height
                 Size: =21
                 Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey15.Y
@@ -689,10 +694,10 @@
 
             StarVisible10 As label:
                 Align: =Align.Center
+                Color: =RGBA(255, 0, 0, 1)
                 Height: =DataCardKey16.Height
                 Size: =21
                 Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey16.Y
@@ -762,10 +767,10 @@
 
             StarVisible11 As label:
                 Align: =Align.Center
+                Color: =RGBA(255, 0, 0, 1)
                 Height: =DataCardKey17.Height
                 Size: =21
                 Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey17.Y
@@ -835,10 +840,10 @@
 
             StarVisible12 As label:
                 Align: =Align.Center
+                Color: =RGBA(255, 0, 0, 1)
                 Height: =DataCardKey18.Height
                 Size: =21
                 Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey18.Y
@@ -1994,7 +1999,7 @@
         Fill: =RGBA(109, 49, 162, 1)
         Height: =73
         OnSelect: |-
-            =Set(PowerAppsResult, Workinghourschange.Run(DataCardValue7.Text, 'Expire date format', DataCardValue5.Text, 'Temp Hour End date', DataCardValue6.Selected.Value, DataCardValue12.Text, DataCardValue13.Selected.Value, DataCardValue14.Selected.Value));
+            =Set(PowerAppsResult, Workinghourschange.Run(DataCardValue7.Text, 'Expire date format', DataCardValue5.Text, 'Temp Hour End date', DataCardValue6.Selected.Value, DataCardValue12.Text, DataCardValue13.Selected.Value,DataCardValue14.Selected.Value));
             If(PowerAppsResult.result = "Success",LBHMSSFTECalculationParent.Run('New Details Table'.Selected.Position,UserName);Navigate(ConfirmSave));
             If(PowerAppsResult.result = "Success", Navigate(ConfirmSave), Navigate(Fail))
             //Set(PowerAppsResult,ExpirePrevPositionDetailsRecord.Run('New Details Table'.Selected.Position,'Expire date format'))
