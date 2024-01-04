@@ -48,6 +48,14 @@
             "schemaName": "crbb7_MSSAPPEmail",
             "description": "Mss postion app email"
           }
+        },
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev 13 - Testing",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
+          }
         }
       },
       "triggers": {
@@ -375,8 +383,8 @@
             },
             "parameters": {
               "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
-              "request/subject": " @{variables('EmployeeNumber')} Extension of Contract -@{variables('EmployeeName')} - @{variables('PositionNumber')}",
-              "request/text": "<p>The employee has had a contract extension:-<br>\n<br>\nNew contract end date : &nbsp;@{variables('EndDate')}<br>\nManagers name : &nbsp;@{variables('ManagerName')}</p>"
+              "request/subject": "@{variables('EmployeeNumber')} Extension of Contract -@{variables('EmployeeName')} - @{variables('PositionNumber')}",
+              "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')} <br>\nThe employee has had a contract extension:-<br>\n<br>\nNew contract end date : &nbsp;@{variables('EndDate')}<br>\nManagers name : &nbsp;@{variables('ManagerName')}</p>"
             },
             "authentication": {
               "type": "Raw",
