@@ -56,6 +56,14 @@
             "schemaName": "crbb7_MSSAPPEmail",
             "description": "Mss postion app email"
           }
+        },
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13 - Testing",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
+          }
         }
       },
       "triggers": {
@@ -1347,8 +1355,8 @@
                         },
                         "parameters": {
                           "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
-                          "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours@{items('Apply_to_each')?['mserp_positionid']}",
-                          "request/text": "<p>This worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record_2')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;@{outputs('Update_a_record_2')?['body/PwCEmploymentFactor_Custom']}</p>"
+                          "request/subject": "Dev 13 - Testing@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours@{items('Apply_to_each')?['mserp_positionid']}@{parameters('EnvSubj (crbb7_EnvSubj)')}",
+                          "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nThis worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record_2')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;@{outputs('Update_a_record_2')?['body/PwCEmploymentFactor_Custom']}</p>"
                         },
                         "authentication": {
                           "type": "Raw",
@@ -1381,10 +1389,7 @@
                           "item/FullTimeEquivalent": "@body('Format_number_for_FTE_2')",
                           "item/PwCEmploymentFactor_Custom": "@body('Format_number_EF_2')"
                         },
-                        "authentication": {
-                          "type": "Raw",
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                        }
+                        "authentication": "@parameters('$authentication')"
                       }
                     }
                   },
@@ -1466,7 +1471,7 @@
                           "parameters": {
                             "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
                             "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours @{items('Apply_to_each')?['mserp_positionid']}",
-                            "request/text": "<p>This worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: No<br>\nFTE:&nbsp;@{outputs('Update_a_record')?['body/PwCEmploymentFactor_Custom']}</p>"
+                            "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nThis worker has had their hours changed in MSS.<br>\n<br>\nManager: @{variables('Manager Name')}<br>\nEffective: @{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: No<br>\nFTE:&nbsp;@{outputs('Update_a_record')?['body/PwCEmploymentFactor_Custom']}</p>"
                           },
                           "authentication": {
                             "type": "Raw",
@@ -1499,10 +1504,7 @@
                             "item/FullTimeEquivalent": "@body('Format_number_for_FTE')",
                             "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
                           },
-                          "authentication": {
-                            "type": "Raw",
-                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                          }
+                          "authentication": "@parameters('$authentication')"
                         }
                       }
                     }

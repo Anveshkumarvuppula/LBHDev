@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="crbb7_EnvSubj">
+  <defaultvalue>Dev13 - Testing</defaultvalue>
+  <description default="This will have the Subject Prefix/Suffix for Environment">
+    <label description="This will have the Subject Prefix/Suffix for Environment" languagecode="1033" />
+  </description>
+  <displayname default="EnvSubj">
+    <label description="EnvSubj" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.275</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>
