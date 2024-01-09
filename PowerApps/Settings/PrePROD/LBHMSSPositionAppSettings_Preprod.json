@@ -7,6 +7,10 @@
     {
       "SchemaName": "crbb7_D365FOURL",
       "Value": "lbh-fo-preprod.sandbox.operations.dynamics.com"
+    },
+    {
+      "SchemaName": "crbb7_EnvSubj",
+      "Value": "PreProd"
     }
 ],
   "ConnectionReferences": [
