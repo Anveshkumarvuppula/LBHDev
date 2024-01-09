@@ -7,7 +7,12 @@
     {
       "SchemaName": "crbb7_D365FOURL",
       "Value": "lbh-fo-prod.operations.dynamics.com"
-    }],
+    },
+    {
+      "SchemaName": "crbb7_EnvSubj",
+      "Value": "live"
+    }
+],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",

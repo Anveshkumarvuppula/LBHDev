@@ -7,6 +7,10 @@
     {
       "SchemaName": "crbb7_D365FOURL",
       "Value": "https://lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com"
+    },
+    {
+      "SchemaName": "crbb7_EnvSubj",
+      "Value": "Dev13"
     }
 
 ],
