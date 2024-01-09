@@ -58,7 +58,6 @@
           }
         },
         "EnvSubj (crbb7_EnvSubj)": {
-          "defaultValue": "Dev13 - Testing",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_EnvSubj",

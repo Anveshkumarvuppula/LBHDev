@@ -2,7 +2,8 @@
   "environmentvariablevalues": {
     "environmentvariablevalue": {
       "@environmentvariablevalueid": "18349e83-619e-ee11-be37-0022481b508f",
-      "iscustomizable": "1"
+      "iscustomizable": "1",
+      "value": "Dev13"
     }
   }
 }
