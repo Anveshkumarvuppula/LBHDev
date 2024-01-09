@@ -59,6 +59,7 @@
                 ZIndex: =1
 
             DataCardValue7 As label:
+                AutoHeight: =true
                 DisplayMode: =Parent.DisplayMode
                 Height: =10
                 PaddingLeft: =0
@@ -598,14 +599,14 @@
         Fill: =RGBA(0, 0, 0, 0)
         HeadingFill: =
         HeadingSize: =21
-        Height: =421
+        Height: =437
         Items: |
             =LookUp('Position details (mserp)', Position= Param("mserp_hcmpositiondetailentityId"))
         Size: =21
         Visible: =false
         Width: =640
         X: =0
-        Y: =184
+        Y: =168
         ZIndex: =5
 
         "'Full-time equivalent_Column1' As dataTableColumn.numberColumn":

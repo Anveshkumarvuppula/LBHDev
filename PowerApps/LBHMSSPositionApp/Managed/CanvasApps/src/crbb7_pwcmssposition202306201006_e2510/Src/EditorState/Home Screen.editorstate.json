@@ -3031,7 +3031,14 @@
         "PaddingRight",
         "PaddingBottom",
         "PaddingLeft",
-        "LineHeight",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "",
+          "InvariantPropertyName": "LineHeight",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "BorderThickness",
         "FocusedBorderThickness",
         "Size",
@@ -6358,7 +6365,14 @@
         "Italic",
         "Underline",
         "Strikethrough",
-        "AutoHeight",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "false",
+          "InvariantPropertyName": "AutoHeight",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingTop",
         "PaddingRight",
         "PaddingBottom",
