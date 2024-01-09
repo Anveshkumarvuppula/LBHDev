@@ -308,7 +308,7 @@
                   "item/mserp_pwcprobduration_custom": "@items('Apply_to_each')?['mserp_pwcprobduration_custom']",
                   "item/mserp_pwcprobationperiod": "@items('Apply_to_each')?['mserp_pwcprobationperiod']",
                   "item/mserp_pwcprobperiod_custom": "@null",
-                  "item/mserp_pwcpositionweeksperyear_custom": "@variables('PositionWeeksPerHour')",
+                  "item/mserp_pwcpositionweeksperyear_custom": "@If(empty(variables('PositionWeeksPerHour')),null,variables('PositionWeeksPerHour'))",
                   "item/mserp_lbhpositionreasonchange": 200000010,
                   "item/mserp_pwcredundancydate": "@items('Apply_to_each')?['mserp_pwcredundancydate']",
                   "item/mserp_pwcredundancydate_custom": "@null",

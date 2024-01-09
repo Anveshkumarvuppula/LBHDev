@@ -1355,7 +1355,7 @@
                         },
                         "parameters": {
                           "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
-                          "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours@{items('Apply_to_each')?['mserp_positionid']}@{parameters('EnvSubj (crbb7_EnvSubj)')}",
+                          "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours@{items('Apply_to_each')?['mserp_positionid']}",
                           "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nThis worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record_2')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;@{outputs('Update_a_record_2')?['body/PwCEmploymentFactor_Custom']}</p>"
                         },
                         "authentication": {
@@ -1389,10 +1389,7 @@
                           "item/FullTimeEquivalent": "@body('Format_number_for_FTE_2')",
                           "item/PwCEmploymentFactor_Custom": "@body('Format_number_EF_2')"
                         },
-                        "authentication": {
-                          "type": "Raw",
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                        }
+                        "authentication": "@parameters('$authentication')"
                       }
                     }
                   },
@@ -1507,10 +1504,7 @@
                             "item/FullTimeEquivalent": "@body('Format_number_for_FTE')",
                             "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
                           },
-                          "authentication": {
-                            "type": "Raw",
-                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                          }
+                          "authentication": "@parameters('$authentication')"
                         }
                       }
                     }
