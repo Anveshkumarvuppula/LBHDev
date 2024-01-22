@@ -34,6 +34,13 @@
       <statecode>0</statecode>
       <statuscode>1</statuscode>
     </connectionreference>
+    <connectionreference connectionreferencelogicalname="crbb7_sharedcommondataserviceforapps_bbced">
+      <connectionreferencedisplayname>Microsoft Dataverse LBHMSSPositionApp-bbced</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
     <connectionreference connectionreferencelogicalname="crbb7_shareddynamicsax_47741">
       <connectionreferencedisplayname>Fin &amp; Ops Apps (Dynamics 365) LBHMSSPositionApp-47741</connectionreferencedisplayname>
       <connectorid>/providers/Microsoft.PowerApps/apis/shared_dynamicsax</connectorid>

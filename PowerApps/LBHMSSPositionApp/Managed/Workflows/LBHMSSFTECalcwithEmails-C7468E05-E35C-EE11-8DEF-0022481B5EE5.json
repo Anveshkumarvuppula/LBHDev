@@ -10,6 +10,15 @@
           "name": "shared_commondataserviceforapps"
         }
       },
+      "shared_commondataserviceforapps_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_bbced"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
       "shared_sendmail": {
         "runtimeSource": "embedded",
         "connection": {
@@ -19,7 +28,7 @@
           "name": "shared_sendmail"
         }
       },
-      "shared_dynamicsax_3": {
+      "shared_dynamicsax_1": {
         "runtimeSource": "embedded",
         "connection": {
           "connectionReferenceLogicalName": "crbb7_shareddynamicsax_47741"
@@ -58,6 +67,7 @@
           }
         },
         "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_EnvSubj",
@@ -491,28 +501,6 @@
                 },
                 "TermTIme": {
                   "actions": {
-                    "ListEmployment": {
-                      "runAfter": {},
-                      "metadata": {
-                        "operationMetadataId": "878a612d-ff5a-4bbd-a28b-6c9c39e34885"
-                      },
-                      "type": "OpenApiConnection",
-                      "inputs": {
-                        "host": {
-                          "connectionName": "shared_commondataserviceforapps",
-                          "operationId": "ListRecords",
-                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
-                        },
-                        "parameters": {
-                          "entityName": "mserp_hcmemploymententities",
-                          "$filter": "mserp_FK_EmployedWorker_Id eq '@{outputs('GetWorker')?['body/mserp_hcmworkerentityid']}'"
-                        },
-                        "authentication": {
-                          "type": "Raw",
-                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
-                        }
-                      }
-                    },
                     "Apply_to_each_3": {
                       "foreach": "@outputs('ListEmployment')?['body/value']",
                       "actions": {
@@ -553,7 +541,7 @@
                         },
                         "DateOfEffective_2": {
                           "runAfter": {
-                            "EmploymentStartTimeTickValue_2": [
+                            "Compose_2": [
                               "Succeeded"
                             ]
                           },
@@ -561,7 +549,7 @@
                             "operationMetadataId": "7d8ac6ef-a86d-4170-9636-627460ddf7ac"
                           },
                           "type": "Compose",
-                          "inputs": "@ticks(outputs('ListPositionDetails')?['body/mserp_validfrom'])"
+                          "inputs": "@ticks(outputs('GetPositionDetails')?['body/mserp_validfrom'])"
                         },
                         "EmployeesHarrowServiceUpToEffectivedate_2": {
                           "runAfter": {
@@ -797,7 +785,7 @@
                                         },
                                         "parameters": {
                                           "entityName": "crbb7_lbhannualleavedayses",
-                                          "$filter": "crbb7_Years eq '@{variables('YearsLBHService NOW')}'",
+                                          "$filter": "crbb7_years eq @{variables('YearsLBHService NOW')}",
                                           "$orderby": "crbb7_annualleave desc",
                                           "$top": 1
                                         },
@@ -880,7 +868,7 @@
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
-                                            "$filter": "crbb7_Years eq ;@{variables('YearsLBHService NOW')}'",
+                                            "$filter": "crbb7_years eq @{variables('YearsLBHService NOW')}",
                                             "$orderby": "crbb7_annualleave desc",
                                             "$top": 1
                                           },
@@ -972,13 +960,13 @@
                                         "type": "OpenApiConnection",
                                         "inputs": {
                                           "host": {
-                                            "connectionName": "shared_commondataserviceforapps",
+                                            "connectionName": "shared_commondataserviceforapps_1",
                                             "operationId": "ListRecords",
                                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
                                           },
                                           "parameters": {
                                             "entityName": "crbb7_lbhannualleavedayses",
-                                            "$filter": "crbb7_Years eq '@{variables('YearsLBHService NOW')}'",
+                                            "$filter": "crbb7_years eq @{variables('YearsLBHService NOW')}",
                                             "$top": 1
                                           },
                                           "authentication": {
@@ -1052,7 +1040,7 @@
                                             "operationMetadataId": "3d1332b2-53f6-4dbe-a77a-d791ecb5e959"
                                           },
                                           "type": "Compose",
-                                          "inputs": "@ticks(outputs('GetWorker')?['body/crbb7_originalhiredate'])"
+                                          "inputs": "@ticks(outputs('GetWorker')?['body/mserp_originalhiredatetime'])"
                                         },
                                         "UTCNow_2": {
                                           "runAfter": {
@@ -1064,7 +1052,7 @@
                                             "operationMetadataId": "513cd0f5-504b-4653-9fcf-4edbb1ec23db"
                                           },
                                           "type": "Compose",
-                                          "inputs": "@ticks(outputs('GetPositionDetails')?['body/mshr_validfrom'])"
+                                          "inputs": "@ticks(outputs('GetPositionDetails')?['body/mserp_validfrom'])"
                                         },
                                         "LocalGovService_2": {
                                           "runAfter": {
@@ -1108,7 +1096,7 @@
                                             },
                                             "parameters": {
                                               "entityName": "crbb7_localgovernmentleavedayses",
-                                              "$filter": "crbb7_Years eq '@{outputs('Total_Service_2')}'",
+                                              "$filter": "crbb7_years eq @{outputs('Total_Service_2')}",
                                               "$top": 1
                                             },
                                             "authentication": {
@@ -1208,6 +1196,18 @@
                             "operationMetadataId": "c117d650-b029-422e-92a8-4526b8c7aa27"
                           },
                           "type": "Foreach"
+                        },
+                        "Compose_2": {
+                          "runAfter": {
+                            "EmploymentStartTimeTickValue_2": [
+                              "Succeeded"
+                            ]
+                          },
+                          "metadata": {
+                            "operationMetadataId": "2f8aae17-e9ff-4f11-b9fb-c52e41da5df0"
+                          },
+                          "type": "Compose",
+                          "inputs": "@{outputs('GetEmploymentStartDate_2')?['body/mserp_employmentstartdate']}|||  @{outputs('GetPositionDetails')?['body/mserp_validfrom']}"
                         }
                       },
                       "runAfter": {
@@ -1290,7 +1290,7 @@
                         "operationMetadataId": "848424e5-45c0-4a34-b364-c6d43964a3c0"
                       },
                       "type": "Compose",
-                      "inputs": "@mul(outputs('GetPositionDetails')?['body/mshr_pwcpositionhoursperweek_custom'], outputs('GetPositionDetails')?['body/mshr_pwcpositionweeksperyear_custom'])"
+                      "inputs": "@mul(outputs('GetPositionDetails')?['body/mserp_pwcpositionhoursperweek_custom'], outputs('GetPositionDetails')?['body/mserp_pwcpositionweeksperyear_custom'])"
                     },
                     "FTECalculation": {
                       "runAfter": {
@@ -1354,7 +1354,7 @@
                         },
                         "parameters": {
                           "request/to": "@{parameters('MSSAPPEmail (crbb7_MSSAPPEmail)')};",
-                          "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours@{items('Apply_to_each')?['mserp_positionid']}",
+                          "request/subject": "@{variables('WorkerNumber')}-@{variables('WorkerName')} Change of hours  @{items('Apply_to_each')?['mserp_positionid']}",
                           "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nThis worker has had their hours changed in MSS.<br>\nManager: @{variables('Manager Name')}<br>\nEffective: &nbsp;@{outputs('FormatEffectiveDateForEmail')}<br>\nNew hours:@{outputs('Update_a_record_2')?['body/PwcPositionHoursPerWeek_Custom']}<br>\nEnd date (if applicable):@{outputs('FormatEndDateTemporaryForEmail')}<br>\nTerm time: Yes<br>\nFTE:&nbsp;&nbsp;@{outputs('Update_a_record_2')?['body/PwCEmploymentFactor_Custom']}</p>"
                         },
                         "authentication": {
@@ -1375,7 +1375,7 @@
                       "type": "OpenApiConnection",
                       "inputs": {
                         "host": {
-                          "connectionName": "shared_dynamicsax_3",
+                          "connectionName": "shared_dynamicsax_1",
                           "operationId": "PatchItem",
                           "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                         },
@@ -1388,7 +1388,32 @@
                           "item/FullTimeEquivalent": "@body('Format_number_for_FTE_2')",
                           "item/PwCEmploymentFactor_Custom": "@body('Format_number_EF_2')"
                         },
-                        "authentication": "@parameters('$authentication')"
+                        "authentication": {
+                          "type": "Raw",
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                        }
+                      }
+                    },
+                    "ListEmployment": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "878a612d-ff5a-4bbd-a28b-6c9c39e34885"
+                      },
+                      "type": "OpenApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connectionName": "shared_commondataserviceforapps",
+                          "operationId": "ListRecords",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                        },
+                        "parameters": {
+                          "entityName": "mserp_hcmemploymententities",
+                          "$filter": "_mserp_fk_employedworker_id_value eq '@{outputs('GetWorker')?['body/mserp_hcmworkerentityid']}'"
+                        },
+                        "authentication": {
+                          "type": "Raw",
+                          "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                        }
                       }
                     }
                   },
@@ -1490,7 +1515,7 @@
                         "type": "OpenApiConnection",
                         "inputs": {
                           "host": {
-                            "connectionName": "shared_dynamicsax_3",
+                            "connectionName": "shared_dynamicsax_1",
                             "operationId": "PatchItem",
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                           },
@@ -1503,7 +1528,10 @@
                             "item/FullTimeEquivalent": "@body('Format_number_for_FTE')",
                             "item/PwCEmploymentFactor_Custom": "@body('Format_number_for_EF')"
                           },
-                          "authentication": "@parameters('$authentication')"
+                          "authentication": {
+                            "type": "Raw",
+                            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                          }
                         }
                       }
                     }
@@ -1511,7 +1539,7 @@
                   "expression": {
                     "equals": [
                       "@outputs('GetPositionDetails')?['body/mserp_pwctermtime_custom']",
-                      1
+                      200000001
                     ]
                   },
                   "metadata": {
@@ -1584,7 +1612,7 @@
                 "operationMetadataId": "1ed6a707-ebd2-418f-a07e-51a9502980aa"
               },
               "type": "Compose",
-              "inputs": "@formatDateTime(items('Apply_to_each')?['mserp_pwctemporaryhoursenddate_custom'],'dd/MM/yyyy')"
+              "inputs": "@If(Empty(items('Apply_to_each')?['mserp_pwctemporaryhoursenddate_custom']),'',formatDateTime(items('Apply_to_each')?['mserp_pwctemporaryhoursenddate_custom'],'dd/MM/yyyy'))"
             }
           },
           "runAfter": {
@@ -1737,7 +1765,7 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "connectionName": "shared_dynamicsax_3",
+                  "connectionName": "shared_dynamicsax_1",
                   "operationId": "GetItem",
                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                 },
@@ -1764,7 +1792,7 @@
               "type": "OpenApiConnection",
               "inputs": {
                 "host": {
-                  "connectionName": "shared_dynamicsax_3",
+                  "connectionName": "shared_dynamicsax_1",
                   "operationId": "GetItem",
                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
                 },
