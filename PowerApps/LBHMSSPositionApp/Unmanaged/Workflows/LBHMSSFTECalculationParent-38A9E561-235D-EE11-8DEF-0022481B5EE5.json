@@ -37,7 +37,7 @@
               "properties": {
                 "Listrows_Filterrows": {
                   "type": "string",
-                  "description": "Enter an OData style filter expression to limit which rows are listed. This parameter is used as part of \"DAEB74CE-4886-4218-802D-3A4DFE64AC2B\"",
+                  "description": "Enter an OData style filter expression to limit which rows are listed. This parameter is used as part of \"219F1FA4-4528-4FFD-8E9F-C33A555B3D2F\"",
                   "x-ms-powerflows-param-ispartial": true
                 },
                 "Initializevariable_Value": {
