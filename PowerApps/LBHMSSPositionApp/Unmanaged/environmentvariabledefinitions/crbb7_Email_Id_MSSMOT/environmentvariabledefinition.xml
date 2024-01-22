@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_Email_Id_MSSMOT">
+  <defaultvalue>shubham_kum@hcl.com;anveshkumar.v@hcl.com</defaultvalue>
+  <displayname default="Email_Id_MSSMOT">
+    <label description="Email_Id_MSSMOT" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.290</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

@@ -1,7 +1,11 @@
 {
   "EnvironmentVariables": [
-     {
+    {
       "SchemaName": "crbb7_MSSAPPEmail",
+      "Value": "D365.Support@harrow.gov.uk"
+    },
+    {
+      "SchemaName": "crbb7_Email_Id_MSSMOT",
       "Value": "D365.Support@harrow.gov.uk"
     },
     {
@@ -12,7 +16,7 @@
       "SchemaName": "crbb7_EnvSubj",
       "Value": "PreProd"
     }
-],
+  ],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",

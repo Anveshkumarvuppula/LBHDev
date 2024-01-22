@@ -5,6 +5,10 @@
       "Value": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk"
     },
     {
+      "SchemaName": "crbb7_Email_Id_MSSMOT",
+      "Value": "anveshkumar.v@hcl.com;Mohammed.Kader@harrow.gov.uk;Shubhamkumar@harrow.gov.uk"
+    },
+    {
       "SchemaName": "crbb7_D365FOURL",
       "Value": "https://lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com"
     },
@@ -13,7 +17,7 @@
       "Value": "Dev13"
     }
 
-],
+  ],
   "ConnectionReferences": [
     {
       "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",
