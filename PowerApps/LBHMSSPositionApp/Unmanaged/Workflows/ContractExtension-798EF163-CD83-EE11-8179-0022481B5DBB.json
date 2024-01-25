@@ -316,7 +316,6 @@
                   "item/mserp_pwcteachingstaff_custom": "@items('Apply_to_each')?['mserp_pwcteachingstaff_custom']",
                   "item/mserp_pwcteachingstuff_custom": "@items('Apply_to_each')?['mserp_pwcteachingstuff_custom']",
                   "item/mserp_pwctemporary_custom": "@items('Apply_to_each')?['mserp_pwctemporary_custom']",
-                  "item/mserp_pwccontractenddate_custom": "@variables('ContractEndDate')",
                   "item/mserp_pwctemporaryhoursenddate_custom": "@items('Apply_to_each')?['mserp_pwctemporaryhoursenddate_custom']",
                   "item/mserp_pwctermtime_custom": "@items('Apply_to_each')?['mserp_pwctermtime_custom']",
                   "item/mserp_titleid": "@items('Apply_to_each')?['mserp_titleid']",
