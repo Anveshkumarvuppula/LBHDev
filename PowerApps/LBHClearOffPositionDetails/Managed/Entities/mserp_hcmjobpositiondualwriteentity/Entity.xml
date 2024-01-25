@@ -3,6 +3,12 @@
   <Name LocalizedName="Job Positions Dual Write (mserp)" OriginalName="Job Positions Dual Write (mserp)">mserp_hcmjobpositiondualwriteentity</Name>
   <EntityInfo>
     <entity Name="mserp_hcmjobpositiondualwriteentity">
+      <LocalizedNames>
+        <LocalizedName description="Job Positions Dual Write (mserp)" languagecode="1033" />
+      </LocalizedNames>
+      <LocalizedCollectionNames>
+        <LocalizedCollectionName description="Job Positions Dual Write (mserp)" languagecode="1033" />
+      </LocalizedCollectionNames>
       <attributes>
         <attribute PhysicalName="crbb7_TestJob">
           <Type>lookup</Type>
@@ -10,6 +16,7 @@
           <LogicalName>crbb7_testjob</LogicalName>
           <RequiredLevel>none</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
           <ValidForReadApi>1</ValidForReadApi>
           <ValidForCreateApi>1</ValidForCreateApi>

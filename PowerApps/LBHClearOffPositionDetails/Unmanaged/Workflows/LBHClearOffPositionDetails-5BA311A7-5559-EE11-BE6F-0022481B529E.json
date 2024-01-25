@@ -9,6 +9,15 @@
         "api": {
           "name": "shared_commondataserviceforapps"
         }
+      },
+      "shared_commondataserviceforapps_2": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_879bb"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
       }
     },
     "definition": {
@@ -27,12 +36,12 @@
       "triggers": {
         "When_a_row_is_added,_modified_or_deleted": {
           "metadata": {
-            "operationMetadataId": "7613a745-fce5-409e-b0aa-e7b70db32e17"
+            "operationMetadataId": "99a4fb81-11a7-49ba-97b5-bf2d045069ad"
           },
           "type": "OpenApiConnectionWebhook",
           "inputs": {
             "host": {
-              "connectionName": "shared_commondataserviceforapps",
+              "connectionName": "shared_commondataserviceforapps_2",
               "operationId": "SubscribeWebhookTrigger",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
             },
@@ -56,8 +65,46 @@
             "variables": [
               {
                 "name": "AssignmentEndDate",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_-_PositionID": {
+          "runAfter": {
+            "Initialize_variable_-_AssignmentStartDate_": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d3726dba-e96d-46c6-a17c-d85fe1562635"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PositionID",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_-_AssignmentStartDate_": {
+          "runAfter": {
+            "Initialize_variable_-_AssignmentEndDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "9815e08f-c24a-40e5-a5c2-433465d53583"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "UpdateAssignmentEndDate",
                 "type": "string",
-                "value": "@triggerOutputs()?['body/mserp_validto']"
+                "value": "@{addSeconds(triggerOutputs()?['body/mserp_validfrom'], -1)}"
               }
             ]
           }
@@ -141,7 +188,7 @@
                   "item/mserp_positiontypeid": "@outputs('Update_a_row')?['body/mserp_positiontypeid']",
                   "item/mserp_pwcprobcompleted_custom": 200000000,
                   "item/mserp_pwcprobperiod_custom": "@null",
-                  "item/mserp_lbhpositionreasonchange": 200000015,
+                  "item/mserp_lbhpositionreasonchange": 200000016,
                   "item/mserp_pwcredundancydate_custom": "@null",
                   "item/mserp_titleid": "@outputs('Update_a_row')?['body/mserp_titleid']",
                   "item/mserp_pwcweekendworking_custom": 200000000
@@ -159,26 +206,6 @@
             "operationMetadataId": "2a87535a-62d6-4ea5-8ba7-2c34fc865ed3"
           },
           "type": "Foreach"
-        },
-        "Initialize_variable_-_PositionID": {
-          "runAfter": {
-            "Initialize_variable_-_AssignmentEndDate": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "d3726dba-e96d-46c6-a17c-d85fe1562635"
-          },
-          "type": "InitializeVariable",
-          "inputs": {
-            "variables": [
-              {
-                "name": "PositionID",
-                "type": "string",
-                "value": "@triggerOutputs()?['body/mserp_positionid']"
-              }
-            ]
-          }
         }
       }
     },
