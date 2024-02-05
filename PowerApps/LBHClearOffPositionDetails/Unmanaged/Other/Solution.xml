@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23123.218" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.24013.172" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>LBHClearOffPositionDetails</UniqueName>
     <LocalizedNames>
       <LocalizedName description="LBH Clear Off Position Details" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.297</Version>
+    <Version>10.0.311</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>DefaultPublisheroperationslbhfodev11</UniqueName>
