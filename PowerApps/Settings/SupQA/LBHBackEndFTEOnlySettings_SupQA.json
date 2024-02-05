@@ -1,0 +1,30 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_entityEnvVariable",
+      "Value": "https://lbh-fo-supqa.sandbox.operations.dynamics.com"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_66d48",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_f0055",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_446fd",
+      "ConnectionId": "32c727d5250840789424d2c7f9c2b5c2",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_fcb03",
+      "ConnectionId": "32c727d5250840789424d2c7f9c2b5c2",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    }
+  ]
+}

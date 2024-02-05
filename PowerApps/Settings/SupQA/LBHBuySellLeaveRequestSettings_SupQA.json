@@ -1,0 +1,42 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_EmailAddressforBuySellLeaveReq",
+      "Value": "shubham_kum@hcl.com;anveshkumar.v@hcl.com"
+    },
+    {
+      "SchemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar",
+      "Value": "https://forms.office.com/e/c2hADqw3sx"
+    },
+    {
+      "SchemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar",
+      "Value": "https://forms.office.com/e/HfDHmHZfWg"
+    },
+    {
+      "SchemaName": "crbb7_MSFormsSellLeaveRequestConfVar",
+      "Value": "https://forms.office.com/e/a1cfukCdee"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_Mail",
+      "ConnectionId": "a8669f1d69e0425d96e82b6b5c7c3a18",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_c69c9",
+      "ConnectionId": "52bc40979f7c4c25b5207bc9f9cd9a10",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_edfa2",
+      "ConnectionId": "52bc40979f7c4c25b5207bc9f9cd9a10",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    },
+    {
+      "LogicalName": "crbb7_sharedmicrosoftforms_ef66f",
+      "ConnectionId": "52bc40979f7c4c25b5207bc9f9cd9a10",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_microsoftforms"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crbb7_MSSAPPEmail",
+      "Value": "shubham_kum@hcl.com;anveshkumar.v@hcl.com"
+    },
+    {
+      "SchemaName": "crbb7_Email_Id_MSSMOT",
+      "Value": "shubham_kum@hcl.com;anveshkumar.v@hcl.com"
+    },
+    {
+      "SchemaName": "crbb7_D365FOURL",
+      "Value": "lbh-fo-supqa.sandbox.operations.dynamics.com/"
+    },
+    {
+      "SchemaName": "crbb7_EnvSubj",
+      "Value": "SupQA"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_113e2",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_7fe85",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_shareddynamicsax_47741",
+      "ConnectionId": "32c727d5250840789424d2c7f9c2b5c2",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
+    },
+    {
+      "LogicalName": "new_sharedcommondataserviceforapps_0c486",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "new_sharedcommondataserviceforapps_a1724",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "new_sharedcommondataserviceforapps_b69ce",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "crbb7_sharedcommondataserviceforapps_66d48",
+      "ConnectionId": "050afa78ff9148019ca9aad7d35052bc",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    }
+  ]
+}
