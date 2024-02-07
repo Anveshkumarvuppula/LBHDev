@@ -4,7 +4,7 @@
       "shared_commondataserviceforapps": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_66d48"
+          "connectionReferenceLogicalName": "crbb7_sharedcommondataserviceforapps_f0055"
         },
         "api": {
           "name": "shared_commondataserviceforapps"
@@ -13,7 +13,7 @@
       "shared_dynamicsax_2": {
         "runtimeSource": "embedded",
         "connection": {
-          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_cb0dc"
+          "connectionReferenceLogicalName": "crbb7_shareddynamicsax_446fd"
         },
         "api": {
           "name": "shared_dynamicsax"
@@ -147,7 +147,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
             },
             "parameters": {
-              "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+              "dataset": "lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com",
               "table": "PHROccupationsCollection",
               "id": "1000,@{outputs('Get_Job_Function')?['body/mserp_jobfunctionid']},2008-01-01T12:00:00Z"
             },
@@ -171,7 +171,7 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_dynamicsax"
             },
             "parameters": {
-              "dataset": "lbh-fo-dev-10de35130ef0a8ac91devaos.axcloud.dynamics.com",
+              "dataset": "lbh-fo-dev-13faa0db13ed451c72devaos.axcloud.dynamics.com",
               "table": "PHRUnionAfflnsCollection",
               "id": "@{outputs('Get_Occupation')?['body/dataAreaId']},@{outputs('Get_Occupation')?['body/UnionAfflnCode']},2005-01-01T12:00:00Z"
             },
