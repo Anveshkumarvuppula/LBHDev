@@ -33,10 +33,18 @@
           "type": "SecureObject"
         },
         "MSFormsBuySellAnnualLeaveManConfVar (crbb7_MSFormsBuySellAnnualLeaveManConfVar)": {
-          "defaultValue": "LBH DEV Buy/Sell Annual Leave Manager Confirmation ",
+          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LFg7Rur8FWVGoa3dQU0EHTlUQjBNUkRRN1dDMktBQ0YxT1k2MTRUTlJFMi4u",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSFormsBuySellAnnualLeaveManConfVar"
+          }
+        },
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13 - Testing",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
           }
         }
       },
@@ -97,9 +105,9 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
             "parameters": {
-              "request/to": "test.payroll@harrow.gov.uk;",
+              "request/to": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
               "request/subject": "@{outputs('Get_response_details')?['body/rcfde10290c0346d8be6bd81662af47a8']}, Manager buy/sell leave confirmation ",
-              "request/text": "<p>Employee: @{outputs('Get_response_details')?['body/rcfde10290c0346d8be6bd81662af47a8']}<br>\n<br>\nBudget manager approval: @{outputs('Get_response_details')?['body/r4d9e577183364dc4a5510cef7523e027']}<br>\n<br>\nDate approval received:<br>\n@{outputs('Get_response_details')?['body/r86ed4665b7824fe0a6678b6410631a23']}<br>\n<br>\nManager email:<br>\n@{outputs('Get_response_details')?['body/responder']}</p>"
+              "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nEmployee: @{outputs('Get_response_details')?['body/rcfde10290c0346d8be6bd81662af47a8']}<br>\n<br>\nBudget manager approval: @{outputs('Get_response_details')?['body/r4d9e577183364dc4a5510cef7523e027']}<br>\n<br>\nDate approval received:<br>\n@{outputs('Get_response_details')?['body/r86ed4665b7824fe0a6678b6410631a23']}<br>\n<br>\nManager email:<br>\n@{outputs('Get_response_details')?['body/responder']}</p>"
             },
             "authentication": "@parameters('$authentication')"
           }

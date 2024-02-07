@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="crbb7_EmailAddressforBuySellLeaveReq">
+  <defaultvalue>shubham_kum@hcl.com;anveshkumar.v@hcl.com;</defaultvalue>
+  <displayname default="Email Address for Buy Sell Leave Req">
+    <label description="Email Address for Buy Sell Leave Req" languagecode="1033" />
+  </displayname>
+  <introducedversion>10.0.247</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

@@ -33,10 +33,18 @@
           "type": "SecureObject"
         },
         "MSFormsBuyLeaveRequestConfirmationVar (crbb7_MSFormsBuyLeaveRequestConfirmationVar)": {
-          "defaultValue": "LBH DEV Buy Annual Leave Confirmation ",
+          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LFg7Rur8FWVGoa3dQU0EHTlURDk4SkZBTkFLTTBBNUVSM1hGR0czT0hYUy4u",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSFormsBuyLeaveRequestConfirmationVar"
+          }
+        },
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13 - Testing",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
           }
         }
       },
@@ -97,9 +105,9 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
             "parameters": {
-              "request/to": "test.payroll@harrow.gov.uk;",
+              "request/to": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
               "request/subject": "Buy Leave Confirmation -@{outputs('Get_response_details')?['body/responder']} , @{outputs('Get_response_details')?['body/submitDate']}",
-              "request/text": "<p>The above employee has confirmed that their buy request be dealt with \"@{outputs('Get_response_details')?['body/rb000059b90604e09b233a10b6ebc6aad']}\"<br>\nPlease consider this in your setup in payroll for this request.<br>\n<br>\nMany thanks</p>"
+              "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nThe above employee has confirmed that their buy request be dealt with \"@{outputs('Get_response_details')?['body/rb000059b90604e09b233a10b6ebc6aad']}\"<br>\nPlease consider this in your setup in payroll for this request.<br>\n<br>\nMany thanks</p>"
             },
             "authentication": "@parameters('$authentication')"
           }

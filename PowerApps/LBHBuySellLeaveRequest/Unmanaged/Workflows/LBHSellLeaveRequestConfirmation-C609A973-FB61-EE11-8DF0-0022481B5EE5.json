@@ -33,10 +33,18 @@
           "type": "SecureObject"
         },
         "MSFormsSellLeaveRequestConfVar (crbb7_MSFormsSellLeaveRequestConfVar)": {
-          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUMUZBUjdLVTJROU1QSVg2RjFYMEc4VzBTVi4u",
+          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LFg7Rur8FWVGoa3dQU0EHTlUN1ZLTlpSQUlFQzVEQUZFTUxBVFg1WlVPVC4u",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSFormsSellLeaveRequestConfVar"
+          }
+        },
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13 - Testing",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
           }
         }
       },
@@ -97,9 +105,9 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
             "parameters": {
-              "request/to": "test.payroll@harrow.gov.uk;",
+              "request/to": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
               "request/subject": "Sell Leave Request Confirmation - @{outputs('Get_response_details')?['body/responder']}, @{outputs('Get_response_details')?['body/submitDate']}",
-              "request/text": "<p>I confirm I have taken, or planned to take, 28 day’s leave, including bank holidays (pro rata for part time staff), before your application will be considered. &nbsp;Please ensure that you have planned how you intend to take the required 28 days (including bank holidays) prior to completing this application.<br>\n<br>\n@{outputs('Get_response_details')?['body/r7fd631f4370a440f88413d1732c5c412']}<br>\n<br>\nI understand that if my request to sell back some of my annual leave is granted, I will receive a one-off payment which will be subject to national insurance and tax deductions.<br>\n<br>\n@{outputs('Get_response_details')?['body/r90309269fb9143df9a367a06ce97baad']}<br>\n<br>\nI authorise the London Borough of Harrow to pay back money to my salary in accordance with this scheme.<br>\n<br>\n@{outputs('Get_response_details')?['body/ra479743473bf456daf753dea075a9b4c']}</p>"
+              "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nI confirm I have taken, or planned to take, 28 day’s leave, including bank holidays (pro rata for part time staff), before your application will be considered. &nbsp;Please ensure that you have planned how you intend to take the required 28 days (including bank holidays) prior to completing this application.<br>\n<br>\n@{outputs('Get_response_details')?['body/r7fd631f4370a440f88413d1732c5c412']}<br>\n<br>\nI understand that if my request to sell back some of my annual leave is granted, I will receive a one-off payment which will be subject to national insurance and tax deductions.<br>\n<br>\n@{outputs('Get_response_details')?['body/r90309269fb9143df9a367a06ce97baad']}<br>\n<br>\nI authorise the London Borough of Harrow to pay back money to my salary in accordance with this scheme.<br>\n<br>\n@{outputs('Get_response_details')?['body/ra479743473bf456daf753dea075a9b4c']}</p>"
             },
             "authentication": "@parameters('$authentication')"
           }
