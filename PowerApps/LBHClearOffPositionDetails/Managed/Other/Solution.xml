@@ -6,7 +6,7 @@
       <LocalizedName description="LBH Clear Off Position Details" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.311</Version>
+    <Version>10.0.312</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>DefaultPublisheroperationslbhfodev11</UniqueName>
@@ -84,7 +84,6 @@
       <RootComponent type="1" schemaName="mserp_hcmpositiondetailentity" behavior="0" />
       <RootComponent type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" behavior="0" />
       <RootComponent type="29" id="{5ba311a7-5559-ee11-be6f-0022481b529e}" behavior="0" />
-      <RootComponent type="29" id="{b392ada4-02ae-ee11-a569-0022481b508f}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
@@ -182,12 +181,6 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="29" displayName="LBHClearOffPositionDetails" id="{5ba311a7-5559-ee11-be6f-0022481b529e}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
-        </Required>
-        <Dependent type="29" displayName="triggertest" id="{b392ada4-02ae-ee11-a569-0022481b508f}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
