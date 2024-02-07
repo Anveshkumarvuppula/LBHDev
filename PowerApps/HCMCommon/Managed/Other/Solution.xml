@@ -6,7 +6,7 @@
       <LocalizedName description="HCM Common" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.312</Version>
+    <Version>10.0.314</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -140,6 +140,12 @@
         <Dependent type="2" schemaName="versionnumber" displayName="Version Number" parentSchemaName="mserp_hcmagreementtermentity" parentDisplayName="Terms of employment (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmagreementtermentity" displayName="Terms of employment (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmagreementtermentity:RibbonDiffXml" displayName="mserp_hcmagreementtermentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmcompensationregionentity" displayName="Compensation regions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -164,6 +170,12 @@
         <Dependent type="2" schemaName="versionnumber" displayName="Version Number" parentSchemaName="mserp_hcmcompensationregionentity" parentDisplayName="Compensation regions (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmcompensationregionentity" displayName="Compensation regions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmcompensationregionentity:RibbonDiffXml" displayName="mserp_hcmcompensationregionentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmcompensationstructuredualwritev2entity" displayName="Compensation structure V2 (DualWrite) (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -174,6 +186,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_HcmCompensationStructureDualWriteV2Entity_dataAreaId_rel" displayName="mserp_HcmCompensationStructureDualWriteV2Entity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmcompensationstructuredualwritev2entity" displayName="Compensation structure V2 (DualWrite) (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmcompensationstructuredualwritev2entity:RibbonDiffXml" displayName="mserp_hcmcompensationstructuredualwritev2entity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmcompensationstructureentity" displayName="Compensation structure (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -206,6 +224,12 @@
         <Dependent type="10" schemaName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" displayName="mserp_HcmCompFixedEmplEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmcompfixedemplentity" displayName="Employee fixed compensation (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmcompfixedemplentity:RibbonDiffXml" displayName="mserp_hcmcompfixedemplentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmemployeev2entity" displayName="Employee V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -218,6 +242,12 @@
         <Dependent type="10" schemaName="mserp_FK_HcmEmployeeV2Entity_Worker" displayName="mserp_FK_HcmEmployeeV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmemployeev2entity" displayName="Employee V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmemployeev2entity:RibbonDiffXml" displayName="mserp_hcmemployeev2entity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmemploymententity" displayName="Employment (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -228,6 +258,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_FK_HcmEmploymentEntity_EmployedWorker" displayName="mserp_FK_HcmEmploymentEntity_EmployedWorker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmemploymententity" displayName="Employment (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmemploymententity:RibbonDiffXml" displayName="mserp_hcmemploymententity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmjobentity" displayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -260,6 +296,12 @@
         <Dependent type="10" schemaName="mserp_FK_HcmJobEntity_JobFunction" displayName="mserp_FK_HcmJobEntity_JobFunction" parentSchemaName="mserp_hcmjobfunctionentity" parentDisplayName="Compensation job function (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmjobentity" displayName="Jobs (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmjobentity:RibbonDiffXml" displayName="mserp_hcmjobentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmjobfunctionentity" displayName="Compensation job function (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -278,22 +320,16 @@
         <Dependent type="2" schemaName="versionnumber" displayName="Version Number" parentSchemaName="mserp_hcmjobfunctionentity" parentDisplayName="Compensation job function (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmjobfunctionentity" displayName="Compensation job function (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmjobfunctionentity:RibbonDiffXml" displayName="mserp_hcmjobfunctionentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
-        </Required>
-        <Dependent type="10" schemaName="crbb7_mserp_hcmjobpositiondualwriteentity_TestJ" displayName="crbb7_mserp_hcmjobpositiondualwriteentity_TestJ" parentSchemaName="mserp_hcmjobentity" parentDisplayName="Jobs (mserp)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
-        </Required>
-        <Dependent type="2" schemaName="crbb7_testjob" displayName="TestJob" parentSchemaName="mserp_hcmjobpositiondualwriteentity" parentDisplayName="Job Positions Dual Write (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmparametersentity" displayName="Human resources parameters (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -308,16 +344,34 @@
         <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmparametersentity" displayName="Human resources parameters (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmparametersentity:RibbonDiffXml" displayName="mserp_hcmparametersentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpersonidentificationnumberentity" displayName="Identification (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="1" schemaName="mserp_hcmpersonidentificationnumberentity" displayName="Identification (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpersonidentificationnumberentity" displayName="Identification (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmpersonidentificationnumberentity:RibbonDiffXml" displayName="mserp_hcmpersonidentificationnumberentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpersonscreeningentity" displayName="Person screening (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="1" schemaName="mserp_hcmpersonscreeningentity" displayName="Person screening (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpersonscreeningentity" displayName="Person screening (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmpersonscreeningentity:RibbonDiffXml" displayName="mserp_hcmpersonscreeningentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositiondetailentity" displayName="Position details (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -362,6 +416,12 @@
         <Dependent type="10" schemaName="mserp_FK_HcmPositionEntity_Worker" displayName="mserp_FK_HcmPositionEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionentity" displayName="Positions (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmpositionentity:RibbonDiffXml" displayName="mserp_hcmpositionentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -398,6 +458,12 @@
         <Dependent type="10" schemaName="mserp_FK_HcmPositionV2Entity_Worker" displayName="mserp_FK_HcmPositionV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionv2entity" displayName="Positions V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmpositionv2entity:RibbonDiffXml" displayName="mserp_hcmpositionv2entity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositionworkerassignmententity" displayName="Position worker assignments (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -414,6 +480,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentEntity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmententity" displayName="Position worker assignments (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmpositionworkerassignmententity:RibbonDiffXml" displayName="mserp_hcmpositionworkerassignmententity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -434,22 +506,16 @@
         <Dependent type="10" schemaName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" displayName="mserp_FK_HcmPositionWorkerAssignmentV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmpositionworkerassignmentv2entity" displayName="Position worker assignments V2 (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmpositionworkerassignmentv2entity:RibbonDiffXml" displayName="mserp_hcmpositionworkerassignmentv2entity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
-        </Required>
-        <Dependent type="10" schemaName="mserp_FK_PayrollBankAccountDisbursementEntity_WorkerBankAccount" displayName="mserp_FK_PayrollBankAccountDisbursementEntity_WorkerBankAccount" parentSchemaName="mserp_hcmworkerbankaccountentity" parentDisplayName="Worker bank accounts (mserp)" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
-          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
-        </Required>
-        <Dependent type="10" schemaName="mserp_FK_HcmWorkerBankAccountEntity_Worker" displayName="mserp_FK_HcmWorkerBankAccountEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -506,6 +572,12 @@
         <Dependent type="10" schemaName="mserp_FK_PayrollBankAccountDisbursementEntity_Worker" displayName="mserp_FK_PayrollBankAccountDisbursementEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
       </MissingDependency>
       <MissingDependency>
+        <Required type="1" schemaName="mserp_hcmworkerentity" displayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_hcmworkerentity:RibbonDiffXml" displayName="mserp_hcmworkerentity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
+      </MissingDependency>
+      <MissingDependency>
         <Required type="1" schemaName="mserp_payrollbankaccountdisbursemententity" displayName="Bank account disbursements (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
@@ -522,6 +594,12 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_FK_PayrollBankAccountDisbursementEntity_Worker" displayName="mserp_FK_PayrollBankAccountDisbursementEntity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="mserp_payrollbankaccountdisbursemententity" displayName="Bank account disbursements (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="50" schemaName="mserp_payrollbankaccountdisbursemententity:RibbonDiffXml" displayName="mserp_payrollbankaccountdisbursemententity:RibbonDiffXml" parentSchemaName="ribboncustomization" parentDisplayName="Application Ribbons" />
       </MissingDependency>
       <MissingDependency>
         <Required type="10" schemaName="mserp_FK_HcmEmployeeV2Entity_Worker" displayName="mserp_FK_HcmEmployeeV2Entity_Worker" parentSchemaName="mserp_hcmworkerentity" parentDisplayName="Worker (mserp)" solution="MicrosoftOperationsERPVE (1.0.0.0)">
@@ -648,6 +726,30 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_hcmParametersEntity_dataAreaId_rel" displayName="mserp_hcmParametersEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="181" schemaName="FinanceAndOperationsVirtualEntity" displayName="FinanceAndOperationsVirtualEntity" solution="MicrosoftOperationsVESupport (2.8.11.131)" id="{2ac667f5-31d6-e911-a95e-000d3a110bbd}">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="181" schemaName="FinanceAndOperationsVirtualEntity" displayName="FinanceAndOperationsVirtualEntity" solution="MicrosoftOperationsVESupport (2.8.11.131)" id="{2ac667f5-31d6-e911-a95e-000d3a110bbd}">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="183" schemaName="Finance and Operations" displayName="Finance and Operations" solution="MicrosoftOperationsERPCatalog (2.8.11.131)" id="{47c40dcb-35d6-e911-a95e-000d3a110bbd}">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmjobpositiondualwriteentity" displayName="Job Positions Dual Write (mserp)" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="183" schemaName="Finance and Operations" displayName="Finance and Operations" solution="MicrosoftOperationsERPCatalog (2.8.11.131)" id="{47c40dcb-35d6-e911-a95e-000d3a110bbd}">
+          <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
+        </Required>
+        <Dependent type="1" schemaName="mserp_hcmworkerbankaccountentity" displayName="Worker bank accounts (mserp)" />
       </MissingDependency>
       <MissingDependency>
         <Required type="2" schemaName="cdm_companycode" displayName="Company Code" parentSchemaName="cdm_company" parentDisplayName="Company" solution="Dynamics365Company (2.2.2.132)">

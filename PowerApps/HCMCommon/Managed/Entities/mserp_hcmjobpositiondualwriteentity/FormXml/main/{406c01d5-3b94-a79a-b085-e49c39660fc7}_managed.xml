@@ -14,9 +14,16 @@
                 <section showlabel="false" showbar="false" IsUserDefined="0" id="{6c889444-9243-a04e-8ab1-a2771afd11bd}" ordinalvalue="0">
                   <rows>
                     <row>
+                      <cell id="{c54ddb6f-5509-129f-705a-ab345aeb8e6a}" ordinalvalue="10000">
+                        <labels>
+                          <label description="Position" languagecode="1033" solutionaction="Added" />
+                        </labels>
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="{0fd439bd-d7e9-4a58-8cab-6957439a8e65}" locklevel="0" rowspan="1" colspan="1" ordinalvalue="10001" solutionaction="Added">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="TestJob" languagecode="1033" />
                         </labels>
                         <control id="crbb7_testjob" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="crbb7_testjob" disabled="false" />
                       </cell>
@@ -29,48 +36,12 @@
         </tab>
       </tabs>
       <header id="{a80574c4-246a-41ea-97f2-4eede93283fb}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left" solutionaction="Added">
-        <rows>
-          <row>
-            <cell id="{32abd46c-646e-4b9d-9a3f-1142f69d4014}" showlabel="false" ordinalvalue="10000">
-              <labels>
-                <label description="" languagecode="1033" />
-              </labels>
-            </cell>
-            <cell id="{40146336-9902-432c-9e90-b92a0adb3832}" showlabel="false" ordinalvalue="20001">
-              <labels>
-                <label description="" languagecode="1033" />
-              </labels>
-            </cell>
-            <cell id="{15bd0674-31cf-4f34-997d-f8a7e4e9b821}" showlabel="false" ordinalvalue="30002">
-              <labels>
-                <label description="" languagecode="1033" />
-              </labels>
-            </cell>
-          </row>
-        </rows>
+        <rows />
       </header>
       <footer id="{1bda2232-4610-4ecd-86dd-711e17386f35}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left" solutionaction="Added">
-        <rows>
-          <row>
-            <cell id="{ee0f3172-0e6d-4f9c-81b4-724c55500717}" showlabel="false" ordinalvalue="10000">
-              <labels>
-                <label description="" languagecode="1033" />
-              </labels>
-            </cell>
-            <cell id="{1692ec36-9397-4ea1-998e-31b1816540ce}" showlabel="false" ordinalvalue="20001">
-              <labels>
-                <label description="" languagecode="1033" />
-              </labels>
-            </cell>
-            <cell id="{5e1ea731-8de6-4bbb-a05e-8de8a5b03720}" showlabel="false" ordinalvalue="30002">
-              <labels>
-                <label description="" languagecode="1033" />
-              </labels>
-            </cell>
-          </row>
-        </rows>
+        <rows />
       </footer>
-      <DisplayConditions Order="0" FallbackForm="true" solutionaction="Added">
+      <DisplayConditions FallbackForm="true" Order="0" solutionaction="Added">
         <Everyone />
       </DisplayConditions>
     </form>
