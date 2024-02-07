@@ -36,10 +36,10 @@
         </tab>
       </tabs>
       <header id="{a80574c4-246a-41ea-97f2-4eede93283fb}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left" solutionaction="Added">
-        <rows></rows>
+        <rows />
       </header>
       <footer id="{1bda2232-4610-4ecd-86dd-711e17386f35}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left" solutionaction="Added">
-        <rows></rows>
+        <rows />
       </footer>
       <DisplayConditions FallbackForm="true" Order="0" solutionaction="Added">
         <Everyone />
