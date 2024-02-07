@@ -15,7 +15,6 @@
     <RolePrivilege name="prvAppendmserp_hcmparametersentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpersonidentificationnumberentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpersonscreeningentity" level="Global" />
-    <RolePrivilege name="prvAppendmserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvAppendmserp_hcmpositionworkerassignmententity" level="Global" />
@@ -36,7 +35,6 @@
     <RolePrivilege name="prvAppendTomserp_hcmparametersentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpersonidentificationnumberentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpersonscreeningentity" level="Global" />
-    <RolePrivilege name="prvAppendTomserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvAppendTomserp_hcmpositionworkerassignmententity" level="Global" />
@@ -58,7 +56,6 @@
     <RolePrivilege name="prvCreatemserp_hcmparametersentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpersonidentificationnumberentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpersonscreeningentity" level="Global" />
-    <RolePrivilege name="prvCreatemserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvCreatemserp_hcmpositionworkerassignmententity" level="Global" />
@@ -80,7 +77,6 @@
     <RolePrivilege name="prvDeletemserp_hcmparametersentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmpersonidentificationnumberentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmpersonscreeningentity" level="Global" />
-    <RolePrivilege name="prvDeletemserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvDeletemserp_hcmpositionworkerassignmententity" level="Global" />
@@ -101,7 +97,6 @@
     <RolePrivilege name="prvReadmserp_hcmparametersentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpersonidentificationnumberentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpersonscreeningentity" level="Global" />
-    <RolePrivilege name="prvReadmserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvReadmserp_hcmpositionworkerassignmententity" level="Global" />
@@ -130,7 +125,6 @@
     <RolePrivilege name="prvWritemserp_hcmparametersentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpersonidentificationnumberentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpersonscreeningentity" level="Global" />
-    <RolePrivilege name="prvWritemserp_hcmpositiondetailentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpositionentity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpositionv2entity" level="Global" />
     <RolePrivilege name="prvWritemserp_hcmpositionworkerassignmententity" level="Global" />

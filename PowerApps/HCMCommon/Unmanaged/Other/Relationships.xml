@@ -4,9 +4,6 @@
   <EntityRelationship Name="mserp_FK_HcmEmployeeV2Entity_Worker" />
   <EntityRelationship Name="mserp_FK_HcmEmploymentEntity_EmployedWorker" />
   <EntityRelationship Name="mserp_FK_HcmJobEntity_JobFunction" />
-  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_CompensationRegion" />
-  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_Job" />
-  <EntityRelationship Name="mserp_FK_HcmPositionDetailEntity_Position" />
   <EntityRelationship Name="mserp_FK_HcmPositionEntity_CompensationRegion" />
   <EntityRelationship Name="mserp_FK_HcmPositionEntity_Job" />
   <EntityRelationship Name="mserp_FK_HcmPositionEntity_Worker" />
