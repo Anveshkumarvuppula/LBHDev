@@ -33,10 +33,18 @@
           "type": "SecureObject"
         },
         "MSFormsExitInterviewVar (crbb7_MSFormsExitInterviewVar)": {
-          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LPBNuh_5AHdLmNbEyqV8motUOTRaSDJRMzdDQlZOVTM3TVdVSkEwOFYwVS4u",
+          "defaultValue": "U5nD0tuoPEyX8tLcdvs-LFg7Rur8FWVGoa3dQU0EHTlUNERIWEU0MjRFM1FFQ09SMzJXMVBQU1hSQy4u",
           "type": "String",
           "metadata": {
             "schemaName": "crbb7_MSFormsExitInterviewVar"
+          }
+        },
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13 - Testing",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
           }
         }
       },
@@ -97,9 +105,9 @@
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
             },
             "parameters": {
-              "request/to": "testaskhr@harrow.gov.uk",
-              "request/subject": "An exit interview has been completed by @{outputs('Get_response_details')?['body/responder']}",
-              "request/text": "<p>Please log into Microsoft forms to retreive the details.</p>"
+              "request/to": "shubham_kum@hcl.com;anveshkumar.v@hcl.com",
+              "request/subject": "An exit interview has been completed by @{outputs('Get_response_details')?['body/responder']} ",
+              "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nPlease log into Microsoft forms to retreive the details.</p>"
             },
             "authentication": "@parameters('$authentication')"
           }
