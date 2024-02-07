@@ -396,7 +396,6 @@
                           "entityName": "mserp_hcmworkerbankaccountentities",
                           "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
                           "item/mserp_pwcbankacverified_custom": 200000001,
-                          "item/mserp_pwcisprimary_custom": 200000001,
                           "item/mserp_lbhloqatevalidationtxt": "@variables('StatusInformation')"
                         },
                         "authentication": "@parameters('$authentication')"
@@ -632,7 +631,8 @@
                     },
                     "parameters": {
                       "entityName": "mserp_hcmworkerbankaccountentities",
-                      "recordId": "@items('Worker_bank_account_is_primary_update_loop')?['mserp_hcmworkerbankaccountentityid']"
+                      "recordId": "@items('Worker_bank_account_is_primary_update_loop')?['mserp_hcmworkerbankaccountentityid']",
+                      "item/mserp_pwcisprimary_custom": "@null"
                     },
                     "authentication": "@parameters('$authentication')"
                   }
