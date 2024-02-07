@@ -32,11 +32,12 @@
           "defaultValue": {},
           "type": "SecureObject"
         },
-        "LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)": {
-          "defaultValue": "test.payroll@harrow.gov.uk",
+        "EnvSubj (crbb7_EnvSubj)": {
+          "defaultValue": "Dev13 - Testing",
           "type": "String",
           "metadata": {
-            "schemaName": "crbb7_LBHTestPayrolEmail"
+            "schemaName": "crbb7_EnvSubj",
+            "description": "This will have the Subject Prefix/Suffix for Environment"
           }
         }
       },
@@ -396,6 +397,7 @@
                           "entityName": "mserp_hcmworkerbankaccountentities",
                           "recordId": "@triggerOutputs()?['body/mserp_hcmworkerbankaccountentityid']",
                           "item/mserp_pwcbankacverified_custom": 200000001,
+                          "item/mserp_pwcisprimary_custom": 200000001,
                           "item/mserp_lbhloqatevalidationtxt": "@variables('StatusInformation')"
                         },
                         "authentication": "@parameters('$authentication')"
@@ -447,9 +449,9 @@
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                           },
                           "parameters": {
-                            "request/to": "@{parameters('LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)')};",
-                            "request/subject": "Bank account not validated",
-                            "request/text": "<p><span style=\"font-family: georgia\">Hi ,<br>\n<br>\nThe Bank account number </span><span style=\"font-family: georgia\">@{variables('BankAccountNum')}</span><span style=\"font-family: georgia\"> and sort code </span><span style=\"font-family: georgia\">@{variables('BankSortCode')}</span><span style=\"font-family: georgia\"> for Employee </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_name']}</span><span style=\"font-family: georgia\">(Id - </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_personnelnumber']}</span><span style=\"font-family: georgia\">) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</span></p>"
+                            "request/to": "anveshkumar.v@hcl.com;shubham_kum@hcl.com;",
+                            "request/subject": "Bank account not validated @{parameters('EnvSubj (crbb7_EnvSubj)')}",
+                            "request/text": "<p><span style=\"font-family: georgia\"></span><span style=\"font-family: georgia\">@{parameters('EnvSubj (crbb7_EnvSubj)')}</span><span style=\"font-family: georgia\"><br>\nHi ,<br>\n<br>\nThe Bank account number </span><span style=\"font-family: georgia\">@{variables('BankAccountNum')}</span><span style=\"font-family: georgia\"> and sort code </span><span style=\"font-family: georgia\">@{variables('BankSortCode')}</span><span style=\"font-family: georgia\"> for Employee </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_name']}</span><span style=\"font-family: georgia\">(Id - </span><span style=\"font-family: georgia\">@{outputs('Get_a_row_by_ID')?['body/mserp_personnelnumber']}</span><span style=\"font-family: georgia\">) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</span></p>"
                           },
                           "authentication": "@parameters('$authentication')"
                         }
@@ -509,9 +511,9 @@
                         "apiId": "/providers/Microsoft.PowerApps/apis/shared_sendmail"
                       },
                       "parameters": {
-                        "request/to": "@{parameters('LBHTestPayrolEmail (crbb7_LBHTestPayrolEmail)')};",
-                        "request/subject": "Bank account not validated",
-                        "request/text": "<p>Hi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee @{outputs('Get_a_row_by_ID')?['body/mserp_name']}(Id - @{outputs('Get_a_row_by_ID')?['body/mserp_personnelnumber']}) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
+                        "request/to": "anveshkumar.v@hcl.com;shubham_kum@hcl.com;",
+                        "request/subject": "Bank account not validated ",
+                        "request/text": "<p>@{parameters('EnvSubj (crbb7_EnvSubj)')}<br>\nHi ,<br>\n<br>\nThe Bank account number @{variables('BankAccountNum')} and sort code @{variables('BankSortCode')} for Employee @{outputs('Get_a_row_by_ID')?['body/mserp_name']}(Id - @{outputs('Get_a_row_by_ID')?['body/mserp_personnelnumber']}) is not validated using Loqate API.<br>\n<br>\nRegards,<br>\nD365HR application team</p>"
                       },
                       "authentication": "@parameters('$authentication')"
                     }
@@ -631,8 +633,7 @@
                     },
                     "parameters": {
                       "entityName": "mserp_hcmworkerbankaccountentities",
-                      "recordId": "@items('Worker_bank_account_is_primary_update_loop')?['mserp_hcmworkerbankaccountentityid']",
-                      "item/mserp_pwcisprimary_custom": "@null"
+                      "recordId": "@items('Worker_bank_account_is_primary_update_loop')?['mserp_hcmworkerbankaccountentityid']"
                     },
                     "authentication": "@parameters('$authentication')"
                   }

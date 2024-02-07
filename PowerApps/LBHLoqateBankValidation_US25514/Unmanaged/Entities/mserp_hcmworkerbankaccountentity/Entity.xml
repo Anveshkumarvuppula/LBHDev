@@ -3,6 +3,12 @@
   <Name LocalizedName="Worker bank accounts (mserp)" OriginalName="Worker bank accounts (mserp)">mserp_hcmworkerbankaccountentity</Name>
   <EntityInfo>
     <entity Name="mserp_hcmworkerbankaccountentity">
+      <LocalizedNames>
+        <LocalizedName description="Worker bank accounts (mserp)" languagecode="1033" />
+      </LocalizedNames>
+      <LocalizedCollectionNames>
+        <LocalizedCollectionName description="Worker bank accounts (mserp)" languagecode="1033" />
+      </LocalizedCollectionNames>
       <attributes>
         <attribute PhysicalName="mserp_FK_Worker_id">
           <Type>lookup</Type>
@@ -10,6 +16,7 @@
           <LogicalName>mserp_fk_worker_id</LogicalName>
           <RequiredLevel>none</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
           <ValidForReadApi>1</ValidForReadApi>
           <ValidForCreateApi>1</ValidForCreateApi>
