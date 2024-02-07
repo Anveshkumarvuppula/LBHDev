@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23122.186" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.24013.172" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>LBHCompensationBarPointApp</UniqueName>
     <LocalizedNames>
       <LocalizedName description="LBH Compensation Bar Point App" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>10.0.296</Version>
+    <Version>10.0.312</Version>
     <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr5bf49</UniqueName>
@@ -150,6 +150,10 @@
           <package>MicrosoftOperationsVEAnchor (2.8.11.131)</package>
         </Required>
         <Dependent type="10" schemaName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" displayName="mserp_HcmCompensationStructureEntity_dataAreaId_rel" parentSchemaName="cdm_company" parentDisplayName="Company" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="connectionreference" displayName="new_sharedcommondataserviceforapps_986a5" solution="Active" id.connectionreferencelogicalname="new_sharedcommondataserviceforapps_986a5" />
+        <Dependent type="29" displayName="LBHUpdateCompensationId" id="{ff4bfcb3-115d-ee11-8def-0022481b529e}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>

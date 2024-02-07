@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>crbb7_lbhcompensationplan_15465</Name>
-  <AppVersion>2023-11-17T11:26:36Z</AppVersion>
+  <AppVersion>2023-12-05T09:50:17Z</AppVersion>
   <Status>Ready</Status>
   <CreatedByClientVersion>3.23105.18.0</CreatedByClientVersion>
   <MinClientVersion>3.23105.18.0</MinClientVersion>
@@ -10,21 +10,18 @@
   <GalleryItemId xsi:nil="true"></GalleryItemId>
   <BackgroundColor>RGBA(0,176,240,1)</BackgroundColor>
   <DisplayName>LBHCompensationPlan</DisplayName>
-  <Description xsi:nil="true"></Description>
-  <CommitMessage xsi:nil="true"></CommitMessage>
+  <Description></Description>
+  <CommitMessage></CommitMessage>
   <Publisher></Publisher>
   <AuthorizationReferences>[]</AuthorizationReferences>
   <ConnectionReferences>{}</ConnectionReferences>
   <DatabaseReferences>{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified"}},"dataSources":{"Employee fixed compensation (mserp)":{"entitySetName":"mserp_hcmcompfixedemplentities","logicalName":"mserp_hcmcompfixedemplentity"},"Compensation structure (mserp)":{"entitySetName":"mserp_hcmcompensationstructureentities","logicalName":"mserp_hcmcompensationstructureentity"}}}}</DatabaseReferences>
-  <AppComponents>[]</AppComponents>
-  <AppComponentDependencies>[]</AppComponentDependencies>
   <CanConsumeAppPass>1</CanConsumeAppPass>
   <CanvasAppType>0</CanvasAppType>
   <BypassConsent>0</BypassConsent>
-  <AdminControlBypassConsent>0</AdminControlBypassConsent>
   <EmbeddedApp xsi:nil="true"></EmbeddedApp>
   <IntroducedVersion>1.0</IntroducedVersion>
-  <CdsDependencies>{"cdsdependencies":[{"logicalname":"mserp_hcmcompfixedemplentity","componenttype":1},{"logicalname":"mserp_hcmcompensationstructureentity","componenttype":1}]}</CdsDependencies>
+  <CdsDependencies>{"cdsdependencies":[{"componenttype":1,"logicalname":"mserp_hcmcompfixedemplentity"},{"componenttype":1,"logicalname":"mserp_hcmcompensationstructureentity"}]}</CdsDependencies>
   <IsCustomizable>1</IsCustomizable>
   <BackgroundImageUri>/CanvasApps/crbb7_lbhcompensationplan_15465_BackgroundImageUri</BackgroundImageUri>
   <DocumentUri>/CanvasApps/crbb7_lbhcompensationplan_15465_DocumentUri.msapp</DocumentUri>
